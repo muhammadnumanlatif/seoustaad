@@ -77,20 +77,22 @@
 
         <div class="container position-relative z-2">
             <div class="row align-items-center g-5">
-                <!-- Text Content Column -->
-                <div class="col-lg-6 text-center text-lg-start stagger-reveal stagger-delay-1">
+                <!-- Text Content Column — order 1 on all screens -->
+                <div class="col-lg-6 order-1 text-center text-lg-start stagger-reveal stagger-delay-1">
                     <h5 class="text-orange fw-bold mb-3 text-uppercase tracking-wider">#1 Digital Agency in Pakistan</h5>
                     <h1 class="display-4 text-white outfit mb-3 fw-bold">Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad</span></h1>
                     <p class="lead text-gray mb-4">
                         Premium Web Development, ROI-Driven SEO, and Meta Ads specialized for the Pakistani market. We don't just build sites; we build search authority.
                     </p>
-                    <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3 mb-4">
+
+                    <!-- CTA Buttons — desktop only (stays in left column) -->
+                    <div class="d-none d-lg-flex flex-column flex-sm-row justify-content-lg-start gap-3 mb-4">
                         <a href="#packages" class="btn btn-orange btn-lg px-4 py-3 fw-bold">View 40+ Packages</a>
                         <a href="#calculator" class="btn btn-outline-light btn-lg px-4 py-3 fw-bold">Calculate Growth</a>
                     </div>
                     
-                    <!-- Ratings Widget -->
-                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 mt-4">
+                    <!-- Ratings Widget — desktop only -->
+                    <div class="d-none d-lg-flex align-items-center justify-content-lg-start gap-3 mt-4">
                         <div class="avatar-group">
                             <span class="avatar-init" style="background-color: var(--primary-orange);">A</span>
                             <span class="avatar-init" style="background-color: #3b5998;">Z</span>
@@ -111,8 +113,8 @@
                     </div>
                 </div>
 
-                <!-- Multi-step Form Column -->
-                <div class="col-lg-6 stagger-reveal stagger-delay-3">
+                <!-- Multi-step Form Column — order 2 on all screens -->
+                <div class="col-lg-6 order-2 stagger-reveal stagger-delay-3">
                     <div class="glass-card p-4 hero-form-card position-relative overflow-hidden">
                         <div class="form-card-spotlight"></div>
                         <!-- Form Progress -->
@@ -367,6 +369,33 @@
                                 <i class="fab fa-whatsapp me-2"></i> Discuss details on WhatsApp
                             </a>
                             <button type="button" class="btn btn-link text-gray text-decoration-none small" id="restartFormBtn">Submit Another Request</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile-only CTA + Ratings — order 3, hidden on desktop -->
+                <div class="col-12 order-3 d-lg-none text-center stagger-reveal stagger-delay-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mb-4">
+                        <a href="#packages" class="btn btn-orange btn-lg px-4 py-3 fw-bold">View 40+ Packages</a>
+                        <a href="#calculator" class="btn btn-outline-light btn-lg px-4 py-3 fw-bold">Calculate Growth</a>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <div class="avatar-group">
+                            <span class="avatar-init" style="background-color: var(--primary-orange);">A</span>
+                            <span class="avatar-init" style="background-color: #3b5998;">Z</span>
+                            <span class="avatar-init" style="background-color: #25d366;">F</span>
+                            <span class="avatar-init" style="background-color: #0077b5;">H</span>
+                        </div>
+                        <div class="text-start">
+                            <div class="text-warning small mb-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-white ms-2 fw-bold">4.9/5</span>
+                            </div>
+                            <span class="text-gray small">Trusted by 1,000+ businesses in Pakistan</span>
                         </div>
                     </div>
                 </div>
