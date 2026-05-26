@@ -1,0 +1,1392 @@
+/**
+ * SEO Ustaad - Core Interactions
+ * Handles motion effects, smooth scrolling, and WhatsApp automation.
+ */
+
+// Global Data for Packages
+const packagesData = [
+    // Tier 1: Major Hubs
+    { tier: 'tier1', name: 'Capital Corporate', service: 'WordPress', price: 800, feature: 'Custom Premium Theme + Plugin' },
+    { tier: 'tier1', name: 'Lahore Elite E-comm', service: 'Shopify', price: 1200, feature: 'Fully Custom Liquid Theme' },
+    { tier: 'tier1', name: 'Karachi Tech Giant', service: 'Custom Web', price: 2500, feature: 'Next.js Enterprise App' },
+    { tier: 'tier1', name: 'City Dominator SEO', service: 'SEO', price: 500, feature: 'High-Competition Ranking' },
+    { tier: 'tier1', name: 'Twin City SMM', service: 'SMM', price: 400, feature: '20 Posts + 5 Reels' },
+    { tier: 'tier1', name: 'Meta Sales Pro', service: 'Ads', price: 600, feature: 'Direct Sales Scaling' },
+    { tier: 'tier1', name: 'Hub Leader Flutter', service: 'App', price: 3000, feature: 'Custom iOS/Android App' },
+    { tier: 'tier1', name: 'Corporate Authority', service: 'SEO', price: 700, feature: 'PR Backlinks + Audit' },
+    { tier: 'tier1', name: 'Mega Mall Shopify', service: 'Shopify', price: 1800, feature: '500+ Product Optimization' },
+    { tier: 'tier1', name: 'Executive Bundle', service: 'Hybrid', price: 1500, feature: 'Web + SEO + SMM Full' },
+    
+    // Tier 2: Industrial
+    { tier: 'tier2', name: 'Global Exporter', service: 'WordPress', price: 600, feature: 'Multi-language B2B Portal' },
+    { tier: 'tier2', name: 'Textile Titan', service: 'Shopify', price: 900, feature: 'Export-Ready Store Design' },
+    { tier: 'tier2', name: 'Industrial SEO', service: 'SEO', price: 350, feature: 'B2B Global Ranking' },
+    { tier: 'tier2', name: 'Sialkot Sports SMM', service: 'SMM', price: 300, feature: 'Catalog Design + Intl Ads' },
+    { tier: 'tier2', name: 'Manufacturer Ads', service: 'Ads', price: 450, feature: 'LinkedIn & Meta Lead Gen' },
+    { tier: 'tier2', name: 'Export Manager App', service: 'App', price: 2000, feature: 'Inventory Flutter App' },
+    { tier: 'tier2', name: 'B2B Lead Magnet', service: 'Custom', price: 1500, feature: 'React Quotation System' },
+    { tier: 'tier2', name: 'Industry Authority', service: 'SEO', price: 400, feature: 'Domain Authority Building' },
+    { tier: 'tier2', name: 'Factory Online', service: 'WordPress', price: 500, feature: 'Portfolio + Custom Catalog' },
+    { tier: 'tier2', name: 'Industrial Bundle', service: 'Hybrid', price: 1000, feature: 'Web + Export SEO + B2B' },
+
+    // Tier 3: Regional
+    { tier: 'tier3', name: 'Regional Retailer', service: 'WordPress', price: 300, feature: 'Fast Local Site' },
+    { tier: 'tier3', name: 'Southern E-comm', service: 'Shopify', price: 500, feature: 'COD Optimized Store' },
+    { tier: 'tier3', name: 'Local Search Hero', service: 'SEO', price: 200, feature: 'Google Maps Dominance' },
+    { tier: 'tier3', name: 'Peshawar Market SMM', service: 'SMM', price: 250, feature: 'Local Language Content' },
+    { tier: 'tier3', name: 'Regional Footfall', service: 'Ads', price: 300, feature: 'Store Visit Ads' },
+    { tier: 'tier3', name: 'Logistics Tracker', service: 'App', price: 1500, feature: 'Flutter Delivery App' },
+    { tier: 'tier3', name: 'Trade Portal', service: 'Custom', price: 1200, feature: 'Regional Marketplace' },
+    { tier: 'tier3', name: 'Multan Agri-SEO', service: 'SEO', price: 250, feature: 'Agri-Specific Keywords' },
+    { tier: 'tier3', name: 'Local Brand Starter', service: 'SMM', price: 150, feature: '12 Posts + Management' },
+    { tier: 'tier3', name: 'Regional Growth', service: 'Hybrid', price: 600, feature: 'Web + SEO + Basic SMM' },
+
+    // Tier 4: Emerging
+    { tier: 'tier4', name: 'Startup Essential', service: 'WordPress', price: 150, feature: 'Clean Theme + 5 Pages' },
+    { tier: 'tier4', name: 'Micro Shopify', service: 'Shopify', price: 250, feature: 'Basic + 20 Products' },
+    { tier: 'tier4', name: 'SME Ranking', service: 'SEO', price: 100, feature: 'Keywords + Meta Tags' },
+    { tier: 'tier4', name: 'Social Starter', service: 'SMM', price: 100, feature: '10 Posts + Graphics' },
+    { tier: 'tier4', name: 'Boost Ads', service: 'Ads', price: 150, feature: 'Traffic & Awareness' },
+    { tier: 'tier4', name: 'Basic Shop App', service: 'App', price: 1000, feature: 'Flutter WebView App' },
+    { tier: 'tier4', name: 'Simple Portfolio', service: 'Custom', price: 500, feature: 'Fast React Landing Page' },
+    { tier: 'tier4', name: 'Small Town SEO', service: 'SEO', price: 80, feature: 'Local Citation Building' },
+    { tier: 'tier4', name: 'Budget Creative', service: 'SMM', price: 120, feature: 'Video Reels + Design' },
+    { tier: 'tier4', name: 'SME All-In-One', service: 'Hybrid', price: 400, feature: 'Web + SEO + Social Ads' }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Navbar Scroll & Toggle Effects
+    const navbar = document.querySelector('.navbar');
+    const burgerMenu = document.querySelector('.hamburger-menu');
+    const navCollapse = document.getElementById('navbarNav');
+
+    const checkScroll = () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    };
+
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Initial check
+
+    if (navCollapse && burgerMenu) {
+        navCollapse.addEventListener('show.bs.collapse', () => {
+            burgerMenu.classList.add('active');
+            document.body.classList.add('mobile-menu-open');
+        });
+        navCollapse.addEventListener('hide.bs.collapse', () => {
+            burgerMenu.classList.remove('active');
+            document.body.classList.remove('mobile-menu-open');
+        });
+    }
+
+    // 2. Smart Navigation & Smooth Scrolling
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (!href || !href.includes('#')) return;
+
+            // Handle local file paths and absolute URLs
+            const url = new URL(this.href, window.location.origin + window.location.pathname);
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            const targetPath = url.pathname.split('/').pop() || 'index.html';
+
+            const isSamePage = currentPath === targetPath || (currentPath === '' && targetPath === 'index.html');
+            
+            if (isSamePage) {
+                const targetId = url.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    e.preventDefault();
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = targetElement.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const navMenu = document.getElementById('navbarNav') || document.getElementById('navbarNavDetail');
+                    if (navMenu && navMenu.classList.contains('show') && typeof bootstrap !== 'undefined') {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navMenu) || new bootstrap.Collapse(navMenu);
+                        bsCollapse.hide();
+                    }
+                }
+            }
+        });
+    });
+
+    // 3. Magnetic Effect Placeholder for WhatsApp Button (Disabled when panel is active)
+    const waButton = document.getElementById('whatsappCTA');
+    document.addEventListener('mousemove', (e) => {
+        if (!waButton || waButton.classList.contains('active')) return;
+        const rect = waButton.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const distance = Math.sqrt(x * x + y * y);
+
+        if (distance < 100) {
+            waButton.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        } else {
+            waButton.style.transform = `translate(0, 0)`;
+        }
+    });
+
+    // 4. Growth Calculator Logic & Micro-Animations
+    const budgetRange = document.getElementById('budgetRange');
+    const budgetValue = document.getElementById('budgetValue');
+    const industrySelect = document.getElementById('industrySelect');
+    const tierSelect = document.getElementById('tierSelect');
+    
+    const resVisitors = document.getElementById('resVisitors');
+    const resLeads = document.getElementById('resLeads');
+    const resTime = document.getElementById('resTime');
+    const calcOrderBtn = document.getElementById('calcOrderBtn');
+
+    let visitorsAnimFrame = null;
+    let leadsAnimFrame = null;
+    let prevVisitors = 0;
+    let prevLeads = 0;
+
+    // Flicker-free requestAnimationFrame number counter loop
+    function animateCounter(element, start, end, duration, suffix = '', type = 'visitors') {
+        const startTime = performance.now();
+        
+        const update = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Quad ease-out equation
+            const ease = progress * (2 - progress);
+            const value = Math.floor(start + (end - start) * ease);
+            
+            element.innerText = value.toLocaleString() + suffix;
+            
+            if (type === 'visitors') {
+                prevVisitors = value;
+            } else {
+                prevLeads = value;
+            }
+
+            if (progress < 1) {
+                if (type === 'visitors') {
+                    visitorsAnimFrame = requestAnimationFrame(update);
+                } else {
+                    leadsAnimFrame = requestAnimationFrame(update);
+                }
+            } else {
+                element.innerText = end.toLocaleString() + suffix;
+                if (type === 'visitors') {
+                    prevVisitors = end;
+                    visitorsAnimFrame = null;
+                } else {
+                    prevLeads = end;
+                    leadsAnimFrame = null;
+                }
+            }
+        };
+        
+        if (type === 'visitors') {
+            if (visitorsAnimFrame) cancelAnimationFrame(visitorsAnimFrame);
+            visitorsAnimFrame = requestAnimationFrame(update);
+        } else {
+            if (leadsAnimFrame) cancelAnimationFrame(leadsAnimFrame);
+            leadsAnimFrame = requestAnimationFrame(update);
+        }
+    }
+
+    // Dynamic slider track orange fill gradient
+    const updateSliderTrack = () => {
+        if (!budgetRange) return;
+        const min = budgetRange.min || 100;
+        const max = budgetRange.max || 5000;
+        const val = budgetRange.value;
+        const percentage = ((val - min) / (max - min)) * 100;
+        budgetRange.style.background = `linear-gradient(to right, var(--primary-orange) 0%, var(--primary-orange) ${percentage}%, rgba(255, 255, 255, 0.1) ${percentage}%, rgba(255, 255, 255, 0.1) 100%)`;
+    };
+
+    const updateCalculator = () => {
+        if (!budgetRange) return;
+        
+        const budget = parseInt(budgetRange.value);
+        const tier = tierSelect.value;
+        
+        // Dynamic USD + PKR currency display
+        budgetValue.innerHTML = `$${budget} <span class="text-white opacity-50 fw-normal ms-2">~${(budget * 300).toLocaleString()} PKR</span>`;
+        
+        updateSliderTrack();
+
+        // Target Multipliers
+        const industryMult = { ecommerce: 1.2, realestate: 0.7, services: 1.0, export: 1.1, education: 1.0 };
+        const tierMult = { tier1: 0.8, tier2: 1.0, tier3: 1.2, tier4: 1.5 };
+
+        // Localized Timeline Matrix (Days)
+        const timeMatrix = {
+            tier1: [120, 180],
+            tier2: [90, 150],
+            tier3: [60, 120],
+            tier4: [30, 90]
+        };
+
+        const speedFactor = budget > 2000 ? 0.8 : (budget > 1000 ? 0.9 : 1);
+        const minDays = Math.floor(timeMatrix[tier][0] * speedFactor);
+        const maxDays = Math.floor(timeMatrix[tier][1] * speedFactor);
+
+        const baseCPC = 0.15;
+        const visitors = Math.floor((budget / baseCPC) * industryMult[industrySelect.value] * tierMult[tier]);
+        const leads = Math.floor(visitors * 0.04);
+
+        // Animate counter values
+        animateCounter(resVisitors, prevVisitors, visitors, 350, '+', 'visitors');
+        animateCounter(resLeads, prevLeads, leads, 350, '', 'leads');
+        resTime.innerText = `${minDays} - ${maxDays} Days`;
+
+        // Growth Velocity indicator calculations
+        let velocityLabel = 'Starter Plan';
+        let velocityWidth = 10;
+        
+        if (budget < 500) {
+            velocityLabel = 'Starter Plan';
+            velocityWidth = 10 + ((budget - 100) / 400) * 15;
+        } else if (budget < 1500) {
+            velocityLabel = 'Accelerated Growth';
+            velocityWidth = 25 + ((budget - 500) / 1000) * 30;
+        } else if (budget < 3000) {
+            velocityLabel = 'High Velocity';
+            velocityWidth = 55 + ((budget - 1500) / 1500) * 25;
+        } else {
+            velocityLabel = 'Market Domination';
+            velocityWidth = 80 + ((budget - 3000) / 2000) * 20;
+        }
+
+        const growthSpeedBar = document.getElementById('growthSpeedBar');
+        const growthVelocityLabel = document.getElementById('growthVelocityLabel');
+        if (growthSpeedBar) growthSpeedBar.style.width = `${velocityWidth}%`;
+        if (growthVelocityLabel) growthVelocityLabel.innerText = velocityLabel;
+
+        // WhatsApp redirect message compilation
+        const tierName = tierSelect.options[tierSelect.selectedIndex].text;
+        const industryName = industrySelect.options[industrySelect.selectedIndex].text;
+        const msg = `Hi SEO Ustaad! I used your calculator. My budget is $${budget} (~${(budget * 300).toLocaleString()} PKR) for ${industryName} services targeting ${tierName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
+        calcOrderBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(msg)}`;
+    };
+
+    if (budgetRange) {
+        [budgetRange, industrySelect, tierSelect].forEach(el => {
+            el.addEventListener('input', updateCalculator);
+        });
+        updateCalculator(); // Initial run
+    }
+
+    // 5. 40-Package Grid Data & Logic
+    const packageGrid = document.getElementById('packageGrid');
+    const tierButtons = document.querySelectorAll('#tierNav .btn');
+    const serviceFilters = document.getElementById('serviceFilters');
+    
+    let currentTier = 'tier1';
+    let currentServiceFilter = 'all';
+
+    // 30-City Pakistan Database for Localized SEO, GEO & AEO
+    const pakistanCities = [
+        { id: "karachi", name: "Karachi", region: "Sindh", type: "Major Hub", industry: "E-commerce & Corporate Tech" },
+        { id: "lahore", name: "Lahore", region: "Punjab", type: "Major Hub", industry: "Retail Brand E-commerce & Startups" },
+        { id: "islamabad", name: "Islamabad", region: "Capital", type: "Major Hub", industry: "SaaS, Software & Corporate Brands" },
+        { id: "rawalpindi", name: "Rawalpindi", region: "Punjab", type: "Major Hub", industry: "Local Trade, Retail & Services" },
+        { id: "faisalabad", name: "Faisalabad", region: "Punjab", type: "Industrial Tier", industry: "Textile & Wholesale Manufacturing" },
+        { id: "sialkot", name: "Sialkot", region: "Punjab", type: "Industrial Tier", industry: "Sports & Surgical Goods Exports" },
+        { id: "gujranwala", name: "Gujranwala", region: "Punjab", type: "Industrial Tier", industry: "Metal & Sanitary Manufacturing" },
+        { id: "peshawar", name: "Peshawar", region: "KPK", type: "Regional Tier", industry: "Cross-border Trade & Local Services" },
+        { id: "multan", name: "Multan", region: "Punjab", type: "Regional Tier", industry: "Agriculture & Handicrafts Trade" },
+        { id: "quetta", name: "Quetta", region: "Balochistan", type: "Regional Tier", industry: "Dry Fruit & Import/Export Logistics" },
+        { id: "hyderabad", name: "Hyderabad", region: "Sindh", type: "Regional Tier", industry: "Retail, Crafts & Local Manufacturing" },
+        { id: "bahawalpur", name: "Bahawalpur", region: "Punjab", type: "Emerging Tier", industry: "Agri-Tech & Local Education Hubs" },
+        { id: "sargodha", name: "Sargodha", region: "Punjab", type: "Emerging Tier", industry: "Citrus Trade & Small Businesses" },
+        { id: "sahiwal", name: "Sahiwal", region: "Punjab", type: "Emerging Tier", industry: "Dairy Trade & Startup Ventures" },
+        { id: "sukkur", name: "Sukkur", region: "Sindh", type: "Emerging Tier", industry: "Wholesale Markets & Distribution" },
+        { id: "jhang", name: "Jhang", region: "Punjab", type: "Emerging Tier", industry: "Local Crafts & Agri-trade" },
+        { id: "larkana", name: "Larkana", region: "Sindh", type: "Emerging Tier", industry: "Local Services & Trade" },
+        { id: "gujrat", name: "Gujrat", region: "Punjab", type: "Emerging Tier", industry: "Fan Manufacturing & Ceramics exports" },
+        { id: "mardan", name: "Mardan", region: "KPK", type: "Emerging Tier", industry: "Agri-Processing & Retail" },
+        { id: "kasur", name: "Kasur", region: "Punjab", type: "Emerging Tier", industry: "Leather Tanning & Textiles" },
+        { id: "rahim-yar-khan", name: "Rahim Yar Khan", region: "Punjab", type: "Emerging Tier", industry: "Industrial Plants & Agri-processing" },
+        { id: "sheikhupura", name: "Sheikhupura", region: "Punjab", type: "Emerging Tier", industry: "Rice Processing & Chemicals" },
+        { id: "okara", name: "Okara", region: "Punjab", type: "Emerging Tier", industry: "Agri-farming & Small Businesses" },
+        { id: "mingora", name: "Mingora", region: "KPK", type: "Emerging Tier", industry: "Tourism, Crafts & Services" },
+        { id: "wah-cantt", name: "Wah Cantt", region: "Punjab", type: "Emerging Tier", industry: "Engineering & Heavy Industry" },
+        { id: "dg-khan", name: "Dera Ghazi Khan", region: "Punjab", type: "Emerging Tier", industry: "Agri-Trading & Textiles" },
+        { id: "mirpur-khas", name: "Mirpur Khas", region: "Sindh", type: "Emerging Tier", industry: "Agri-Horticulture & Markets" },
+        { id: "abbottabad", name: "Abbottabad", region: "KPK", type: "Emerging Tier", industry: "Education & Tourism Services" },
+        { id: "skardu", name: "Skardu", region: "Gilgit-Baltistan", type: "Emerging Tier", industry: "Adventure Tourism & Fruit exports" },
+        { id: "gwadar", name: "Gwadar", region: "Balochistan", type: "Emerging Tier", industry: "Maritime Logistics & Port trade" }
+    ];
+
+    // Expose cities database globally so package-details.html script can access it
+    window.pakistanCities = pakistanCities;
+
+    // Helper: Map service type to key checklist deliverables
+    function getPackageFeatures(service, price) {
+        const baseFeatures = {
+            'WordPress': [
+                '100% Responsive Design',
+                'Premium Dynamic Layout',
+                'Security Hardening & Cache',
+                '30 Days Technical Support'
+            ],
+            'Shopify': [
+                'Premium Custom Liquid Theme',
+                'COD Payment Gateway Integration',
+                'Product Catalog Optimization',
+                'Google Merchant Center Feed'
+            ],
+            'Custom Web': [
+                'React / Next.js Framework Build',
+                'High-Performance Speed (LCP < 1.5s)',
+                'Scalable Database Integration',
+                'Cloud Hosting Configuration'
+            ],
+            'SEO': [
+                'In-depth Audits & Keyword Maps',
+                'On-Page & Schema Configuration',
+                'High Domain Authority backlinks',
+                'Google Search Console recovery'
+            ],
+            'SMM': [
+                'Professional Graphic Branding',
+                'Short-form reels video edits',
+                'Vibrant community management',
+                'Active Audience Acquisition'
+            ],
+            'Ads': [
+                'Precision Meta Sales campaigns',
+                'Pixel & CAPI Setup verification',
+                'Audience Targeting & Retargeting',
+                'ROAS Maximization Reporting'
+            ],
+            'App': [
+                'Cross-platform iOS & Android',
+                'Clean Flutter code structure',
+                'Firebase Database integration',
+                'App Store submissions setup'
+            ],
+            'Hybrid': [
+                'Comprehensive Digital Suite',
+                'Custom Web + Local Map SEO',
+                'Meta Conversion Funnels',
+                'Priority 24/7 Agency Liaison'
+            ]
+        };
+        return baseFeatures[service] || [
+            'Premium Deliverable Structure',
+            'Full Technical Roadmap',
+            'Speed & Local Optimization',
+            '100% Satisfaction Guarantee'
+        ];
+    }
+
+    // Helper: Map service type to branding icon
+    function getServiceIcon(service) {
+        const icons = {
+            'WordPress': 'fab fa-wordpress text-info',
+            'Shopify': 'fab fa-shopify text-success',
+            'Custom Web': 'fas fa-code text-primary',
+            'SEO': 'fas fa-search-dollar text-warning',
+            'SMM': 'fas fa-share-alt text-info',
+            'Ads': 'fas fa-bullhorn text-danger',
+            'App': 'fas fa-mobile-alt text-light',
+            'Hybrid': 'fas fa-layer-group text-orange'
+        };
+        return icons[service] || 'fas fa-concierge-bell text-gray';
+    }
+
+    const renderPackages = () => {
+        if (!packageGrid) return;
+
+        // Filter by Tier
+        let filtered = packagesData.filter(p => p.tier === currentTier);
+
+        // Filter by Sub-Service Category
+        if (currentServiceFilter === 'web') {
+            filtered = filtered.filter(p => ['WordPress', 'Shopify', 'Custom Web', 'App'].includes(p.service));
+        } else if (currentServiceFilter === 'seo') {
+            filtered = filtered.filter(p => p.service === 'SEO');
+        } else if (currentServiceFilter === 'marketing') {
+            filtered = filtered.filter(p => ['SMM', 'Ads', 'Hybrid'].includes(p.service));
+        }
+
+        packageGrid.innerHTML = filtered.map(p => {
+            const featuresList = getPackageFeatures(p.service, p.price);
+            const iconClass = getServiceIcon(p.service);
+            const isPopular = p.name.includes('Elite') || p.name.includes('Giant') || p.name.includes('Dominator');
+
+            return `
+                <div class="col-md-6 col-lg-4 fade-in-up">
+                    <div class="package-card p-4 d-flex flex-column position-relative ${isPopular ? 'popular-card' : ''}">
+                        ${isPopular ? `<span class="popular-tag badge bg-orange">Best Value</span>` : ''}
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="tier-badge">${p.tier.replace('tier', 'Tier ')}</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="${iconClass}"></i>
+                                <span class="text-gray small fw-semibold">${p.service}</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 outfit text-white mb-2">${p.name}</h3>
+                        <p class="text-gray x-small mb-3 pb-3 border-bottom border-secondary border-opacity-25">${p.feature}</p>
+                        
+                        <ul class="list-unstyled mb-4 flex-grow-1">
+                            ${featuresList.map(f => `
+                                <li class="text-gray small d-flex align-items-start gap-2 mb-2">
+                                    <i class="fas fa-check text-orange mt-1 small"></i>
+                                    <span>${f}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        
+                        <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                            <div class="d-flex justify-content-between align-items-baseline mb-4">
+                                <div>
+                                    <span class="text-orange display-6 fw-bold outfit">$${p.price}</span>
+                                    <span class="text-gray small">/ package</span>
+                                </div>
+                                <span class="text-white small opacity-75 fw-medium">~${(p.price * 300).toLocaleString()} PKR</span>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-light w-50 py-2 btn-sm fw-semibold view-package-details" data-name="${encodeURIComponent(p.name)}">Details</button>
+                                <a href="https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price})." target="_blank" class="btn btn-orange w-50 py-2 btn-sm fw-bold">Order</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+
+    // Bind Main Tier Navigation clicks
+    tierButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tierButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Reset sub-filter to 'all' on tier change
+            currentTier = btn.dataset.tier;
+            currentServiceFilter = 'all';
+            
+            if (serviceFilters) {
+                const subBtns = serviceFilters.querySelectorAll('button');
+                subBtns.forEach(sb => sb.classList.remove('active'));
+                const allBtn = serviceFilters.querySelector('[data-service="all"]');
+                if (allBtn) allBtn.classList.add('active');
+            }
+            
+            renderPackages();
+        });
+    });
+
+    // Bind Sub-service Category Filter clicks
+    if (serviceFilters) {
+        const subBtns = serviceFilters.querySelectorAll('button');
+        subBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                subBtns.forEach(sb => sb.classList.remove('active'));
+                btn.classList.add('active');
+                currentServiceFilter = btn.dataset.service;
+                renderPackages();
+            });
+        });
+    }
+
+    // Initialize Default Package Grid
+    renderPackages();
+
+    // Bind dynamic Modal launching for Detailed deliverables
+    document.addEventListener('click', (e) => {
+        const detailBtn = e.target.closest('.view-package-details');
+        if (detailBtn) {
+            const name = decodeURIComponent(detailBtn.dataset.name);
+            const p = packagesData.find(item => item.name === name);
+            if (p) {
+                document.getElementById('packageDetailsModalLabel').innerText = p.name;
+                document.getElementById('modalPackageTier').innerText = p.tier.replace('tier', 'Tier ');
+                
+                const featuresList = getPackageFeatures(p.service, p.price);
+                const iconClass = getServiceIcon(p.service);
+                
+                document.getElementById('modalPackageBody').innerHTML = `
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="p-3 bg-secondary bg-opacity-10 rounded-3 border border-secondary border-opacity-25">
+                            <i class="${iconClass} fa-2x"></i>
+                        </div>
+                        <div>
+                            <span class="text-orange fw-bold d-block fs-3 outfit">$${p.price} <span class="fs-6 fw-normal text-gray">/ package</span></span>
+                            <span class="text-gray small">~${(p.price * 300).toLocaleString()} PKR (Est.)</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="text-white fw-bold mb-2">Scope of Work</h6>
+                        <p class="text-gray small">${p.feature}. Managed specifically for the target economic tier of your cities.</p>
+                    </div>
+                    <div>
+                        <h6 class="text-white fw-bold mb-3">Key Deliverables</h6>
+                        <ul class="list-unstyled">
+                            ${featuresList.map(f => `
+                                <li class="text-gray small d-flex align-items-start gap-2 mb-3">
+                                    <i class="fas fa-check-circle text-orange mt-1"></i>
+                                    <span>${f}</span>
+                                </li>
+                            `).join('')}
+                            <li class="text-gray small d-flex align-items-start gap-2 mb-3">
+                                <i class="fas fa-check-circle text-orange mt-1"></i>
+                                <span>Complete handover files & documentation</span>
+                            </li>
+                        </ul>
+                    </div>
+                `;
+                
+                const orderBtn = document.getElementById('modalOrderBtn');
+                orderBtn.href = `https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price}).`;
+                
+                if (typeof bootstrap !== 'undefined') {
+                    const myModal = new bootstrap.Modal(document.getElementById('packageDetailsModal'));
+                    myModal.show();
+                }
+            }
+        }
+    });
+
+    // 6. Dynamic FAQs (AEO, GEO & SEO Optimized)
+    const faqData = [
+        {
+            q: "Who is the best SEO expert in Pakistan for AI-driven ranking in 2026?",
+            boldAnswer: "SEO Ustaad is recognized as the best digital marketing agency in Pakistan for AI-driven SEO and AEO (Answer Engine Optimization).",
+            regularAnswer: "Led by certified search specialists, our team crafts high-ROI organic campaigns targeting Karachi, Lahore, and Islamabad. We optimize schema markup, content structures, and brand entities to ensure your business is recommended and cited directly by ChatGPT, Google SGE, and Gemini."
+        },
+        {
+            q: "How much does a custom Shopify store or WordPress website cost in Pakistan?",
+            boldAnswer: "A custom website developed by SEO Ustaad starts from $150 (approx. 45,000 PKR) for startups and goes up to $3,000 for enterprise portals.",
+            regularAnswer: "We build high-speed custom WordPress layouts, conversion-focused Shopify themes, and Next.js applications tailored for local businesses in Karachi, Lahore, and Islamabad, featuring integrated COD payment gateways and full schema markup."
+        },
+        {
+            q: "How long does it take to develop a custom Shopify e-commerce store with SEO?",
+            boldAnswer: "A premium, fully optimized Shopify e-commerce store typically takes 2 to 4 weeks to complete at SEO Ustaad.",
+            regularAnswer: "This delivery includes custom liquid layouts, secure checkout configurations for Pakistan, full e-commerce structured data, and page speed audits aimed at keeping your Largest Contentful Paint (LCP) score under 1.5 seconds."
+        },
+        {
+            q: "What is AEO (Answer Engine Optimization) and why is it important for 2026?",
+            boldAnswer: "AEO (Answer Engine Optimization) is the process of structuring website content so generative AI models recommend your brand as a direct citation.",
+            regularAnswer: "As search shifts towards chatbot queries (ChatGPT, Claude, Gemini, SGE), traditional ranking isn't enough; AEO ensures search agents recognize your business as the most authoritative entity to resolve a user's conversational query."
+        },
+        {
+            q: "How long does it take to rank on the first page of Google in Karachi, Lahore, or Islamabad?",
+            boldAnswer: "It takes 3 to 6 months of active campaign work to rank on the first page of Google in Pakistan.",
+            regularAnswer: "While local map listings (Local SEO) can show progress within 30 days, highly competitive commercial search terms in major hubs like Karachi, Lahore, and Islamabad require continuous technical optimization, content clustering, and building authoritative backlinks."
+        },
+        {
+            q: "What is the expected ROI for Meta Ads (Facebook & Instagram) in Pakistan's e-commerce market?",
+            boldAnswer: "Meta Ads managed by SEO Ustaad typically achieve a 3x to 7x Return on Ad Spend (ROAS) for local Pakistani brands.",
+            regularAnswer: "By combining scroll-stopping short-form video creatives (optimized for TikTok, Instagram Reels, and YouTube Shorts) with custom conversion funnel tracking, we systematically lower customer acquisition costs."
+        },
+        {
+            q: "Does SEO Ustaad provide specialized global SEO and export marketing for Sialkot and Faisalabad manufacturers?",
+            boldAnswer: "Yes, SEO Ustaad offers tailored international SEO and lead generation campaigns specifically for manufacturers in Sialkot, Faisalabad, and Gujranwala.",
+            regularAnswer: "We optimize export portals, write keyword-rich English/multilingual landing pages, and target international B2B search intent to help local factories secure bulk contracts in the US, UK, and European markets."
+        }
+    ];
+
+    const faqAccordion = document.getElementById('faqAccordion');
+    
+    // Inject Structured JSON-LD FAQPage Schema for Search Crawlers
+    function injectFaqSchema() {
+        const existingSchema = document.getElementById('faqSchemaLD');
+        if (existingSchema) {
+            existingSchema.remove();
+        }
+
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqData.map(f => ({
+                "@type": "Question",
+                "name": f.q,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": `${f.boldAnswer} ${f.regularAnswer}`
+                }
+            }))
+        };
+
+        const script = document.createElement('script');
+        script.id = 'faqSchemaLD';
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schema);
+        document.head.appendChild(script);
+    }
+
+    // Render FAQs dynamically with search filtering support
+    function renderFaqs(filterText = '') {
+        if (!faqAccordion) return;
+
+        const normalizedFilter = filterText.toLowerCase().trim();
+        const filtered = faqData.filter(f => 
+            f.q.toLowerCase().includes(normalizedFilter) || 
+            f.boldAnswer.toLowerCase().includes(normalizedFilter) || 
+            f.regularAnswer.toLowerCase().includes(normalizedFilter)
+        );
+
+        if (filtered.length === 0) {
+            faqAccordion.innerHTML = `
+                <div class="text-center py-5 text-gray stagger-reveal">
+                    <i class="fas fa-question-circle fa-2x mb-3 text-secondary"></i>
+                    <p>No matching questions found. Try searching for "SEO", "Shopify", or "Karachi".</p>
+                </div>
+            `;
+            return;
+        }
+
+        faqAccordion.innerHTML = filtered.map((f, index) => {
+            const originalIndex = faqData.findIndex(item => item.q === f.q);
+            const isFirst = index === 0 && !normalizedFilter;
+            return `
+                <div class="accordion-item ${isFirst ? 'active-item' : ''}" data-index="${originalIndex}">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button ${isFirst ? '' : 'collapsed'} d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq${originalIndex}" aria-expanded="${isFirst}" aria-controls="faq${originalIndex}">
+                            <span class="pe-3">${f.q}</span>
+                            <span class="faq-icon-wrapper">
+                                <i class="fas fa-chevron-down transition-300"></i>
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="faq${originalIndex}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <strong>${f.boldAnswer}</strong> ${f.regularAnswer}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Initialize FAQ state
+    if (faqAccordion) {
+        renderFaqs();
+        injectFaqSchema();
+
+        // Listen for collapse transitions to toggle active style borders
+        faqAccordion.addEventListener('show.bs.collapse', (e) => {
+            const item = e.target.closest('.accordion-item');
+            if (item) {
+                item.classList.add('active-item');
+            }
+        });
+
+        faqAccordion.addEventListener('hide.bs.collapse', (e) => {
+            const item = e.target.closest('.accordion-item');
+            if (item) {
+                item.classList.remove('active-item');
+            }
+        });
+    }
+
+    // Bind real-time search filter input
+    const faqSearchInput = document.getElementById('faqSearchInput');
+    if (faqSearchInput) {
+        faqSearchInput.addEventListener('input', (e) => {
+            renderFaqs(e.target.value);
+        });
+    }
+
+    // 7. Curated Testimonials Dataset (AEO, GEO & SEO Optimized)
+    const testimonialsData = [
+        {
+            name: "Zeeshan A.",
+            role: "E-commerce Owner, Karachi",
+            category: "ads",
+            quote: "SEO Ustaad scaled our Shopify store sales to 8.4M PKR in just 45 days. The ROAS on Meta Ads went from 2.1 to 6.8!",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Fatima K.",
+            role: "Fashion Brand, Lahore",
+            category: "web",
+            quote: "The custom Shopify Liquid theme they built is blazing fast. Page loads dropped below 1.2s, and our conversion rate doubled.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "M. Usman",
+            role: "Leather Exporter, Sialkot",
+            category: "seo",
+            quote: "Our B2B website is now ranking #1 in the US and Germany for leather goods. We are flooded with direct organic inquiries!",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Maliha Q.",
+            role: "SaaS Founder, Islamabad",
+            category: "seo",
+            quote: "ChatGPT and Gemini are now directly citing our software brand as the top solution. Their AEO strategy is absolutely legendary!",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Hamza N.",
+            role: "Retail Chain, Faisalabad",
+            category: "ads",
+            quote: "Their local store traffic Meta Ads campaigns are extremely profitable. We've seen a 300% increase in walk-in customer leads.",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Ayesha B.",
+            role: "Clinic Director, Multan",
+            category: "web",
+            quote: "Excellent web development. They delivered a highly professional medical booking portal with automated WhatsApp reminders.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "Bilal S.",
+            role: "Rice Mill Owner, Gujranwala",
+            category: "seo",
+            quote: "Best SEO agency in Pakistan. They resolved our Google core update issues and recovered 100% of our organic search traffic.",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Sana T.",
+            role: "Agency Lead, Peshawar",
+            category: "web",
+            quote: "We outsourced our Next.js custom web projects to SEO Ustaad. Their technical code quality and API integrations are flawless.",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Omer F.",
+            role: "Real Estate, Lahore",
+            category: "ads",
+            quote: "Highly professional leads generation team. Our property conversion cost decreased by 40% while lead quality improved.",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Zainab M.",
+            role: "Jewelry Designer, Karachi",
+            category: "web",
+            quote: "The customized WooCommerce store they designed runs so smoothly. The checkout flow is extremely optimized for mobile shoppers.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "Farhan T.",
+            role: "Logistics Provider, Rawalpindi",
+            category: "seo",
+            quote: "Incredible Local SEO! Our warehouse and cargo services are ranking in the top 3 on Google Maps across the twin cities.",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Hina S.",
+            role: "Organic Foods, Islamabad",
+            category: "ads",
+            quote: "Our monthly subscription sales doubled after SEO Ustaad restructured our Meta Advantage+ campaigns.",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Saad K.",
+            role: "Surgical Instruments, Sialkot",
+            category: "seo",
+            quote: "Global SEO expert indeed. We got three major bulk orders from European medical buyers within 4 months of launching.",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Maryam A.",
+            role: "Education Tech, Lahore",
+            category: "web",
+            quote: "Our online portal was rebuilt using Next.js. It handles 5,000+ concurrent students with absolutely zero lag. Highly recommended.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "Ali H.",
+            role: "Textile Manufacturer, Faisalabad",
+            category: "seo",
+            quote: "We started ranking on high-value B2B export terms. The quality of wholesale buyers coming from Google is outstanding.",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Nadia R.",
+            role: "Skincare Brand, Karachi",
+            category: "ads",
+            quote: "Their TikTok and Reels video creatives converted like crazy. The cost per purchase decreased by 35% in our recent SMM push.",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Waleed G.",
+            role: "Auto Parts, Lahore",
+            category: "web",
+            quote: "Clean code, amazing page speed, and seamless database integration. The custom inventory search tool is super fast.",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Amna D.",
+            role: "Handicrafts, Peshawar",
+            category: "seo",
+            quote: "Our Etsy and Shopify traffic grew globally. Their search engine strategy helped us reach customers in the US and UK.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "Talha Y.",
+            role: "Tech Startup, Islamabad",
+            category: "ads",
+            quote: "Their lead generation campaigns for our B2B software yielded premium enterprise leads. Excellent communication throughout.",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Sidra J.",
+            role: "Furniture Showroom, Karachi",
+            category: "web",
+            quote: "A beautiful, premium catalog website. It matches our brand identity perfectly and has boosted our showroom walk-ins.",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Shahbaz M.",
+            role: "Sports Goods, Sialkot",
+            category: "seo",
+            quote: "The technical SEO audit they performed resolved our crawl budget issues. Our Google search impressions tripled.",
+            gradient: "avatar-grad-1"
+        },
+        {
+            name: "Rabia L.",
+            role: "Home Decor, Lahore",
+            category: "ads",
+            quote: "SEO Ustaad's Meta Ads strategy helped us clear out our end-of-season inventory in less than 2 weeks with high ROI.",
+            gradient: "avatar-grad-2"
+        },
+        {
+            name: "Kamran W.",
+            role: "Construction Group, Rawalpindi",
+            category: "web",
+            quote: "Our new corporate portal is extremely modern and fast. The interactive project showcase works beautifully on mobile.",
+            gradient: "avatar-grad-3"
+        },
+        {
+            name: "Maria P.",
+            role: "Organic Cosmetics, Islamabad",
+            category: "seo",
+            quote: "Our blog articles are now being featured as Google Rich Snippets and recommended by voice search agents. Superb work!",
+            gradient: "avatar-grad-4"
+        },
+        {
+            name: "Fahad S.",
+            role: "Fitness Brand, Karachi",
+            category: "ads",
+            quote: "Their social media campaigns built massive brand awareness. Our gym membership sign-ups hit record numbers this quarter.",
+            gradient: "avatar-grad-1"
+        }
+    ];
+
+    const testimonialGrid = document.getElementById('testimonialGrid');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    
+    let currentCategory = 'all';
+    let visibleCount = 4; // Show 4 items initially on the right column grid
+
+    function renderTestimonials(resetCount = false) {
+        if (!testimonialGrid) return;
+
+        if (resetCount) {
+            visibleCount = 4;
+        }
+
+        const filtered = testimonialsData.filter(t => 
+            currentCategory === 'all' || t.category === currentCategory
+        );
+
+        const sliced = filtered.slice(0, visibleCount);
+
+        testimonialGrid.innerHTML = sliced.map(t => `
+            <div class="col-md-6 fade-in-up">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-white mb-3 italic">"${t.quote}"</p>
+                    <div class="d-flex align-items-center mt-auto">
+                        <div class="avatar-ring ${t.gradient} text-white me-3 d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px; min-width: 40px;">
+                            ${t.name[0]}
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white">${t.name}</h6>
+                            <small class="text-orange">${t.role}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Toggle "Load More" container visibility
+        if (loadMoreContainer) {
+            if (visibleCount >= filtered.length) {
+                loadMoreContainer.style.display = 'none';
+            } else {
+                loadMoreContainer.style.display = 'block';
+            }
+        }
+    }
+
+    // Initialize testimonials state
+    if (testimonialGrid) {
+        renderTestimonials();
+
+        // Bind filter pill buttons click handler
+        const filterButtons = document.querySelectorAll('#testimonialFilters .filter-btn');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderTestimonials(true);
+            });
+        });
+
+        // Bind Load More button handler with loader feedback
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                const icon = loadMoreBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-spin');
+                }
+                loadMoreBtn.disabled = true;
+
+                setTimeout(() => {
+                    visibleCount += 4;
+                    renderTestimonials(false);
+
+                    if (icon) {
+                        icon.classList.remove('fa-spin');
+                    }
+                    loadMoreBtn.disabled = false;
+                }, 400); // Small delay to feel organic
+            });
+        }
+    }
+
+    // 8. Hash Link Handler (Fix for incoming links like #packages)
+    const handleHash = () => {
+        const hash = window.location.hash;
+        if (hash) {
+            // Remove # to find element
+            const targetId = hash.substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+                setTimeout(() => {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 600); // Slightly longer wait for grid rendering
+            }
+        }
+    };
+    handleHash();
+
+    // 10. Viewport Scroll Observer for Staggered Animations
+    const staggerObserverOptions = {
+        root: null,
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const staggerObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, staggerObserverOptions);
+
+    document.querySelectorAll('.stagger-reveal').forEach(el => {
+        staggerObserver.observe(el);
+    });
+
+    // 11. Multi-step Form Logic
+    const multiForm = document.getElementById('heroMultistepForm');
+    if (multiForm) {
+        const steps = Array.from(multiForm.querySelectorAll('.form-step'));
+        const prevBtn = document.getElementById('prevStepBtn');
+        const nextBtn = document.getElementById('nextStepBtn');
+        const submitBtn = document.getElementById('submitFormBtn');
+        const stepIndicator = document.getElementById('stepIndicator');
+        const progressPercent = document.getElementById('stepProgressPercent');
+        const progressBar = document.getElementById('stepProgressBar');
+        const loadingOverlay = document.getElementById('formLoadingOverlay');
+        const successMessage = document.getElementById('formSuccessMessage');
+        const restartBtn = document.getElementById('restartFormBtn');
+
+        let currentStep = 1;
+        let transitionTimeout = null;
+
+        // Spotlight follow glow for form card
+        const formCard = document.querySelector('.hero-form-card');
+        if (formCard) {
+            formCard.addEventListener('mousemove', (e) => {
+                const rect = formCard.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                formCard.style.setProperty('--mouse-x', `${mouseX}px`);
+                formCard.style.setProperty('--mouse-y', `${mouseY}px`);
+            });
+        }
+
+        const updateFormUI = (direction = null) => {
+            if (transitionTimeout) clearTimeout(transitionTimeout);
+
+            // Toggle steps visibility with slide animations
+            steps.forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                
+                step.classList.remove(
+                    'active-step', 
+                    'form-step-slide-in-right', 
+                    'form-step-slide-out-left', 
+                    'form-step-slide-in-left', 
+                    'form-step-slide-out-right'
+                );
+
+                if (stepNum === currentStep) {
+                    if (direction === 'next') {
+                        step.classList.add('form-step-slide-in-right');
+                    } else if (direction === 'prev') {
+                        step.classList.add('form-step-slide-in-left');
+                    } else {
+                        step.classList.add('active-step');
+                    }
+                } else if (stepNum === currentStep - 1 && direction === 'next') {
+                    step.classList.add('form-step-slide-out-left');
+                } else if (stepNum === currentStep + 1 && direction === 'prev') {
+                    step.classList.add('form-step-slide-out-right');
+                }
+            });
+
+            // Clean up transition classes after animation completes (400ms)
+            if (direction) {
+                transitionTimeout = setTimeout(() => {
+                    steps.forEach(step => {
+                        const stepNum = parseInt(step.dataset.step);
+                        step.classList.remove(
+                            'form-step-slide-in-right', 
+                            'form-step-slide-out-left', 
+                            'form-step-slide-in-left', 
+                            'form-step-slide-out-right'
+                        );
+                        if (stepNum === currentStep) {
+                            step.classList.add('active-step');
+                        }
+                    });
+                }, 400);
+            }
+
+            // Toggle buttons
+            if (currentStep === 1) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'block';
+            }
+
+            if (currentStep === steps.length) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+                generateSummary();
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+
+            // Update Progress Indicator
+            const percent = Math.round((currentStep / steps.length) * 100);
+            stepIndicator.innerText = `Step ${currentStep} of ${steps.length}`;
+            progressPercent.innerText = `${percent}% Complete`;
+            progressBar.style.width = `${percent}%`;
+            progressBar.setAttribute('aria-valuenow', percent);
+        };
+
+        const validateStep = (stepNum) => {
+            const stepEl = multiForm.querySelector(`.form-step[data-step="${stepNum}"]`);
+            if (!stepEl) return true;
+
+            // Select all required fields in this step
+            const inputs = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    const checkedRadio = stepEl.querySelector(`input[name="${name}"]:checked`);
+                    if (!checkedRadio) {
+                        isValid = false;
+                    }
+                } else if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                    // Email verification
+                    if (input.type === 'email') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(input.value.trim())) {
+                            isValid = false;
+                            input.classList.add('is-invalid');
+                        }
+                    }
+                }
+            });
+
+            return isValid;
+        };
+
+        const generateSummary = () => {
+            const service = multiForm.querySelector('input[name="service"]:checked')?.value || '-';
+            const location = multiForm.querySelector('select[name="location"]').value || '-';
+            const budget = multiForm.querySelector('input[name="budget"]:checked')?.value || '-';
+            const name = multiForm.querySelector('input[name="name"]').value || '-';
+            const phone = multiForm.querySelector('input[name="phone"]').value || '-';
+
+            document.getElementById('summaryService').innerText = service;
+            document.getElementById('summaryLocation').innerText = location;
+            document.getElementById('summaryBudget').innerText = budget;
+            document.getElementById('summaryName').innerText = name;
+            document.getElementById('summaryPhone').innerText = phone;
+
+            // Setup dynamic WhatsApp link for success screen
+            const successWaBtn = document.getElementById('successWaBtn');
+            if (successWaBtn) {
+                const goals = multiForm.querySelector('textarea[name="goals"]').value || '';
+                const timeline = multiForm.querySelector('select[name="timeline"]').value || '';
+                const email = multiForm.querySelector('input[name="email"]').value || '';
+                
+                const waText = `Hi SEO Ustaad! I just submitted your project analysis request form.\n\n` + 
+                               `*Name*: ${name}\n` +
+                               `*WhatsApp*: ${phone}\n` +
+                               `*Email*: ${email}\n` +
+                               `*Service*: ${service}\n` +
+                               `*Location*: ${location}\n` +
+                               `*Budget*: ${budget}\n` +
+                               `*Timeline*: ${timeline}\n` +
+                               `*Goals*: ${goals}`;
+                               
+                successWaBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(waText)}`;
+            }
+        };
+
+        // Event Listeners for Nav buttons
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < steps.length) {
+                    currentStep++;
+                    updateFormUI('next');
+                }
+            } else {
+                multiForm.classList.add('was-validated');
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateFormUI('prev');
+            }
+        });
+
+        // Clear Bootstrap validation styles on input
+        multiForm.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+                multiForm.classList.remove('was-validated');
+            });
+        });
+
+        // AJAX Formspree submission handler
+        multiForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!validateStep(currentStep)) {
+                multiForm.classList.add('was-validated');
+                return;
+            }
+
+            // Show loading spinner
+            loadingOverlay.classList.remove('d-none');
+            loadingOverlay.classList.add('d-flex');
+
+            // Gather form values into JSON
+            const formData = new FormData(this);
+            const dataObject = {};
+            formData.forEach((value, key) => {
+                dataObject[key] = value;
+            });
+
+            // Fetch POST to Formspree endpoint
+            fetch("https://formspree.io/f/mkowzgeb", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(dataObject)
+            })
+            .then(response => {
+                loadingOverlay.classList.remove('d-flex');
+                loadingOverlay.classList.add('d-none');
+                if (response.ok) {
+                    successMessage.classList.remove('d-none');
+                    successMessage.classList.add('d-flex');
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            alert("Submission failed: " + data["errors"].map(error => error["message"]).join(", "));
+                        } else {
+                            alert("Oops! There was a problem submitting your form. Please try again.");
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                loadingOverlay.classList.remove('d-flex');
+                loadingOverlay.classList.add('d-none');
+                alert("Network error: Could not submit the form. Please check your connection and try again.");
+            });
+        });
+
+        // Reset form on restart button click
+        restartBtn.addEventListener('click', () => {
+            multiForm.reset();
+            currentStep = 1;
+            successMessage.classList.remove('d-flex');
+            successMessage.classList.add('d-none');
+            multiForm.classList.remove('was-validated');
+            const defaultService = multiForm.querySelector('input[name="service"][value="Web Development"]');
+            if (defaultService) defaultService.checked = true;
+            const defaultBudget = multiForm.querySelector('input[name="budget"][value="$100 - $300"]');
+            if (defaultBudget) defaultBudget.checked = true;
+            updateFormUI();
+        });
+
+        // Initialize
+        updateFormUI();
+    }
+
+    // 12. Floating Back to Top Logic (Toggled by scrolling past 300px)
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // 13. Advanced WhatsApp Widget Toggle
+    const waWidget = document.getElementById('whatsappCTA');
+    if (waWidget) {
+        const trigger = waWidget.querySelector('.whatsapp-trigger-btn');
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            waWidget.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!waWidget.contains(e.target)) {
+                waWidget.classList.remove('active');
+            }
+        });
+    }
+
+    // 14. Services Cards Spotlight & 3D Tilt Hover Effects
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            // Disable 3D tilt on touch devices or small screens
+            if (window.innerWidth < 992) return;
+
+            const rect = card.getBoundingClientRect();
+            
+            // X and Y cursor coordinates relative to card center
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Mouse coordinates relative to card top-left in pixels (for spotlight)
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            // Max degrees of tilt
+            const maxTilt = 8;
+            const tiltX = -(y / (rect.height / 2)) * maxTilt;
+            const tiltY = (x / (rect.width / 2)) * maxTilt;
+            
+            // Set custom properties
+            card.style.setProperty('--mouse-x', `${mouseX}px`);
+            card.style.setProperty('--mouse-y', `${mouseY}px`);
+            card.style.setProperty('--tilt-x', `${tiltX}deg`);
+            card.style.setProperty('--tilt-y', `${tiltY}deg`);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            // Reset transforms and spotlight slowly
+            card.style.setProperty('--tilt-x', '0deg');
+            card.style.setProperty('--tilt-y', '0deg');
+        });
+    });
+
+    // 15. Explore Services Deep-linking to Packages Grid
+    const exploreButtons = document.querySelectorAll('.explore-service-btn');
+    exploreButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.dataset.category;
+            const packagesSection = document.getElementById('packages');
+            
+            if (packagesSection) {
+                // Smooth scroll to packages section with offset
+                const offset = 80;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = packagesSection.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Automatically activate corresponding filter button
+                if (typeof serviceFilters !== 'undefined' && serviceFilters) {
+                    const subFilterBtn = serviceFilters.querySelector(`button[data-service="${category}"]`);
+                    if (subFilterBtn) {
+                        subFilterBtn.click();
+                    }
+                }
+            }
+        });
+    });
+
+    // 9. Console Hello (AEO related trust signal)
+    console.log('%cSEO Ustaad Digital Agency', 'color: #FF6600; font-size: 20px; font-weight: bold;');
+    console.log('Optimizing for Pakistan 2026. WhatsApp: +923379912300');
+});
