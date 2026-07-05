@@ -267,48 +267,120 @@
                 <span class="text-gray x-small">Select an agent or ask a Quick FAQ</span>
             </div>
             <div class="d-flex flex-column gap-2">
-                <a href="https://wa.me/923379912300?text=I%20want%20to%20discuss%20SEO%20and%20Ads%20marketing" target="_blank" class="agent-link d-flex align-items-center p-2 rounded">
+                <a href="javascript:void(0)" onclick="openWhatsAppChat('923379912300')" class="agent-link d-flex align-items-center p-2 rounded text-decoration-none">
                     <div class="agent-avatar bg-orange me-2 d-flex align-items-center justify-content-center text-white fw-bold">SEO</div>
                     <div class="text-start">
                         <span class="text-white small fw-bold d-block">SEO & Ads Expert</span>
-                        <span class="text-orange x-small">Online • Agent 1</span>
+                        <span class="text-orange x-small"><span class="online-dot"></span>Online • Agent 1</span>
                     </div>
                     <i class="fab fa-whatsapp ms-auto text-success"></i>
                 </a>
-                <a href="https://wa.me/923146348900?text=I%20want%20to%20discuss%20Web%20and%20App%20development" target="_blank" class="agent-link d-flex align-items-center p-2 rounded">
+                <a href="javascript:void(0)" onclick="openWhatsAppChat('923146348900')" class="agent-link d-flex align-items-center p-2 rounded text-decoration-none">
                     <div class="agent-avatar bg-success me-2 d-flex align-items-center justify-content-center text-white fw-bold">DEV</div>
                     <div class="text-start">
                         <span class="text-white small fw-bold d-block">Web & App Expert</span>
-                        <span class="text-orange x-small">Online • Agent 2</span>
+                        <span class="text-orange x-small"><span class="online-dot"></span>Online • Agent 2</span>
                     </div>
                     <i class="fab fa-whatsapp ms-auto text-success"></i>
                 </a>
             </div>
             
-            <!-- Quick FAQs section inside WhatsApp Panel -->
+                        <!-- Quick Enquiries Section -->
             <div class="panel-faq-section mt-3 pt-2 border-top border-secondary border-opacity-25">
-                <span class="fw-bold text-white x-small d-block mb-2">Quick Enquiries / FAQs</span>
-                <div class="d-flex flex-column gap-1">
-                    <a href="https://wa.me/923146348900?text=Hi%20SEO%20Ustaad!%20How%20much%20does%20it%20cost%20to%20build%20a%20Shopify%20store%20in%20Pakistan?" target="_blank" class="faq-link p-2 rounded d-flex align-items-center justify-content-between">
-                        <span class="x-small text-gray">How much for a Shopify store?</span>
-                        <i class="fas fa-chevron-right text-orange x-small"></i>
-                    </a>
-                    <a href="https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20What%20are%20your%20monthly%20SEO%20packages%20and%20deliverables?" target="_blank" class="faq-link p-2 rounded d-flex align-items-center justify-content-between">
-                        <span class="x-small text-gray">What are your SEO packages?</span>
-                        <i class="fas fa-chevron-right text-orange x-small"></i>
-                    </a>
-                    <a href="https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20know%20how%20to%20start%20Meta%20Ads%20for%20my%20business." target="_blank" class="faq-link p-2 rounded d-flex align-items-center justify-content-between">
-                        <span class="x-small text-gray">How to start Meta Ads?</span>
-                        <i class="fas fa-chevron-right text-orange x-small"></i>
-                    </a>
-                    <a href="https://wa.me/923146348900?text=Hi%20SEO%20Ustaad!%20Can%20you%20share%20details%20about%20Custom%20Web%20Dev%20and%20Mobile%20App%20options?" target="_blank" class="faq-link p-2 rounded d-flex align-items-center justify-content-between">
-                        <span class="x-small text-gray">Custom Web/App options?</span>
-                        <i class="fas fa-chevron-right text-orange x-small"></i>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-orange bg-opacity-10 me-2" style="width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-bolt text-orange" style="font-size: 0.7rem;"></i>
+                    </div>
+                    <span class="fw-bold text-white small m-0">Quick Enquiries / FAQs</span>
+                </div>
+                <div id="waWidgetQuickFaqs" class="d-flex flex-column gap-2 mb-3" style="max-height: 150px; overflow-y: auto;">
+                    <!-- Dynamically populated by JS based on dropdown selections -->
+                </div>
+            </div>
+
+            <!-- Dynamic WhatsApp Chat section -->
+            <div class="panel-faq-section mt-3 pt-2 border-top border-secondary border-opacity-25">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-orange bg-opacity-10 me-2" style="width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-briefcase text-orange" style="font-size: 0.7rem;"></i>
+                    </div>
+                    <span class="fw-bold text-white small m-0">Project Enquiries</span>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    <select class="premium-select mb-2" id="waWidgetService">
+                        <option value="" disabled selected>Select Service...</option>
+                        <optgroup label="Web Development">
+                            <option value="Website Speed Optimization">Website Speed Optimization</option>
+                            <option value="E-Commerce Bug Fixing & Tweaks">E-Commerce Bug Fixing & Tweaks</option>
+                            <option value="Premium Custom WordPress development full website">Premium Custom WordPress development full website</option>
+                            <option value="Premium custom Shopify Store development and Setup">Premium custom Shopify Store development and Setup</option>
+                            <option value="Custom Next.js full website [for any niche]">Custom Next.js full website [for any niche]</option>
+                        </optgroup>
+                        <optgroup label="Technical SEO">
+                            <option value="Premium Disavow Toxic Backlinks & Penalty Recovery">Premium Disavow Toxic Backlinks & Penalty Recovery</option>
+                            <option value="Premium Schema Markup & Advanced Structured Data">Premium Schema Markup & Advanced Structured Data</option>
+                            <option value="Comprehensive Keyword Research & Competitor Gap Analysis">Comprehensive Keyword Research & Competitor Gap Analysis</option>
+                            <option value="Premium Technical SEO Audit & Action Plan">Premium Technical SEO Audit & Action Plan</option>
+                            <option value="Complete On-Page SEO Optimization [up to 10 Pages]">Complete On-Page SEO Optimization [up to 10 Pages]</option>
+                            <option value="Advanced Core Web Vitals & PageSpeed Fixes">Advanced Core Web Vitals & PageSpeed Fixes</option>
+                        </optgroup>
+                        <optgroup label="Local SEO">
+                            <option value="Premium Local Citations & High-DA Directory Listings">Premium Local Citations & High-DA Directory Listings</option>
+                            <option value="Premium Google Business Profile (GMB) Setup & Ranking">Premium Google Business Profile (GMB) Setup & Ranking</option>
+                            <option value="Highly-Converting Geo-Targeted Landing Page Copywriting">Highly-Converting Geo-Targeted Landing Page Copywriting</option>
+                            <option value="Premium Local SEO Monthly Retainer [Dominate your City]">Premium Local SEO Monthly Retainer [Dominate your City]</option>
+                        </optgroup>
+                        <optgroup label="E-Commerce">
+                            <option value="Premium Shopify/WooCommerce Product SEO [20 Products]">Premium Shopify/WooCommerce Product SEO [20 Products]</option>
+                            <option value="Complete E-Commerce Category Page Optimization">Complete E-Commerce Category Page Optimization</option>
+                            <option value="Advanced Conversion Rate Optimization (CRO) Audit">Advanced Conversion Rate Optimization (CRO) Audit</option>
+                            <option value="Premium E-Commerce Architecture & Silo Restructure">Premium E-Commerce Architecture & Silo Restructure</option>
+                        </optgroup>
+                        <optgroup label="Social Media & Ads">
+                            <option value="10 Premium Foundation Web 2.0 Backlinks">10 Premium Foundation Web 2.0 Backlinks</option>
+                            <option value="Advanced Competitor Backlink Intercept Strategy">Advanced Competitor Backlink Intercept Strategy</option>
+                            <option value="High-Converting Ad Copywriting & Creative Strategy">High-Converting Ad Copywriting & Creative Strategy</option>
+                            <option value="Premium Meta Ads Campaign Setup & Targeting">Premium Meta Ads Campaign Setup & Targeting</option>
+                            <option value="5 Ultra High-DR Guest Post Backlinks [Contextual]">5 Ultra High-DR Guest Post Backlinks [Contextual]</option>
+                            <option value="Premium Social Media Management [Full Month / 3 Posts Wk]">Premium Social Media Management [Full Month / 3 Posts Wk]</option>
+                        </optgroup>
+                    </select>
+                    <select class="premium-select" id="waWidgetLocation">
+                        <option value="" disabled selected>Select Location...</option>
+                        <option value="Karachi">Karachi</option>
+                        <option value="Lahore">Lahore</option>
+                        <option value="Faisalabad">Faisalabad</option>
+                        <option value="Rawalpindi">Rawalpindi</option>
+                        <option value="Gujranwala">Gujranwala</option>
+                        <option value="Peshawar">Peshawar</option>
+                        <option value="Multan">Multan</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Islamabad">Islamabad</option>
+                        <option value="Quetta">Quetta</option>
+                        <option value="Bahawalpur">Bahawalpur</option>
+                        <option value="Sargodha">Sargodha</option>
+                        <option value="Sialkot">Sialkot</option>
+                        <option value="Sukkur">Sukkur</option>
+                        <option value="Larkana">Larkana</option>
+                        <option value="Sheikhupura">Sheikhupura</option>
+                        <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+                        <option value="Jhang">Jhang</option>
+                        <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+                        <option value="Gujrat">Gujrat</option>
+                        <option value="Sahiwal">Sahiwal</option>
+                        <option value="Wah Cantonment">Wah Cantonment</option>
+                        <option value="Mardan">Mardan</option>
+                        <option value="Kasur">Kasur</option>
+                        <option value="Okara">Okara</option>
+                    </select>
+                    <a href="javascript:void(0)" onclick="openWhatsAppChat()" id="waWidgetChatBtn" class="premium-whatsapp-btn text-white w-100 fw-bold mt-3 d-flex align-items-center justify-content-center text-decoration-none">
+                        <i class="fab fa-whatsapp me-2 fs-5"></i> Chat with Expert
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Floating Back to Top Button (Bottom-Right) -->
     <button type="button" class="back-to-top-float" id="backToTopBtn" aria-label="Scroll to top">

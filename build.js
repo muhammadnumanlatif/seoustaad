@@ -2,7 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const gigs = require('./gigs.json');
 
+
+function injectWidget(html) {
+    if (html.includes('<!-- INJECT_WHATSAPP_WIDGET -->')) {
+        return html.replace('<!-- INJECT_WHATSAPP_WIDGET -->', widgetHtml);
+    }
+    return html;
+}
+
+
 const srcDir = __dirname;
+const widgetHtml = fs.existsSync(path.join(srcDir, 'components', 'whatsapp-widget.html')) ? fs.readFileSync(path.join(srcDir, 'components', 'whatsapp-widget.html'), 'utf-8') : '';
 // We'll update files in place since this is a static project without a build step currently
 const filesToProcess = ['index.html', 'legal.html', 'package-details.html'];
 
@@ -51,6 +61,7 @@ filesToProcess.forEach(file => {
     if (file === 'package-details.html') canonicalUrl = 'https://seoustaad.com/package-details'; 
     
     content = injectCanonical(content, canonicalUrl);
+    content = injectWidget(content);
     
     fs.writeFileSync(filePath, content, 'utf8');
     console.log(`Updated ${file} with canonical tag and fixed links.`);
@@ -101,6 +112,7 @@ cities.forEach(city => {
     // Dynamic Form Pre-selection for Location
     cityContent = cityContent.replace(new RegExp('value="' + city + '"'), 'value="' + city + '" selected');
 
+    cityContent = injectWidget(cityContent);
     fs.writeFileSync(path.join(cityDir, 'index.html'), cityContent, 'utf8');
     console.log(`Generated location page: /locations/${slug}/`);
 });
@@ -125,6 +137,7 @@ gigs.forEach(gig => {
     gigContent = gigContent.replace(/__GIG_NAME__/g, gig.name);
     gigContent = gigContent.replace(/__GIG_PRICE__/g, gig.price);
     
+    gigContent = injectWidget(gigContent);
     fs.writeFileSync(path.join(gigDir, 'index.html'), gigContent, 'utf8');
     
     urls.push(`/services/${gig.slug}/`);
@@ -195,6 +208,7 @@ hubContent = hubContent.replace(servicesRegex, `
     </section>
 `);
 
+hubContent = injectWidget(hubContent);
 fs.writeFileSync(path.join(locationsDir, 'index.html'), hubContent, 'utf8');
 console.log('Generated Hub Page: /locations/');
 
@@ -226,6 +240,7 @@ servicesHubContent = servicesHubContent.replace(/<section class="py-5 bg-orange[
 
 const sDir = path.join(srcDir, 'services');
 if (!fs.existsSync(sDir)) fs.mkdirSync(sDir);
+servicesHubContent = injectWidget(servicesHubContent);
 fs.writeFileSync(path.join(sDir, 'index.html'), servicesHubContent, 'utf8');
 console.log('Generated Services Hub Page: /services/');
 
