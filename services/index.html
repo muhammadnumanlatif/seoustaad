@@ -1344,7 +1344,7 @@
                     <div class="agent-avatar bg-orange me-2 d-flex align-items-center justify-content-center text-white fw-bold">SEO</div>
                     <div class="text-start">
                         <span class="text-white small fw-bold d-block">SEO & Ads Expert</span>
-                        <span class="text-orange x-small">Online • Agent 1</span>
+                        <span class="text-orange x-small"><span class="online-dot"></span>Online • Agent 1</span>
                     </div>
                     <i class="fab fa-whatsapp ms-auto text-success"></i>
                 </a>
@@ -1352,7 +1352,7 @@
                     <div class="agent-avatar bg-success me-2 d-flex align-items-center justify-content-center text-white fw-bold">DEV</div>
                     <div class="text-start">
                         <span class="text-white small fw-bold d-block">Web & App Expert</span>
-                        <span class="text-orange x-small">Online • Agent 2</span>
+                        <span class="text-orange x-small"><span class="online-dot"></span>Online • Agent 2</span>
                     </div>
                     <i class="fab fa-whatsapp ms-auto text-success"></i>
                 </a>
@@ -1360,9 +1360,14 @@
             
             <!-- Dynamic WhatsApp Chat section -->
             <div class="panel-faq-section mt-3 pt-2 border-top border-secondary border-opacity-25">
-                <span class="fw-bold text-white x-small d-block mb-2">Discuss a specific project:</span>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-orange bg-opacity-10 me-2" style="width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-briefcase text-orange" style="font-size: 0.7rem;"></i>
+                    </div>
+                    <span class="fw-bold text-white small m-0">Project Enquiries</span>
+                </div>
                 <div class="d-flex flex-column gap-2">
-                    <select class="form-select text-gray bg-transparent border border-secondary border-opacity-25 rounded px-2" style="font-size: 0.75rem; height: 30px;" id="waWidgetService">
+                    <select class="premium-select mb-2" id="waWidgetService">
                         <option value="" disabled selected>Select Service...</option>
                         <optgroup label="Web Development">
                             <option value="Website Speed Optimization">Website Speed Optimization</option>
@@ -1400,7 +1405,7 @@
                             <option value="Premium Social Media Management [Full Month / 3 Posts Wk]">Premium Social Media Management [Full Month / 3 Posts Wk]</option>
                         </optgroup>
                     </select>
-                    <select class="form-select text-gray bg-transparent border border-secondary border-opacity-25 rounded px-2" style="font-size: 0.75rem; height: 30px;" id="waWidgetLocation">
+                    <select class="premium-select" id="waWidgetLocation">
                         <option value="" disabled selected>Select Location...</option>
                         <option value="Karachi">Karachi</option>
                         <option value="Lahore">Lahore</option>
@@ -1428,8 +1433,8 @@
                         <option value="Kasur">Kasur</option>
                         <option value="Okara">Okara</option>
                     </select>
-                    <a href="javascript:void(0)" id="waWidgetChatBtn" class="btn btn-orange text-white w-100 fw-bold mt-1 d-flex align-items-center justify-content-center" style="font-size: 0.8rem; padding: 6px 0;">
-                        <i class="fab fa-whatsapp me-2"></i> Chat with Expert
+                    <a href="javascript:void(0)" id="waWidgetChatBtn" class="premium-whatsapp-btn w-100 fw-bold mt-3 d-flex align-items-center justify-content-center text-decoration-none">
+                        <i class="fab fa-whatsapp me-2 fs-5"></i> Chat with Expert
                     </a>
                 </div>
             </div>
