@@ -1483,3 +1483,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+window.openWhatsAppChat = function() {
+    const serviceSelect = document.getElementById('waWidgetService');
+    const locationSelect = document.getElementById('waWidgetLocation');
+    
+    const service = serviceSelect && serviceSelect.value ? serviceSelect.value : 'your services';
+    const location = locationSelect && locationSelect.value ? locationSelect.value : '';
+    
+    let text = `Hi SEO Ustaad! I want to discuss ${service}`;
+    if (location) {
+        text += ` targeting ${location}`;
+    }
+    text += `. Can we connect?`;
+    
+    window.open(`https://wa.me/923379912300?text=${encodeURIComponent(text)}`, '_blank');
+};
