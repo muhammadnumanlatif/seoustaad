@@ -3,16 +3,24 @@ const path = require('path');
 const gigs = require('./gigs.json');
 
 
-function injectWidget(html) {
-    if (html.includes('<!-- INJECT_WHATSAPP_WIDGET -->')) {
-        return html.replace('<!-- INJECT_WHATSAPP_WIDGET -->', widgetHtml);
-    }
-    return html;
-}
-
-
 const srcDir = __dirname;
 const widgetHtml = fs.existsSync(path.join(srcDir, 'components', 'whatsapp-widget.html')) ? fs.readFileSync(path.join(srcDir, 'components', 'whatsapp-widget.html'), 'utf-8') : '';
+const headerHtml = fs.existsSync(path.join(srcDir, 'components', 'header.html')) ? fs.readFileSync(path.join(srcDir, 'components', 'header.html'), 'utf-8') : '';
+const footerHtml = fs.existsSync(path.join(srcDir, 'components', 'footer.html')) ? fs.readFileSync(path.join(srcDir, 'components', 'footer.html'), 'utf-8') : '';
+
+function injectComponents(html) {
+    let newHtml = html;
+    if (newHtml.includes('<!-- INJECT_WHATSAPP_WIDGET -->')) {
+        newHtml = newHtml.replace('<!-- INJECT_WHATSAPP_WIDGET -->', widgetHtml);
+    }
+    if (newHtml.includes('<!-- INJECT_HEADER -->')) {
+        newHtml = newHtml.replace('<!-- INJECT_HEADER -->', headerHtml);
+    }
+    if (newHtml.includes('<!-- INJECT_FOOTER -->')) {
+        newHtml = newHtml.replace('<!-- INJECT_FOOTER -->', footerHtml);
+    }
+    return newHtml;
+}
 // We'll update files in place since this is a static project without a build step currently
 const filesToProcess = ['index.html', 'legal.html', 'package-details.html'];
 
@@ -60,8 +68,18 @@ filesToProcess.forEach(file => {
     if (file === 'legal.html') canonicalUrl = 'https://seoustaad.com/legal';
     if (file === 'package-details.html') canonicalUrl = 'https://seoustaad.com/package-details'; 
     
-    content = injectCanonical(content, canonicalUrl);
-    content = injectWidget(content);
+    if (!content.includes('<link rel="canonical"')) {
+        content = content.replace(/<\/head>/i, `    <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
+    }
+    
+    // Cache busting
+    content = content.replace(/href="style\.css"/g, `href="style.css?v=${Date.now()}"`);
+    content = content.replace(/src="script\.js"/g, `src="script.js?v=${Date.now()}"`);
+    content = content.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
+    content = content.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+    
+    // Always re-inject widget
+    content = injectComponents(content);
     
     fs.writeFileSync(filePath, content, 'utf8');
     console.log(`Updated ${file} with canonical tag and fixed links.`);
@@ -76,11 +94,7 @@ if (!fs.existsSync(locationsDir)) {
 const templatePath = path.join(srcDir, 'city-template.html');
 const template = fs.readFileSync(templatePath, 'utf8');
 
-let sitemapUrls = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url><loc>https://seoustaad.com/</loc><priority>1.0</priority></url>
-    <url><loc>https://seoustaad.com/legal</loc><priority>0.5</priority></url>
-    <url><loc>https://seoustaad.com/locations/</loc><priority>0.9</priority></url>`;
+let urls = ['/', '/legal', '/package-details', '/locations/', '/services/'];
 
 let locationsHtmlList = '';
 
@@ -93,7 +107,7 @@ cities.forEach(city => {
     }
     
     const canonicalUrl = `https://seoustaad.com/locations/${slug}/`;
-    sitemapUrls += `\n    <url><loc>${canonicalUrl}</loc><priority>0.8</priority></url>`;
+    urls.push(`/locations/${slug}/`);
     locationsHtmlList += `\n                        <li class="mb-2"><a href="/locations/${slug}/" class="text-white text-decoration-none hover-orange">SEO Agency in ${city}</a></li>`;
     
     // Modify template for this city
@@ -101,9 +115,9 @@ cities.forEach(city => {
     cityContent = cityContent.replace(/<title>.*?<\/title>/, `<title>SEO Agency in ${city} | SEO Ustaad</title>`);
     cityContent = cityContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Looking for a local SEO consultant in ${city}? SEO Ustaad provides premium eCommerce web design services and affordable WordPress developers in ${city} starting at just 5,000 PKR. Dominate your local market today!"`);
     cityContent = cityContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonicalUrl}"`);
-    cityContent = cityContent.replace(/href="style\.css"/g, 'href="/style.css"');
+    cityContent = cityContent.replace(/href="style\.css"/g, `href="/style.css?v=${Date.now()}"`);
     cityContent = cityContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
-    cityContent = cityContent.replace(/src="script\.js"/g, 'src="/script.js"');
+    cityContent = cityContent.replace(/src="script\.js"/g, `src="/script.js?v=${Date.now()}"`);
     cityContent = cityContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
     cityContent = cityContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Dominate Digital Search in ${city} <br> <span class="text-gradient">With SEO Ustaad</span>`);
     cityContent = cityContent.replace(/__CITY__/g, city);
@@ -112,7 +126,7 @@ cities.forEach(city => {
     // Dynamic Form Pre-selection for Location
     cityContent = cityContent.replace(new RegExp('value="' + city + '"'), 'value="' + city + '" selected');
 
-    cityContent = injectWidget(cityContent);
+    cityContent = injectComponents(cityContent);
     fs.writeFileSync(path.join(cityDir, 'index.html'), cityContent, 'utf8');
     console.log(`Generated location page: /locations/${slug}/`);
 });
@@ -121,8 +135,6 @@ cities.forEach(city => {
 const serviceTemplate = fs.readFileSync(path.join(srcDir, 'service-template.html'), 'utf8');
 const servicesDir = path.join(srcDir, 'services');
 if (!fs.existsSync(servicesDir)) fs.mkdirSync(servicesDir);
-
-let urls = ['/', '/legal', '/locations/', '/services/'];
 
 gigs.forEach(gig => {
     const gigDir = path.join(servicesDir, gig.slug);
@@ -137,25 +149,65 @@ gigs.forEach(gig => {
     gigContent = gigContent.replace(/__GIG_NAME__/g, gig.name);
     gigContent = gigContent.replace(/__GIG_PRICE__/g, gig.price);
     
-    gigContent = injectWidget(gigContent);
+    gigContent = gigContent.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
+    gigContent = gigContent.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+    
+    gigContent = injectComponents(gigContent);
     fs.writeFileSync(path.join(gigDir, 'index.html'), gigContent, 'utf8');
     
     urls.push(`/services/${gig.slug}/`);
     console.log(`Generated service page: /services/${gig.slug}/`);
 });
 
-const generatedSitemapUrls = urls.map(url => `  <url>\n    <loc>https://seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n');
+// Generate Service x Location Matrix (625 Pages)
+const serviceLocationTemplate = fs.existsSync(path.join(srcDir, 'service-location-template.html')) 
+    ? fs.readFileSync(path.join(srcDir, 'service-location-template.html'), 'utf8') 
+    : '';
+
+if (serviceLocationTemplate) {
+    cities.forEach(city => {
+        const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+        
+        gigs.forEach(gig => {
+            const matrixSlug = `${gig.slug}-in-${citySlug}`;
+            const matrixDir = path.join(servicesDir, matrixSlug);
+            if (!fs.existsSync(matrixDir)) fs.mkdirSync(matrixDir);
+            
+            let matrixContent = serviceLocationTemplate;
+            matrixContent = matrixContent.replace(/__CITY__/g, city);
+            matrixContent = matrixContent.replace(/__GIG_NAME__/g, gig.name);
+            matrixContent = matrixContent.replace(/__GIG_PRICE__/g, gig.price);
+            
+            matrixContent = matrixContent.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
+            matrixContent = matrixContent.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+            
+            matrixContent = injectComponents(matrixContent);
+            fs.writeFileSync(path.join(matrixDir, 'index.html'), matrixContent, 'utf8');
+            
+            urls.push(`/services/${matrixSlug}/`);
+        });
+        console.log(`Generated 25 matrix pages for ${city}`);
+    });
+}
+
+const generatedSitemapUrls = urls.map(url => {
+    let priority = '0.8';
+    if (url === '/') priority = '1.0';
+    else if (url === '/locations/' || url === '/services/') priority = '0.9';
+    return `  <url>\n    <loc>https://seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+}).join('\n');
 const finalSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${generatedSitemapUrls}\n</urlset>`;
-// fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
-// console.log('Generated sitemap.xml');
+fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
+console.log('Generated sitemap.xml');
 
 const robotsTxt = `User-agent: *
 Allow: /
 
 Sitemap: https://seoustaad.com/sitemap.xml`;
-// fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
-// console.log('Generated robots.txt');
+fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
+console.log('Generated robots.txt');
 
+const llmsUrls = urls.map(url => `- https://seoustaad.com${url}`).join('\n');
 const llmsTxt = `# SEO Ustaad - Digital Agency Pakistan
 
 SEO Ustaad is Pakistan's leading digital agency specializing in SEO, AEO, and Premium Web Development.
@@ -171,10 +223,13 @@ Pricing starts at a minimum of 30,000 PKR ($100) and scales up based on the city
 ## Locations Targeted
 We provide dedicated local SEO services in ${cities.length} major cities across Pakistan: ${cities.join(', ')}.
 
+## All Pages
+${llmsUrls}
+
 ## Contact
 WhatsApp: +923379912300`;
-// fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
-// console.log('Generated llms.txt');
+fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
+console.log('Generated llms.txt');
 
 // Generate the Locations Hub Page
 const hubCanonicalUrl = `https://seoustaad.com/locations/`;
@@ -208,7 +263,7 @@ hubContent = hubContent.replace(servicesRegex, `
     </section>
 `);
 
-hubContent = injectWidget(hubContent);
+hubContent = injectComponents(hubContent);
 fs.writeFileSync(path.join(locationsDir, 'index.html'), hubContent, 'utf8');
 console.log('Generated Hub Page: /locations/');
 
@@ -240,7 +295,7 @@ servicesHubContent = servicesHubContent.replace(/<section class="py-5 bg-orange[
 
 const sDir = path.join(srcDir, 'services');
 if (!fs.existsSync(sDir)) fs.mkdirSync(sDir);
-servicesHubContent = injectWidget(servicesHubContent);
+servicesHubContent = injectComponents(servicesHubContent);
 fs.writeFileSync(path.join(sDir, 'index.html'), servicesHubContent, 'utf8');
 console.log('Generated Services Hub Page: /services/');
 

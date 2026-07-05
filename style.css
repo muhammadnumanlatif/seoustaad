@@ -59,6 +59,7 @@ body {
 
 /* Typography & Colors */
 .text-orange { color: var(--primary-orange); }
+.bg-orange { background-color: var(--primary-orange) !important; }
 .text-gray { color: var(--text-gray); }
 .text-gradient {
     background: linear-gradient(120deg, var(--text-white) 20%, var(--primary-orange) 50%, var(--text-white) 80%);
