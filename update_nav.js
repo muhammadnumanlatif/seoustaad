@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const srcDir = __dirname;
-const filesToProcess = ['index.html', 'legal.html', 'package-details.html'];
+const filesToProcess = ['index.html', 'legal.html', 'package-details.html', 'city-template.html', 'service-template.html'];
 
 const megaMenuHTML = `
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -10,82 +10,40 @@ const megaMenuHTML = `
                         <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">Services</a>
                         <div class="dropdown-menu megamenu shadow-sm p-3">
                             <div class="row g-3">
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">Web Development</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/#services">WordPress Themes</a></li>
-                                        <li><a class="dropdown-item" href="/#services">Shopify Liquid</a></li>
-                                        <li><a class="dropdown-item" href="/#services">React & Next.js</a></li>
+                                <div class="col-md-6">
+                                    <h6 class="text-orange fw-bold mb-3">Top Development Services</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a class="dropdown-item py-2" href="/services/custom-nextjs-website/">Custom Next.js Website</a></li>
+                                        <li><a class="dropdown-item py-2" href="/services/premium-custom-shopify-store/">Premium Shopify Store</a></li>
+                                        <li><a class="dropdown-item py-2" href="/services/premium-custom-wordpress-website/">Custom WordPress Website</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">SEO & AEO</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/#services">Technical SEO</a></li>
-                                        <li><a class="dropdown-item" href="/#services">Local SEO</a></li>
-                                        <li><a class="dropdown-item" href="/#services">AEO Optimization</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">SMM & Ads</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/#services">Meta Ads</a></li>
-                                        <li><a class="dropdown-item" href="/#services">Video Reels</a></li>
-                                        <li><a class="dropdown-item" href="/#services">Lead Funnels</a></li>
+                                <div class="col-md-6">
+                                    <h6 class="text-orange fw-bold mb-3">Top SEO & Marketing</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a class="dropdown-item py-2" href="/services/premium-ecommerce-architecture/">E-Commerce Architecture SEO</a></li>
+                                        <li><a class="dropdown-item py-2" href="/services/advanced-core-web-vitals/">Core Web Vitals Optimization</a></li>
+                                        <li><a class="dropdown-item py-2" href="/services/premium-social-media-management/">Social Media Management</a></li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown has-megamenu">
-                        <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">Packages</a>
-                        <div class="dropdown-menu megamenu shadow-sm p-3">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <h6 class="text-orange fw-bold">Tier 1 & 2 Packages</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/#packages">Corporate & Elite (Tier 1)</a></li>
-                                        <li><a class="dropdown-item" href="/#packages">Industrial & Export (Tier 2)</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6 class="text-orange fw-bold">Tier 3 & 4 Packages</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/#packages">Regional Growth (Tier 3)</a></li>
-                                        <li><a class="dropdown-item" href="/#packages">Startup & SME (Tier 4)</a></li>
-                                    </ul>
-                                </div>
+                            <div class="mt-3 text-center border-top border-secondary border-opacity-25 pt-3">
+                                <a href="/#services" class="text-orange fw-bold text-decoration-none small">View All 25 Services &rarr;</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item dropdown has-megamenu">
                         <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">Locations</a>
                         <div class="dropdown-menu megamenu shadow-sm p-3">
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">Tier 1 Cities</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-karachi/">Karachi</a></li>
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-lahore/">Lahore</a></li>
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-islamabad/">Islamabad</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">Tier 2 Cities</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-faisalabad/">Faisalabad</a></li>
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-rawalpindi/">Rawalpindi</a></li>
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-gujranwala/">Gujranwala</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6 class="text-orange fw-bold">All Locations</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-multan/">Multan</a></li>
-                                        <li><a class="dropdown-item" href="/locations/seo-agency-peshawar/">Peshawar</a></li>
-                                        <li><a class="dropdown-item text-orange fw-bold mt-2" href="/locations/">View All 25 Cities &rarr;</a></li>
-                                    </ul>
-                                </div>
+                            <h6 class="text-orange fw-bold mb-3">Tier 1 Hubs</h6>
+                            <ul class="list-unstyled mb-0">
+                                <li><a class="dropdown-item py-2" href="/locations/seo-agency-karachi/">Karachi</a></li>
+                                <li><a class="dropdown-item py-2" href="/locations/seo-agency-lahore/">Lahore</a></li>
+                                <li><a class="dropdown-item py-2" href="/locations/seo-agency-islamabad/">Islamabad</a></li>
+                                <li><a class="dropdown-item py-2" href="/locations/seo-agency-rawalpindi/">Rawalpindi</a></li>
+                            </ul>
+                            <div class="mt-3 text-center border-top border-secondary border-opacity-25 pt-3">
+                                <a href="/locations/" class="text-orange fw-bold text-decoration-none small">View All Locations &rarr;</a>
                             </div>
                         </div>
                     </li>

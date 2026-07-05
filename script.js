@@ -191,11 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Dynamic slider track orange fill gradient
     const updateSliderTrack = () => {
         if (!budgetRange) return;
-        const min = budgetRange.min || 100;
-        const max = budgetRange.max || 5000;
+        const min = budgetRange.min || 5000;
+        const max = budgetRange.max || 30000;
         const val = budgetRange.value;
         const percentage = ((val - min) / (max - min)) * 100;
         budgetRange.style.background = `linear-gradient(to right, var(--primary-orange) 0%, var(--primary-orange) ${percentage}%, rgba(255, 255, 255, 0.1) ${percentage}%, rgba(255, 255, 255, 0.1) 100%)`;
@@ -207,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const budget = parseInt(budgetRange.value);
         const tier = tierSelect.value;
         
-        // Dynamic USD + PKR currency display
-        budgetValue.innerHTML = `$${budget} <span class="text-white opacity-50 fw-normal ms-2">~${(budget * 300).toLocaleString()} PKR</span>`;
+        // Dynamic PKR currency display
+        budgetValue.innerHTML = `${budget.toLocaleString()} PKR`;
         
         updateSliderTrack();
 
@@ -224,11 +223,11 @@ document.addEventListener('DOMContentLoaded', () => {
             tier4: [30, 90]
         };
 
-        const speedFactor = budget > 2000 ? 0.8 : (budget > 1000 ? 0.9 : 1);
+        const speedFactor = budget > 20000 ? 0.8 : (budget > 10000 ? 0.9 : 1);
         const minDays = Math.floor(timeMatrix[tier][0] * speedFactor);
         const maxDays = Math.floor(timeMatrix[tier][1] * speedFactor);
 
-        const baseCPC = 0.15;
+        const baseCPC = 45; // 0.15 USD in PKR
         const visitors = Math.floor((budget / baseCPC) * industryMult[industrySelect.value] * tierMult[tier]);
         const leads = Math.floor(visitors * 0.04);
 
@@ -241,18 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let velocityLabel = 'Starter Plan';
         let velocityWidth = 10;
         
-        if (budget < 500) {
+        if (budget < 10000) {
             velocityLabel = 'Starter Plan';
-            velocityWidth = 10 + ((budget - 100) / 400) * 15;
-        } else if (budget < 1500) {
+            velocityWidth = 10 + ((budget - 5000) / 5000) * 15;
+        } else if (budget < 20000) {
             velocityLabel = 'Accelerated Growth';
-            velocityWidth = 25 + ((budget - 500) / 1000) * 30;
-        } else if (budget < 3000) {
+            velocityWidth = 25 + ((budget - 10000) / 10000) * 30;
+        } else if (budget < 25000) {
             velocityLabel = 'High Velocity';
-            velocityWidth = 55 + ((budget - 1500) / 1500) * 25;
+            velocityWidth = 55 + ((budget - 20000) / 5000) * 25;
         } else {
             velocityLabel = 'Market Domination';
-            velocityWidth = 80 + ((budget - 3000) / 2000) * 20;
+            velocityWidth = 80 + ((budget - 25000) / 5000) * 20;
         }
 
         const growthSpeedBar = document.getElementById('growthSpeedBar');
@@ -263,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // WhatsApp redirect message compilation
         const tierName = tierSelect.options[tierSelect.selectedIndex].text;
         const industryName = industrySelect.options[industrySelect.selectedIndex].text;
-        const msg = `Hi SEO Ustaad! I used your calculator. My budget is $${budget} (~${(budget * 300).toLocaleString()} PKR) for ${industryName} services targeting ${tierName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
+        const msg = `Hi SEO Ustaad! I used your calculator. My budget is ${budget.toLocaleString()} PKR for ${industryName} services targeting ${tierName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
         calcOrderBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(msg)}`;
     };
 

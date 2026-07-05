@@ -1478,12 +1478,12 @@ body.mobile-menu-open {
 /* Desktop Mega Menu */
 @media all and (min-width: 992px) {
     .navbar .has-megamenu {
-        position: static !important;
+        position: relative !important;
     }
     .navbar .megamenu {
         left: 0;
-        right: 0;
-        width: 100%;
+        right: auto;
+        min-width: 450px;
         margin-top: 0;
         position: absolute;
         
