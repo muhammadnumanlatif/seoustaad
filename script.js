@@ -1437,3 +1437,15 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('%cSEO Ustaad Digital Agency', 'color: #FF6600; font-size: 20px; font-weight: bold;');
     console.log('Optimizing for Pakistan 2026. WhatsApp: +923379912300');
 });
+
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('SW registered: ', registration.scope);
+    }).catch(error => {
+      console.log('SW registration failed: ', error);
+    });
+  });
+}
