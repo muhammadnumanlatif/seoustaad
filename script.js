@@ -1484,7 +1484,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-window.openWhatsAppChat = function() {
+window.openWhatsAppChat = function(phone) {
+    if (!phone) phone = '923379912300';
     const serviceSelect = document.getElementById('waWidgetService');
     const locationSelect = document.getElementById('waWidgetLocation');
     
@@ -1497,5 +1498,5 @@ window.openWhatsAppChat = function() {
     }
     text += `. Can we connect?`;
     
-    window.open(`https://wa.me/923379912300?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
 };
