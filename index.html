@@ -165,58 +165,48 @@
                             <div class="form-step active-step" data-step="1">
                                 <h4 class="outfit text-white mb-2 h5">What service do you need?</h4>
                                 <p class="text-gray small mb-3">Select the primary service for your project.</p>
-                                <div class="d-flex flex-column gap-2 max-height-step-container">
-                                    <label class="service-option-card">
-                                        <input type="radio" name="service" value="Web Development" required checked>
-                                        <div class="service-option-content d-flex align-items-center p-3">
-                                            <i class="fas fa-code text-orange me-3 fa-lg"></i>
-                                            <div class="text-start">
-                                                <span class="d-block text-white fw-bold">Web Development</span>
-                                                <span class="text-gray small">WordPress, Shopify, React/Next.js, Custom Web</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="service-option-card">
-                                        <input type="radio" name="service" value="SEO & AEO">
-                                        <div class="service-option-content d-flex align-items-center p-3">
-                                            <i class="fas fa-search text-orange me-3 fa-lg"></i>
-                                            <div class="text-start">
-                                                <span class="d-block text-white fw-bold">SEO & AEO Services</span>
-                                                <span class="text-gray small">Google Search, local SEO, Answer Engine citation</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="service-option-card">
-                                        <input type="radio" name="service" value="SMM & Meta Ads">
-                                        <div class="service-option-content d-flex align-items-center p-3">
-                                            <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
-                                            <div class="text-start">
-                                                <span class="d-block text-white fw-bold">SMM & Meta Ads</span>
-                                                <span class="text-gray small">Facebook/Instagram ads campaigns, high-ROAS leads</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="service-option-card">
-                                        <input type="radio" name="service" value="App Development">
-                                        <div class="service-option-content d-flex align-items-center p-3">
-                                            <i class="fas fa-mobile-alt text-orange me-3 fa-lg"></i>
-                                            <div class="text-start">
-                                                <span class="d-block text-white fw-bold">App Development</span>
-                                                <span class="text-gray small">iOS & Android Flutter cross-platform mobile apps</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="service-option-card">
-                                        <input type="radio" name="service" value="Hybrid Package">
-                                        <div class="service-option-content d-flex align-items-center p-3">
-                                            <i class="fas fa-layer-group text-orange me-3 fa-lg"></i>
-                                            <div class="text-start">
-                                                <span class="d-block text-white fw-bold">Hybrid Growth Pack</span>
-                                                <span class="text-gray small">A complete blend of Web Dev, SEO, and Meta Ads</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
+                                <div class="mb-3 text-start">
+    <label class="form-label text-gray small fw-bold">Select a Service</label>
+    <select class="form-select glass-input custom-select-tall" name="service" required>
+        <option value="" disabled selected>Choose from 25 Premium Gigs...</option>
+        <optgroup label="Web Development">
+            <option value="Website Speed Optimization">Website Speed Optimization</option>
+            <option value="E-Commerce Bug Fixing & Tweaks">E-Commerce Bug Fixing & Tweaks</option>
+            <option value="Premium Custom WordPress development full website">Premium Custom WordPress development full website</option>
+            <option value="Premium custom Shopify Store development and Setup">Premium custom Shopify Store development and Setup</option>
+            <option value="Custom Next.js full website [for any niche]">Custom Next.js full website [for any niche]</option>
+        </optgroup>
+        <optgroup label="Technical SEO">
+            <option value="Premium Disavow Toxic Backlinks & Penalty Recovery">Premium Disavow Toxic Backlinks & Penalty Recovery</option>
+            <option value="Premium Schema Markup & Advanced Structured Data">Premium Schema Markup & Advanced Structured Data</option>
+            <option value="Comprehensive Keyword Research & Competitor Gap Analysis">Comprehensive Keyword Research & Competitor Gap Analysis</option>
+            <option value="Premium Technical SEO Audit & Action Plan">Premium Technical SEO Audit & Action Plan</option>
+            <option value="Complete On-Page SEO Optimization [up to 10 Pages]">Complete On-Page SEO Optimization [up to 10 Pages]</option>
+            <option value="Advanced Core Web Vitals & PageSpeed Fixes">Advanced Core Web Vitals & PageSpeed Fixes</option>
+        </optgroup>
+        <optgroup label="Local SEO">
+            <option value="Premium Local Citations & High-DA Directory Listings">Premium Local Citations & High-DA Directory Listings</option>
+            <option value="Premium Google Business Profile (GMB) Setup & Ranking">Premium Google Business Profile (GMB) Setup & Ranking</option>
+            <option value="Highly-Converting Geo-Targeted Landing Page Copywriting">Highly-Converting Geo-Targeted Landing Page Copywriting</option>
+            <option value="Premium Local SEO Monthly Retainer [Dominate your City]">Premium Local SEO Monthly Retainer [Dominate your City]</option>
+        </optgroup>
+        <optgroup label="E-Commerce">
+            <option value="Premium Shopify/WooCommerce Product SEO [20 Products]">Premium Shopify/WooCommerce Product SEO [20 Products]</option>
+            <option value="Complete E-Commerce Category Page Optimization">Complete E-Commerce Category Page Optimization</option>
+            <option value="Advanced Conversion Rate Optimization (CRO) Audit">Advanced Conversion Rate Optimization (CRO) Audit</option>
+            <option value="Premium E-Commerce Architecture & Silo Restructure">Premium E-Commerce Architecture & Silo Restructure</option>
+        </optgroup>
+        <optgroup label="Social Media & Ads">
+            <option value="10 Premium Foundation Web 2.0 Backlinks">10 Premium Foundation Web 2.0 Backlinks</option>
+            <option value="Advanced Competitor Backlink Intercept Strategy">Advanced Competitor Backlink Intercept Strategy</option>
+            <option value="High-Converting Ad Copywriting & Creative Strategy">High-Converting Ad Copywriting & Creative Strategy</option>
+            <option value="Premium Meta Ads Campaign Setup & Targeting">Premium Meta Ads Campaign Setup & Targeting</option>
+            <option value="5 Ultra High-DR Guest Post Backlinks [Contextual]">5 Ultra High-DR Guest Post Backlinks [Contextual]</option>
+            <option value="Premium Social Media Management [Full Month / 3 Posts Wk]">Premium Social Media Management [Full Month / 3 Posts Wk]</option>
+        </optgroup>
+    </select>
+    <div class="invalid-feedback">Please select a service.</div>
+</div>
                             </div>
 
                             <!-- Step 2: Location & Goals -->
@@ -226,19 +216,36 @@
                                 
                                 <div class="mb-3 text-start">
                                     <label class="form-label text-gray small fw-bold">Your Target City / Location</label>
-                                    <select class="form-select glass-input" name="location" required>
-                                        <option value="" disabled selected>Select location...</option>
-                                        <option value="Karachi">Karachi (Tier 1)</option>
-                                        <option value="Lahore">Lahore (Tier 1)</option>
-                                        <option value="Islamabad">Islamabad / Rawalpindi (Tier 1)</option>
-                                        <option value="Faisalabad">Faisalabad (Tier 2)</option>
-                                        <option value="Sialkot">Sialkot (Tier 2)</option>
-                                        <option value="Gujranwala">Gujranwala (Tier 2)</option>
-                                        <option value="Multan">Multan (Tier 3)</option>
-                                        <option value="Peshawar">Peshawar (Tier 3)</option>
-                                        <option value="Other PK City">Other Pakistani City</option>
-                                        <option value="International">Outside Pakistan (International)</option>
-                                    </select>
+                                    <select class="form-select glass-input custom-select-tall" name="location" required>
+    <option value="" disabled selected>Select location...</option>
+    <option value="Karachi">Karachi</option>
+    <option value="Lahore">Lahore</option>
+    <option value="Faisalabad">Faisalabad</option>
+    <option value="Rawalpindi">Rawalpindi</option>
+    <option value="Gujranwala">Gujranwala</option>
+    <option value="Peshawar">Peshawar</option>
+    <option value="Multan">Multan</option>
+    <option value="Hyderabad">Hyderabad</option>
+    <option value="Islamabad">Islamabad</option>
+    <option value="Quetta">Quetta</option>
+    <option value="Bahawalpur">Bahawalpur</option>
+    <option value="Sargodha">Sargodha</option>
+    <option value="Sialkot">Sialkot</option>
+    <option value="Sukkur">Sukkur</option>
+    <option value="Larkana">Larkana</option>
+    <option value="Sheikhupura">Sheikhupura</option>
+    <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+    <option value="Jhang">Jhang</option>
+    <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+    <option value="Gujrat">Gujrat</option>
+    <option value="Sahiwal">Sahiwal</option>
+    <option value="Wah Cantonment">Wah Cantonment</option>
+    <option value="Mardan">Mardan</option>
+    <option value="Kasur">Kasur</option>
+    <option value="Okara">Okara</option>
+    <option value="Other PK City">Other Pakistani City</option>
+    <option value="International">Outside Pakistan (International)</option>
+</select>
                                     <div class="invalid-feedback">Please select a location.</div>
                                 </div>
 

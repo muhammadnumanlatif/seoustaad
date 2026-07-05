@@ -121,89 +121,272 @@
                 </div>
             </div>
 
-            <!-- 5-Step WhatsApp Form -->
-            <div class="col-lg-6 stagger-reveal">
-                <div class="glass-card p-4 p-lg-5 rounded-5 border border-secondary border-opacity-25 position-relative overflow-hidden glow-form">
-                    <h3 class="text-white fw-bold mb-4 outfit">Start Your Campaign</h3>
-                    <form id="waForm" onsubmit="submitWaForm(event)">
-                        <!-- Step 1 -->
-                        <div class="form-step" id="step1">
-                            <label class="text-gray mb-2">1. Contact Info</label>
-                            <input type="text" class="form-control bg-dark text-white border-secondary mb-3" id="waName" placeholder="Your Name" required>
-                            <input type="text" class="form-control bg-dark text-white border-secondary mb-3" id="waPhone" placeholder="WhatsApp Number" required>
-                            <button type="button" class="btn btn-orange w-100" onclick="nextStep(2)">Next Step</button>
-                        </div>
-                        <!-- Step 2 -->
-                        <div class="form-step d-none" id="step2">
-                            <label class="text-gray mb-2">2. Business Context</label>
-                            <input type="text" class="form-control bg-dark text-white border-secondary mb-3" id="waBiz" placeholder="Business Type (e.g. Retail, Service)" required>
-                            <input type="text" class="form-control bg-dark text-white border-secondary mb-3" id="waSite" placeholder="Website URL (Optional)">
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-light w-50" onclick="nextStep(1)">Back</button>
-                                <button type="button" class="btn btn-orange w-50" onclick="nextStep(3)">Next</button>
+            <!-- Multi-step Form Column — order 2 on all screens -->
+                <div class="col-lg-6 order-2 stagger-reveal stagger-delay-3">
+                    <div class="glass-card p-4 hero-form-card position-relative overflow-hidden">
+                        <div class="form-card-spotlight"></div>
+                        <!-- Form Progress -->
+                        <div class="form-progress-container mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 5</span>
+                                <span class="small text-gray" id="stepProgressPercent">20% Complete</span>
+                            </div>
+                            <div class="progress bg-dark" style="height: 6px;">
+                                <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        <!-- Step 3 -->
-                        <div class="form-step d-none" id="step3">
-                            <label class="text-gray mb-2">3. Select Your Primary Gig</label>
-                            <select class="form-select bg-dark text-white border-secondary mb-3" id="waGig" required>
-                                <option value="">Select a Gig...</option>
-                                <option value="Website Speed Optimization (5k)">Website Speed Optimization (5,000 PKR)</option>
-                                <option value="E-Commerce Bug Fixing & Tweaks (10k)">E-Commerce Bug Fixing & Tweaks (10,000 PKR)</option>
-                                <option value="Premium Custom WordPress full website (15k)">Premium Custom WordPress full website (15,000 PKR)</option>
-                                <option value="Premium custom Shopify Store Setup (25k)">Premium custom Shopify Store Setup (25,000 PKR)</option>
-                                <option value="Custom Next.js full website (30k)">Custom Next.js full website (30,000 PKR)</option>
-                                <option value="Premium Disavow Toxic Backlinks (5k)">Premium Disavow Toxic Backlinks (5,000 PKR)</option>
-                                <option value="Premium Schema Markup (8k)">Premium Schema Markup (8,000 PKR)</option>
-                                <option value="Comprehensive Keyword Research (10k)">Comprehensive Keyword Research (10,000 PKR)</option>
-                                <option value="Premium Technical SEO Audit (15k)">Premium Technical SEO Audit (15,000 PKR)</option>
-                                <option value="Complete On-Page SEO (20k)">Complete On-Page SEO (20,000 PKR)</option>
-                                <option value="Advanced Core Web Vitals Fixes (25k)">Advanced Core Web Vitals Fixes (25,000 PKR)</option>
-                                <option value="Premium Local Citations (8k)">Premium Local Citations (8,000 PKR)</option>
-                                <option value="Premium Google Business Profile Setup (10k)">Premium Google Business Profile Setup (10,000 PKR)</option>
-                                <option value="Highly-Converting Geo-Targeted Copywriting (15k)">Highly-Converting Geo-Targeted Copywriting (15,000 PKR)</option>
-                                <option value="Premium Local SEO Monthly Retainer (20k)">Premium Local SEO Monthly Retainer (20,000 PKR)</option>
-                                <option value="Premium Shopify Product SEO (15k)">Premium Shopify Product SEO (15,000 PKR)</option>
-                                <option value="Complete E-Commerce Category SEO (20k)">Complete E-Commerce Category SEO (20,000 PKR)</option>
-                                <option value="Advanced CRO Audit (25k)">Advanced CRO Audit (25,000 PKR)</option>
-                                <option value="Premium E-Commerce Architecture Restructure (30k)">Premium E-Commerce Architecture Restructure (30,000 PKR)</option>
-                                <option value="10 Premium Foundation Web 2.0 Backlinks (5k)">10 Premium Foundation Web 2.0 Backlinks (5,000 PKR)</option>
-                                <option value="Advanced Competitor Backlink Intercept (10k)">Advanced Competitor Backlink Intercept (10,000 PKR)</option>
-                                <option value="High-Converting Ad Copywriting (15k)">High-Converting Ad Copywriting (15,000 PKR)</option>
-                                <option value="Premium Meta Ads Campaign Setup (20k)">Premium Meta Ads Campaign Setup (20,000 PKR)</option>
-                                <option value="5 Ultra High-DR Guest Post Backlinks (25k)">5 Ultra High-DR Guest Post Backlinks (25,000 PKR)</option>
-                                <option value="Premium Social Media Management (30k)">Premium Social Media Management (30,000 PKR)</option>
-                            </select>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-light w-50" onclick="nextStep(2)">Back</button>
-                                <button type="button" class="btn btn-orange w-50" onclick="nextStep(4)">Next</button>
+
+                        <!-- Formspree Action Endpoint -->
+                        <form id="heroMultistepForm" class="needs-validation" novalidate>
+                            
+                            <!-- Step 1: Choose Service -->
+                            <div class="form-step active-step" data-step="1">
+                                <h4 class="outfit text-white mb-2 h5">What service do you need?</h4>
+                                <p class="text-gray small mb-3">Select the primary service for your project.</p>
+                                <div class="mb-3 text-start">
+    <label class="form-label text-gray small fw-bold">Select a Service</label>
+    <select class="form-select glass-input custom-select-tall" name="service" required>
+        <option value="" disabled selected>Choose from 25 Premium Gigs...</option>
+        <optgroup label="Web Development">
+            <option value="Website Speed Optimization">Website Speed Optimization</option>
+            <option value="E-Commerce Bug Fixing & Tweaks">E-Commerce Bug Fixing & Tweaks</option>
+            <option value="Premium Custom WordPress development full website">Premium Custom WordPress development full website</option>
+            <option value="Premium custom Shopify Store development and Setup">Premium custom Shopify Store development and Setup</option>
+            <option value="Custom Next.js full website [for any niche]">Custom Next.js full website [for any niche]</option>
+        </optgroup>
+        <optgroup label="Technical SEO">
+            <option value="Premium Disavow Toxic Backlinks & Penalty Recovery">Premium Disavow Toxic Backlinks & Penalty Recovery</option>
+            <option value="Premium Schema Markup & Advanced Structured Data">Premium Schema Markup & Advanced Structured Data</option>
+            <option value="Comprehensive Keyword Research & Competitor Gap Analysis">Comprehensive Keyword Research & Competitor Gap Analysis</option>
+            <option value="Premium Technical SEO Audit & Action Plan">Premium Technical SEO Audit & Action Plan</option>
+            <option value="Complete On-Page SEO Optimization [up to 10 Pages]">Complete On-Page SEO Optimization [up to 10 Pages]</option>
+            <option value="Advanced Core Web Vitals & PageSpeed Fixes">Advanced Core Web Vitals & PageSpeed Fixes</option>
+        </optgroup>
+        <optgroup label="Local SEO">
+            <option value="Premium Local Citations & High-DA Directory Listings">Premium Local Citations & High-DA Directory Listings</option>
+            <option value="Premium Google Business Profile (GMB) Setup & Ranking">Premium Google Business Profile (GMB) Setup & Ranking</option>
+            <option value="Highly-Converting Geo-Targeted Landing Page Copywriting">Highly-Converting Geo-Targeted Landing Page Copywriting</option>
+            <option value="Premium Local SEO Monthly Retainer [Dominate your City]">Premium Local SEO Monthly Retainer [Dominate your City]</option>
+        </optgroup>
+        <optgroup label="E-Commerce">
+            <option value="Premium Shopify/WooCommerce Product SEO [20 Products]">Premium Shopify/WooCommerce Product SEO [20 Products]</option>
+            <option value="Complete E-Commerce Category Page Optimization">Complete E-Commerce Category Page Optimization</option>
+            <option value="Advanced Conversion Rate Optimization (CRO) Audit">Advanced Conversion Rate Optimization (CRO) Audit</option>
+            <option value="Premium E-Commerce Architecture & Silo Restructure">Premium E-Commerce Architecture & Silo Restructure</option>
+        </optgroup>
+        <optgroup label="Social Media & Ads">
+            <option value="10 Premium Foundation Web 2.0 Backlinks">10 Premium Foundation Web 2.0 Backlinks</option>
+            <option value="Advanced Competitor Backlink Intercept Strategy">Advanced Competitor Backlink Intercept Strategy</option>
+            <option value="High-Converting Ad Copywriting & Creative Strategy">High-Converting Ad Copywriting & Creative Strategy</option>
+            <option value="Premium Meta Ads Campaign Setup & Targeting">Premium Meta Ads Campaign Setup & Targeting</option>
+            <option value="5 Ultra High-DR Guest Post Backlinks [Contextual]">5 Ultra High-DR Guest Post Backlinks [Contextual]</option>
+            <option value="Premium Social Media Management [Full Month / 3 Posts Wk]">Premium Social Media Management [Full Month / 3 Posts Wk]</option>
+        </optgroup>
+    </select>
+    <div class="invalid-feedback">Please select a service.</div>
+</div>
+                            </div>
+
+                            <!-- Step 2: Location & Goals -->
+                            <div class="form-step" data-step="2">
+                                <h4 class="outfit text-white mb-2 h5">Location & Goals</h4>
+                                <p class="text-gray small mb-3">Help us align with your local market scope.</p>
+                                
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Your Target City / Location</label>
+                                    <select class="form-select glass-input custom-select-tall" name="location" required>
+    <option value="" disabled selected>Select location...</option>
+    <option value="Karachi">Karachi</option>
+    <option value="Lahore">Lahore</option>
+    <option value="Faisalabad">Faisalabad</option>
+    <option value="Rawalpindi">Rawalpindi</option>
+    <option value="Gujranwala">Gujranwala</option>
+    <option value="Peshawar">Peshawar</option>
+    <option value="Multan">Multan</option>
+    <option value="Hyderabad">Hyderabad</option>
+    <option value="Islamabad">Islamabad</option>
+    <option value="Quetta">Quetta</option>
+    <option value="Bahawalpur">Bahawalpur</option>
+    <option value="Sargodha">Sargodha</option>
+    <option value="Sialkot" selected>Sialkot</option>
+    <option value="Sukkur">Sukkur</option>
+    <option value="Larkana">Larkana</option>
+    <option value="Sheikhupura">Sheikhupura</option>
+    <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+    <option value="Jhang">Jhang</option>
+    <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+    <option value="Gujrat">Gujrat</option>
+    <option value="Sahiwal">Sahiwal</option>
+    <option value="Wah Cantonment">Wah Cantonment</option>
+    <option value="Mardan">Mardan</option>
+    <option value="Kasur">Kasur</option>
+    <option value="Okara">Okara</option>
+    <option value="Other PK City">Other Pakistani City</option>
+    <option value="International">Outside Pakistan (International)</option>
+</select>
+                                    <div class="invalid-feedback">Please select a location.</div>
+                                </div>
+
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Briefly describe your goals</label>
+                                    <textarea class="form-control glass-input" name="goals" rows="3" placeholder="e.g. Build a Shopify store with local COD delivery and rank it in Karachi..." required></textarea>
+                                    <div class="invalid-feedback">Please describe your project goals.</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Budget & Timeline -->
+                            <div class="form-step" data-step="3">
+                                <h4 class="outfit text-white mb-2 h5">Budget & Timeline</h4>
+                                <p class="text-gray small mb-3">Define your target budget range and delivery urgency.</p>
+                                
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Select Project Budget</label>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="budget-option-card">
+                                                <input type="radio" name="budget" value="$100 - $300" checked>
+                                                <div class="budget-option-content p-2 text-center">
+                                                    <span class="text-white fw-bold small d-block">$100-$300</span>
+                                                    <span class="text-gray x-small">~30k-90k PKR</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="budget-option-card">
+                                                <input type="radio" name="budget" value="$300 - $600">
+                                                <div class="budget-option-content p-2 text-center">
+                                                    <span class="text-white fw-bold small d-block">$300-$600</span>
+                                                    <span class="text-gray x-small">~90k-180k PKR</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="budget-option-card">
+                                                <input type="radio" name="budget" value="$600 - $1000">
+                                                <div class="budget-option-content p-2 text-center">
+                                                    <span class="text-white fw-bold small d-block">$600-$1000</span>
+                                                    <span class="text-gray x-small">~180k-450k PKR</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="budget-option-card">
+                                                <input type="radio" name="budget" value="$1000+">
+                                                <div class="budget-option-content p-2 text-center">
+                                                    <span class="text-white fw-bold small d-block">$1000+</span>
+                                                    <span class="text-gray x-small">Enterprise / Corporate</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Project Timeline</label>
+                                    <select class="form-select glass-input" name="timeline" required>
+                                        <option value="" disabled selected>Choose timeline...</option>
+                                        <option value="Urgent (ASAP)">Urgent (ASAP / Within 7 days)</option>
+                                        <option value="1 Month">Standard (Within 30 days)</option>
+                                        <option value="2-3 Months">Flexible (2-3 months planning)</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a timeline.</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Contact Info -->
+                            <div class="form-step" data-step="4">
+                                <h4 class="outfit text-white mb-2 h5">Contact Information</h4>
+                                <p class="text-gray small mb-3">Provide your details to receive the roadmap proposal.</p>
+                                
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Full Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-dark border-secondary text-gray"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control glass-input" name="name" placeholder="e.g. Hamza Chaudhry" required>
+                                        <div class="invalid-feedback">Please enter your full name.</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-dark border-secondary text-gray"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control glass-input" name="email" placeholder="e.g. hamza@seoustaad.com" required>
+                                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">WhatsApp Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-dark border-secondary text-gray"><i class="fab fa-whatsapp"></i></span>
+                                        <input type="tel" class="form-control glass-input" name="phone" placeholder="e.g. +923379912300" required>
+                                        <div class="invalid-feedback">Please enter your WhatsApp contact number.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 5: Review & Submit -->
+                            <div class="form-step" data-step="5">
+                                <h4 class="outfit text-white mb-2 h5">Review & Confirm</h4>
+                                <p class="text-gray small mb-3">Verify your request details before submitting.</p>
+                                
+                                <div class="glass-card p-3 mb-3 text-start border border-secondary rounded">
+                                    <div class="mb-2 pb-1 border-bottom border-secondary d-flex justify-content-between">
+                                        <span class="text-gray small">Selected Service:</span>
+                                        <span class="text-white fw-bold small" id="summaryService">-</span>
+                                    </div>
+                                    <div class="mb-2 pb-1 border-bottom border-secondary d-flex justify-content-between">
+                                        <span class="text-gray small">Target Location:</span>
+                                        <span class="text-white fw-bold small" id="summaryLocation">-</span>
+                                    </div>
+                                    <div class="mb-2 pb-1 border-bottom border-secondary d-flex justify-content-between">
+                                        <span class="text-gray small">Project Budget:</span>
+                                        <span class="text-white fw-bold small" id="summaryBudget">-</span>
+                                    </div>
+                                    <div class="mb-2 pb-1 border-bottom border-secondary d-flex justify-content-between">
+                                        <span class="text-gray small">Contact Name:</span>
+                                        <span class="text-white fw-bold small" id="summaryName">-</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-gray small">WhatsApp:</span>
+                                        <span class="text-white fw-bold small" id="summaryPhone">-</span>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-info bg-transparent border-orange text-orange small p-2 text-start mb-0" role="alert">
+                                    <i class="fas fa-info-circle me-1"></i> Pressing submit submits the form to Formspree securely via HTTPS.
+                                </div>
+                            </div>
+
+                            <!-- Navigation Buttons -->
+                            <div class="d-flex justify-content-between mt-4 border-top border-secondary pt-3">
+                                <button type="button" class="btn btn-outline-light px-4" id="prevStepBtn" style="display: none;">Back</button>
+                                <button type="button" class="btn btn-orange px-4 ms-auto" id="nextStepBtn">Next Step <i class="fas fa-arrow-right ms-2"></i></button>
+                                <button type="submit" class="btn btn-orange btn-glow px-4 ms-auto" id="submitFormBtn" style="display: none;">Submit Request <i class="fas fa-paper-plane ms-2"></i></button>
+                            </div>
+                        </form>
+
+                        <!-- Loading State Overlay -->
+                        <div id="formLoadingOverlay" class="position-absolute top-0 start-0 w-100 h-100 bg-darker d-none align-items-center justify-content-center" style="opacity: 0.95; z-index: 10;">
+                            <div class="text-center">
+                                <div class="spinner-border text-orange mb-3" role="status"></div>
+                                <p class="text-white small mb-0">Sending your growth request to SEO Ustaad...</p>
                             </div>
                         </div>
-                        <!-- Step 4 -->
-                        <div class="form-step d-none" id="step4">
-                            <label class="text-gray mb-2">4. Monthly Budget</label>
-                            <select class="form-select bg-dark text-white border-secondary mb-3" id="waBudget" required>
-                                <option value="5,000 - 10,000 PKR">5,000 - 10,000 PKR</option>
-                                <option value="10,000 - 20,000 PKR">10,000 - 20,000 PKR</option>
-                                <option value="20,000 - 30,000+ PKR">20,000 - 30,000+ PKR</option>
-                            </select>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-light w-50" onclick="nextStep(3)">Back</button>
-                                <button type="button" class="btn btn-orange w-50" onclick="nextStep(5)">Next</button>
-                            </div>
+
+                        <!-- Success State Overlay -->
+                        <div id="formSuccessMessage" class="position-absolute top-0 start-0 w-100 h-100 bg-darker d-none flex-column align-items-center justify-content-center p-4 text-center" style="z-index: 10;">
+                            <div class="success-icon mb-4"><i class="fas fa-check-circle text-success" style="font-size: 3.5rem;"></i></div>
+                            <h4 class="outfit text-white mb-2">Details Submitted!</h4>
+                            <p class="text-gray small mb-4">Your analysis request has been logged. Our strategist will contact you within 24 hours.</p>
+                            <a href="https://wa.me/923379912300" id="successWaBtn" target="_blank" class="btn btn-orange btn-glow w-100 py-3 fw-bold mb-2">
+                                <i class="fab fa-whatsapp me-2"></i> Discuss details on WhatsApp
+                            </a>
+                            <button type="button" class="btn btn-link text-gray text-decoration-none small" id="restartFormBtn">Submit Another Request</button>
                         </div>
-                        <!-- Step 5 -->
-                        <div class="form-step d-none" id="step5">
-                            <label class="text-gray mb-2">5. What is your biggest challenge?</label>
-                            <textarea class="form-control bg-dark text-white border-secondary mb-3" id="waChallenge" rows="3" placeholder="Describe your main bottleneck..."></textarea>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-light w-50" onclick="nextStep(4)">Back</button>
-                                <button type="submit" class="btn btn-success w-50">Connect on WhatsApp</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </header>

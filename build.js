@@ -91,6 +91,10 @@ cities.forEach(city => {
     cityContent = cityContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Dominate Digital Search in ${city} <br> <span class="text-gradient">With SEO Ustaad</span>`);
     cityContent = cityContent.replace(/__CITY__/g, city);
     
+    
+    // Dynamic Form Pre-selection for Location
+    cityContent = cityContent.replace(new RegExp('value="' + city + '"'), 'value="' + city + '" selected');
+
     fs.writeFileSync(path.join(cityDir, 'index.html'), cityContent, 'utf8');
     console.log(`Generated location page: /locations/${slug}/`);
 });
