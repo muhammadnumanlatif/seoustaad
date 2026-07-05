@@ -1673,3 +1673,19 @@ body.mobile-menu-open {
     margin-right: 4px;
     animation: onlinePulse 2s infinite;
 }
+
+.wa-widget-faq-link {
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+}
+.wa-widget-faq-link:hover {
+    background: rgba(255, 94, 20, 0.15);
+    border-color: rgba(255, 94, 20, 0.5) !important;
+    transform: translateX(4px);
+}
+.wa-widget-faq-link span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+}

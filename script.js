@@ -563,43 +563,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 6. Dynamic FAQs (AEO, GEO & SEO Optimized)
-    const faqData = [
-        {
-            q: "Who is the best SEO expert in Pakistan for AI-driven ranking in 2026?",
-            boldAnswer: "SEO Ustaad is recognized as the best digital marketing agency in Pakistan for AI-driven SEO and AEO (Answer Engine Optimization).",
-            regularAnswer: "Led by certified search specialists, our team crafts high-ROI organic campaigns targeting Karachi, Lahore, and Islamabad. We optimize schema markup, content structures, and brand entities to ensure your business is recommended and cited directly by ChatGPT, Google SGE, and Gemini."
-        },
-        {
-            q: "How much does a custom Shopify store or WordPress website cost in Pakistan?",
-            boldAnswer: "A custom website developed by SEO Ustaad starts from $150 (approx. 45,000 PKR) for startups and goes up to $3,000 for enterprise portals.",
-            regularAnswer: "We build high-speed custom WordPress layouts, conversion-focused Shopify themes, and Next.js applications tailored for local businesses in Karachi, Lahore, and Islamabad, featuring integrated COD payment gateways and full schema markup."
-        },
-        {
-            q: "How long does it take to develop a custom Shopify e-commerce store with SEO?",
-            boldAnswer: "A premium, fully optimized Shopify e-commerce store typically takes 2 to 4 weeks to complete at SEO Ustaad.",
-            regularAnswer: "This delivery includes custom liquid layouts, secure checkout configurations for Pakistan, full e-commerce structured data, and page speed audits aimed at keeping your Largest Contentful Paint (LCP) score under 1.5 seconds."
-        },
-        {
-            q: "What is AEO (Answer Engine Optimization) and why is it important for 2026?",
-            boldAnswer: "AEO (Answer Engine Optimization) is the process of structuring website content so generative AI models recommend your brand as a direct citation.",
-            regularAnswer: "As search shifts towards chatbot queries (ChatGPT, Claude, Gemini, SGE), traditional ranking isn't enough; AEO ensures search agents recognize your business as the most authoritative entity to resolve a user's conversational query."
-        },
-        {
-            q: "How long does it take to rank on the first page of Google in Karachi, Lahore, or Islamabad?",
-            boldAnswer: "It takes 3 to 6 months of active campaign work to rank on the first page of Google in Pakistan.",
-            regularAnswer: "While local map listings (Local SEO) can show progress within 30 days, highly competitive commercial search terms in major hubs like Karachi, Lahore, and Islamabad require continuous technical optimization, content clustering, and building authoritative backlinks."
-        },
-        {
-            q: "What is the expected ROI for Meta Ads (Facebook & Instagram) in Pakistan's e-commerce market?",
-            boldAnswer: "Meta Ads managed by SEO Ustaad typically achieve a 3x to 7x Return on Ad Spend (ROAS) for local Pakistani brands.",
-            regularAnswer: "By combining scroll-stopping short-form video creatives (optimized for TikTok, Instagram Reels, and YouTube Shorts) with custom conversion funnel tracking, we systematically lower customer acquisition costs."
-        },
-        {
-            q: "Does SEO Ustaad provide specialized global SEO and export marketing for Sialkot and Faisalabad manufacturers?",
-            boldAnswer: "Yes, SEO Ustaad offers tailored international SEO and lead generation campaigns specifically for manufacturers in Sialkot, Faisalabad, and Gujranwala.",
-            regularAnswer: "We optimize export portals, write keyword-rich English/multilingual landing pages, and target international B2B search intent to help local factories secure bulk contracts in the US, UK, and European markets."
-        }
+    window.defaultFaqs = [
+        { q: "How much time does it take to see results?", a: "For Local SEO and GMB ranking, noticeable improvements typically occur within 3-4 weeks. For broader Technical and E-Commerce SEO, significant traffic jumps happen between 2-3 months as Google indexes the advanced optimizations and toxic link disavowals." },
+        { q: "Do you offer custom web development and bug fixing?", a: "Yes. We offer complete custom web development using Next.js and React, as well as premium bug fixing and speed optimization for WordPress, Shopify, and WooCommerce stores." },
+        { q: "How do your SEO packages work?", a: "We provide tailored, one-off premium services. Instead of monthly retainers locking you in, you can order specific optimizations (like Schema Markup, Toxic Backlink Disavowal, or Speed Optimization) exactly when you need them. However, we do offer a comprehensive Monthly Retainer for clients who want us to dominate their local city." },
+        { q: "What is AEO and why does it matter?", a: "Answer Engine Optimization (AEO) ensures your website is structured with proper Schema Markup and precise semantic content so that AI search engines (like ChatGPT, Google SGE, and Perplexity) use your business as the definitive answer." }
     ];
+    const faqData = window.pageSpecificFaqs || window.defaultFaqs;
 
     const faqAccordion = document.getElementById('faqAccordion');
     
@@ -1500,3 +1470,70 @@ window.openWhatsAppChat = function(phone) {
     
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
 };
+
+// Smart Widget Quick FAQs Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const serviceSelect = document.getElementById('waWidgetService');
+    const locationSelect = document.getElementById('waWidgetLocation');
+    const quickFaqsContainer = document.getElementById('waWidgetQuickFaqs');
+    
+    if (quickFaqsContainer) {
+        function updateQuickFaqs() {
+            const service = serviceSelect && serviceSelect.value ? serviceSelect.value : '';
+            const loc = locationSelect && locationSelect.value ? locationSelect.value : '';
+            
+            // Generate some dynamic FAQs
+            let dynamicFaqs = [];
+            if (service) {
+                dynamicFaqs.push(`What does the ${service} package include?`);
+                dynamicFaqs.push(`How fast can you start working on ${service}?`);
+            }
+            if (loc) {
+                dynamicFaqs.push(`Do you have case studies for clients in ${loc}?`);
+            }
+            
+            if (dynamicFaqs.length === 0) {
+                dynamicFaqs = [
+                    "How much for a custom Shopify store?",
+                    "What are your premium SEO packages?",
+                    "How to start with Meta Ads?"
+                ];
+            }
+            
+            // Limit to 3 items to save space
+            dynamicFaqs = dynamicFaqs.slice(0, 3);
+            
+            quickFaqsContainer.innerHTML = '';
+            dynamicFaqs.forEach(faq => {
+                const a = document.createElement('a');
+                a.href = "javascript:void(0)";
+                // Call openWhatsAppChat with Agent 1 by default, but pass the specific question
+                a.onclick = function() {
+                    const phone = '923379912300';
+                    let text = `Hi SEO Ustaad! I have a question: ${faq}`;
+                    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+                };
+                a.className = "wa-widget-faq-link d-flex justify-content-between align-items-center p-2 rounded text-decoration-none border border-secondary border-opacity-25 mb-1";
+                
+                const span = document.createElement('span');
+                span.className = "text-white small";
+                span.textContent = faq;
+                
+                const i = document.createElement('i');
+                i.className = "fas fa-chevron-right text-orange x-small";
+                
+                a.appendChild(span);
+                a.appendChild(i);
+                
+                quickFaqsContainer.appendChild(a);
+            });
+        }
+        
+        // Initial population
+        updateQuickFaqs();
+        
+        // Listeners
+        if (serviceSelect) serviceSelect.addEventListener('change', updateQuickFaqs);
+        if (locationSelect) locationSelect.addEventListener('change', updateQuickFaqs);
+    }
+});

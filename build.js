@@ -19,6 +19,12 @@ function injectCanonical(html, canonicalUrl) {
     return html.replace('</head>', `    <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
 }
 
+function injectFaqs(html, faqs) {
+    if (!faqs || faqs.length === 0) return html;
+    return html.replace('</head>', `    <script>window.pageSpecificFaqs = ${JSON.stringify(faqs)};</script>\n</head>`);
+}
+
+
 function fixInternalLinks(html) {
     // Replace index.html with /
     let fixed = html.replace(/href="index\.html([^"]*)"/g, 'href="/$1"');
