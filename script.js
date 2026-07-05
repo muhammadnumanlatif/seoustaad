@@ -131,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Growth Calculator Logic & Micro-Animations
     const budgetRange = document.getElementById('budgetRange');
     const budgetValue = document.getElementById('budgetValue');
-    const industrySelect = document.getElementById('industrySelect');
-    const tierSelect = document.getElementById('tierSelect');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const locationSelect = document.getElementById('locationSelect');
     
     const resVisitors = document.getElementById('resVisitors');
     const resLeads = document.getElementById('resLeads');
@@ -204,31 +204,43 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!budgetRange) return;
         
         const budget = parseInt(budgetRange.value);
-        const tier = tierSelect.value;
+        const location = locationSelect.value;
+        const service = serviceSelect.value;
         
         // Dynamic PKR currency display
         budgetValue.innerHTML = `${budget.toLocaleString()} PKR`;
         
         updateSliderTrack();
 
-        // Target Multipliers
-        const industryMult = { ecommerce: 1.2, realestate: 0.7, services: 1.0, export: 1.1, education: 1.0 };
-        const tierMult = { tier1: 0.8, tier2: 1.0, tier3: 1.2, tier4: 1.5 };
 
-        // Localized Timeline Matrix (Days)
-        const timeMatrix = {
-            tier1: [120, 180],
-            tier2: [90, 150],
-            tier3: [60, 120],
-            tier4: [30, 90]
+        const hashString = (str) => {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return Math.abs(hash);
         };
 
+        // Target Multipliers dynamically based on selection
+        const serviceMult = 0.8 + (hashString(service) % 50) / 100;
+        const locationMult = 0.8 + (hashString(location) % 50) / 100;
+
+        // Localized Timeline Matrix (Days)
+        const timeOptions = [
+            [120, 180],
+            [90, 150],
+            [60, 120],
+            [30, 90]
+        ];
+        const timeIdx = hashString(location) % timeOptions.length;
+        const [minDaysBase, maxDaysBase] = timeOptions[timeIdx];
+
         const speedFactor = budget > 20000 ? 0.8 : (budget > 10000 ? 0.9 : 1);
-        const minDays = Math.floor(timeMatrix[tier][0] * speedFactor);
-        const maxDays = Math.floor(timeMatrix[tier][1] * speedFactor);
+        const minDays = Math.floor(minDaysBase * speedFactor);
+        const maxDays = Math.floor(maxDaysBase * speedFactor);
 
         const baseCPC = 45; // 0.15 USD in PKR
-        const visitors = Math.floor((budget / baseCPC) * industryMult[industrySelect.value] * tierMult[tier]);
+        const visitors = Math.floor((budget / baseCPC) * serviceMult * locationMult);
         const leads = Math.floor(visitors * 0.04);
 
         // Animate counter values
@@ -260,14 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (growthVelocityLabel) growthVelocityLabel.innerText = velocityLabel;
 
         // WhatsApp redirect message compilation
-        const tierName = tierSelect.options[tierSelect.selectedIndex].text;
-        const industryName = industrySelect.options[industrySelect.selectedIndex].text;
-        const msg = `Hi SEO Ustaad! I used your calculator. My budget is ${budget.toLocaleString()} PKR for ${industryName} services targeting ${tierName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
+        const locationName = locationSelect.options[locationSelect.selectedIndex].text;
+        const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
+        const msg = `Hi SEO Ustaad! I used your calculator. My budget is ${budget.toLocaleString()} PKR for ${serviceName} targeting ${locationName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
         calcOrderBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(msg)}`;
     };
 
     if (budgetRange) {
-        [budgetRange, industrySelect, tierSelect].forEach(el => {
+        [budgetRange, serviceSelect, locationSelect].forEach(el => {
             el.addEventListener('input', updateCalculator);
         });
         updateCalculator(); // Initial run
