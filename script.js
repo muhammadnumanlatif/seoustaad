@@ -49,7 +49,7 @@ const packagesData = [
     { tier: 'tier4', name: 'Boost Ads', service: 'Ads', price: 150, feature: 'Traffic & Awareness' },
     { tier: 'tier4', name: 'Basic Shop App', service: 'App', price: 1000, feature: 'Flutter WebView App' },
     { tier: 'tier4', name: 'Simple Portfolio', service: 'Custom', price: 500, feature: 'Fast React Landing Page' },
-    { tier: 'tier4', name: 'Small Town SEO', service: 'SEO', price: 80, feature: 'Local Citation Building' },
+    { tier: 'tier4', name: 'Small Town SEO', service: 'SEO', price: 100, feature: 'Local Citation Building' },
     { tier: 'tier4', name: 'Budget Creative', service: 'SMM', price: 120, feature: 'Video Reels + Design' },
     { tier: 'tier4', name: 'SME All-In-One', service: 'Hybrid', price: 400, feature: 'Web + SEO + Social Ads' }
 ];
