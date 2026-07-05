@@ -1035,6 +1035,66 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        
+        // Cascade Logic: Category -> Gig -> Price
+        const categoryRadios = multiForm.querySelectorAll('input[name="category"]');
+        const gigSelect = document.getElementById('gigSelect');
+        const displayPrice = document.getElementById('displayPrice');
+        const hiddenPriceInput = document.getElementById('hiddenPriceInput');
+        const gigsDataEl = document.getElementById('gigsData');
+        
+        let allGigs = [];
+        if (gigsDataEl) {
+            try {
+                allGigs = JSON.parse(gigsDataEl.textContent);
+            } catch(e){}
+        }
+
+        if (categoryRadios.length > 0 && gigSelect) {
+            const populateDropdown = (cat, preselectName = null) => {
+                const filtered = allGigs.filter(g => g.category === cat);
+                
+                gigSelect.innerHTML = '<option value="" disabled selected>Select a specific gig...</option>';
+                filtered.forEach(g => {
+                    const isSelected = (g.name === preselectName) ? 'selected' : '';
+                    gigSelect.innerHTML += `<option value="${g.name}" data-price="${g.price}" ${isSelected}>${g.name}</option>`;
+                });
+                
+                if (preselectName) {
+                    const selectedGig = filtered.find(g => g.name === preselectName);
+                    if (selectedGig) {
+                        displayPrice.innerText = selectedGig.price;
+                        hiddenPriceInput.value = selectedGig.price;
+                    }
+                } else {
+                    displayPrice.innerText = "Select a gig to view price";
+                    hiddenPriceInput.value = "";
+                }
+            };
+
+            categoryRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    populateDropdown(e.target.value);
+                });
+            });
+
+            gigSelect.addEventListener('change', (e) => {
+                const selectedOption = gigSelect.options[gigSelect.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
+                if (price) {
+                    displayPrice.innerText = price;
+                    hiddenPriceInput.value = price;
+                }
+            });
+            
+            // Handle pre-selected logic on load
+            const checkedCat = multiForm.querySelector('input[name="category"]:checked');
+            if (checkedCat) {
+                const preselectedGigName = gigSelect.getAttribute('data-preselected');
+                populateDropdown(checkedCat.value, preselectedGigName);
+            }
+        }
+
         const updateFormUI = (direction = null) => {
             if (transitionTimeout) clearTimeout(transitionTimeout);
 
@@ -1144,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const generateSummary = () => {
             const service = multiForm.querySelector('input[name="service"]:checked')?.value || '-';
             const location = multiForm.querySelector('select[name="location"]').value || '-';
-            const budget = multiForm.querySelector('input[name="budget"]:checked')?.value || '-';
+            const budget = document.getElementById("hiddenPriceInput").value || "-";
             const name = multiForm.querySelector('input[name="name"]').value || '-';
             const phone = multiForm.querySelector('input[name="phone"]').value || '-';
 

@@ -137,56 +137,81 @@
                         <!-- Formspree Action Endpoint -->
                         <form id="heroMultistepForm" class="needs-validation" novalidate>
                             
-                            <!-- Step 1: Choose Service -->
+                            
+                            <!-- Step 1: Choose Category -->
                             <div class="form-step active-step" data-step="1">
                                 <h4 class="outfit text-white mb-2 h5">What service do you need?</h4>
-                                <p class="text-gray small mb-3">Select the primary service for your project.</p>
-                                <div class="mb-3 text-start">
-    <label class="form-label text-gray small fw-bold">Select a Service</label>
-    <select class="form-select glass-input custom-select-tall" name="service" required>
-        <option value="" disabled selected>Choose from 25 Premium Gigs...</option>
-        <optgroup label="Web Development">
-            <option value="Website Speed Optimization">Website Speed Optimization</option>
-            <option value="E-Commerce Bug Fixing & Tweaks">E-Commerce Bug Fixing & Tweaks</option>
-            <option value="Premium Custom WordPress development full website">Premium Custom WordPress development full website</option>
-            <option value="Premium custom Shopify Store development and Setup">Premium custom Shopify Store development and Setup</option>
-            <option value="Custom Next.js full website [for any niche]">Custom Next.js full website [for any niche]</option>
-        </optgroup>
-        <optgroup label="Technical SEO">
-            <option value="Premium Disavow Toxic Backlinks & Penalty Recovery">Premium Disavow Toxic Backlinks & Penalty Recovery</option>
-            <option value="Premium Schema Markup & Advanced Structured Data">Premium Schema Markup & Advanced Structured Data</option>
-            <option value="Comprehensive Keyword Research & Competitor Gap Analysis">Comprehensive Keyword Research & Competitor Gap Analysis</option>
-            <option value="Premium Technical SEO Audit & Action Plan">Premium Technical SEO Audit & Action Plan</option>
-            <option value="Complete On-Page SEO Optimization [up to 10 Pages]">Complete On-Page SEO Optimization [up to 10 Pages]</option>
-            <option value="Advanced Core Web Vitals & PageSpeed Fixes">Advanced Core Web Vitals & PageSpeed Fixes</option>
-        </optgroup>
-        <optgroup label="Local SEO">
-            <option value="Premium Local Citations & High-DA Directory Listings">Premium Local Citations & High-DA Directory Listings</option>
-            <option value="Premium Google Business Profile (GMB) Setup & Ranking">Premium Google Business Profile (GMB) Setup & Ranking</option>
-            <option value="Highly-Converting Geo-Targeted Landing Page Copywriting">Highly-Converting Geo-Targeted Landing Page Copywriting</option>
-            <option value="Premium Local SEO Monthly Retainer [Dominate your City]">Premium Local SEO Monthly Retainer [Dominate your City]</option>
-        </optgroup>
-        <optgroup label="E-Commerce">
-            <option value="Premium Shopify/WooCommerce Product SEO [20 Products]">Premium Shopify/WooCommerce Product SEO [20 Products]</option>
-            <option value="Complete E-Commerce Category Page Optimization">Complete E-Commerce Category Page Optimization</option>
-            <option value="Advanced Conversion Rate Optimization (CRO) Audit">Advanced Conversion Rate Optimization (CRO) Audit</option>
-            <option value="Premium E-Commerce Architecture & Silo Restructure">Premium E-Commerce Architecture & Silo Restructure</option>
-        </optgroup>
-        <optgroup label="Social Media & Ads">
-            <option value="10 Premium Foundation Web 2.0 Backlinks">10 Premium Foundation Web 2.0 Backlinks</option>
-            <option value="Advanced Competitor Backlink Intercept Strategy">Advanced Competitor Backlink Intercept Strategy</option>
-            <option value="High-Converting Ad Copywriting & Creative Strategy">High-Converting Ad Copywriting & Creative Strategy</option>
-            <option value="Premium Meta Ads Campaign Setup & Targeting">Premium Meta Ads Campaign Setup & Targeting</option>
-            <option value="5 Ultra High-DR Guest Post Backlinks [Contextual]">5 Ultra High-DR Guest Post Backlinks [Contextual]</option>
-            <option value="Premium Social Media Management [Full Month / 3 Posts Wk]">Premium Social Media Management [Full Month / 3 Posts Wk]</option>
-        </optgroup>
-    </select>
-    <div class="invalid-feedback">Please select a service.</div>
-</div>
+                                <p class="text-gray small mb-3">Select the primary category for your project.</p>
+                                <div class="d-flex flex-column gap-2 max-height-step-container">
+                                    <label class="service-option-card">
+                                        <input type="radio" name="category" value="web" required>
+                                        <div class="service-option-content d-flex align-items-center p-3">
+                                            <i class="fas fa-code text-orange me-3 fa-lg"></i>
+                                            <div class="text-start">
+                                                <span class="d-block text-white fw-bold">Web Development</span>
+                                                <span class="text-gray small">WordPress, Shopify, React/Next.js, Custom Web</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <label class="service-option-card">
+                                        <input type="radio" name="category" value="seo">
+                                        <div class="service-option-content d-flex align-items-center p-3">
+                                            <i class="fas fa-search text-orange me-3 fa-lg"></i>
+                                            <div class="text-start">
+                                                <span class="d-block text-white fw-bold">Technical SEO</span>
+                                                <span class="text-gray small">Audits, On-Page, Speed, Web Vitals</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <label class="service-option-card">
+                                        <input type="radio" name="category" value="local">
+                                        <div class="service-option-content d-flex align-items-center p-3">
+                                            <i class="fas fa-map-marker-alt text-orange me-3 fa-lg"></i>
+                                            <div class="text-start">
+                                                <span class="d-block text-white fw-bold">Local SEO</span>
+                                                <span class="text-gray small">GMB, Citations, Local Retainers</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <label class="service-option-card">
+                                        <input type="radio" name="category" value="ecom">
+                                        <div class="service-option-content d-flex align-items-center p-3">
+                                            <i class="fas fa-shopping-cart text-orange me-3 fa-lg"></i>
+                                            <div class="text-start">
+                                                <span class="d-block text-white fw-bold">E-Commerce</span>
+                                                <span class="text-gray small">Product SEO, Category Optimization, CRO</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <label class="service-option-card">
+                                        <input type="radio" name="category" value="smm">
+                                        <div class="service-option-content d-flex align-items-center p-3">
+                                            <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
+                                            <div class="text-start">
+                                                <span class="d-block text-white fw-bold">Social Media & Ads</span>
+                                                <span class="text-gray small">Meta Ads, Backlinks, Guest Posts</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
 
-                            <!-- Step 2: Location & Goals -->
+                            <!-- Step 2: Choose Specific Gig -->
                             <div class="form-step" data-step="2">
+                                <h4 class="outfit text-white mb-2 h5">Select Specific Service</h4>
+                                <p class="text-gray small mb-3">Choose the premium gig that fits your needs.</p>
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-gray small fw-bold">Selected Service</label>
+                                    <select class="form-select glass-input custom-select-tall" name="service" id="gigSelect" required>
+                                        <option value="" disabled selected>Please select a category first...</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a service.</div>
+                                </div>
+                            </div>
+
+
+                            <!-- Step 3: Location & Goals -->
+                            <div class="form-step" data-step="3">
                                 <h4 class="outfit text-white mb-2 h5">Location & Goals</h4>
                                 <p class="text-gray small mb-3">Help us align with your local market scope.</p>
                                 
@@ -232,51 +257,18 @@
                                 </div>
                             </div>
 
-                            <!-- Step 3: Budget & Timeline -->
-                            <div class="form-step" data-step="3">
-                                <h4 class="outfit text-white mb-2 h5">Budget & Timeline</h4>
-                                <p class="text-gray small mb-3">Define your target budget range and delivery urgency.</p>
+                            <!-- Step 4: Budget & Timeline -->
+                            <div class="form-step" data-step="4">
+                                <h4 class="outfit text-white mb-2 h5">Project Cost & Timeline</h4>
+                                <p class="text-gray small mb-3">Review the cost of your selected gig.</p>
                                 
                                 <div class="mb-3 text-start">
-                                    <label class="form-label text-gray small fw-bold">Select Project Budget</label>
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <label class="budget-option-card">
-                                                <input type="radio" name="budget" value="$100 - $300" checked>
-                                                <div class="budget-option-content p-2 text-center">
-                                                    <span class="text-white fw-bold small d-block">$100-$300</span>
-                                                    <span class="text-gray x-small">~30k-90k PKR</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="budget-option-card">
-                                                <input type="radio" name="budget" value="$300 - $600">
-                                                <div class="budget-option-content p-2 text-center">
-                                                    <span class="text-white fw-bold small d-block">$300-$600</span>
-                                                    <span class="text-gray x-small">~90k-180k PKR</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="budget-option-card">
-                                                <input type="radio" name="budget" value="$600 - $1000">
-                                                <div class="budget-option-content p-2 text-center">
-                                                    <span class="text-white fw-bold small d-block">$600-$1000</span>
-                                                    <span class="text-gray x-small">~180k-450k PKR</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="budget-option-card">
-                                                <input type="radio" name="budget" value="$1000+">
-                                                <div class="budget-option-content p-2 text-center">
-                                                    <span class="text-white fw-bold small d-block">$1000+</span>
-                                                    <span class="text-gray x-small">Enterprise / Corporate</span>
-                                                </div>
-                                            </label>
-                                        </div>
+                                    <label class="form-label text-gray small fw-bold">Gig Price</label>
+                                    <div class="glass-card p-3 border border-orange border-opacity-50 text-center rounded">
+                                        <span class="text-orange fw-bold fs-4 d-block outfit" id="displayPrice">Select a gig to view price</span>
+                                        <span class="text-gray small" id="displayPriceSubtitle">Fixed transparent pricing</span>
                                     </div>
+                                    <input type="hidden" name="price" id="hiddenPriceInput" value="">
                                 </div>
 
                                 <div class="mb-3 text-start">
@@ -385,6 +377,7 @@
                         </div>
                     </div>
                 </div>
+        </div>
         </div>
     </div>
 </header>

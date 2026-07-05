@@ -28,15 +28,34 @@ function replaceFormInTemplate(templatePath) {
     
     let content = fs.readFileSync(templatePath, 'utf8');
     
-    // Find the old 5-Step WhatsApp Form
-    const oldFormRegex = /<!-- 5-Step WhatsApp Form -->[\s\S]*?<\/form>\s*<\/div>\s*<\/div>/;
+    // In city-template and service-template, the old form starts with the formStartMarker and ends just before </header>
+    // Wait, let's just find formStartMarker, and find the index of </header>.
+    // The form is inside a <div class="row"> inside a <div class="container">.
+    // Actually, let's just use a greedy regex up to the </div></div></div> before </header>
     
-    if (oldFormRegex.test(content)) {
-        content = content.replace(oldFormRegex, globalFormContent);
-        fs.writeFileSync(templatePath, content, 'utf8');
-        console.log(`Successfully injected global form into ${path.basename(templatePath)}`);
+    const startIdx = content.indexOf(formStartMarker);
+    if (startIdx !== -1) {
+        // Find the end of the row div
+        const endHeaderIdx = content.indexOf('</header>');
+        if (endHeaderIdx !== -1) {
+            // We want to keep the closing tags for row, container, header.
+            // Let's find the `</div>\n        </div>\n    </div>\n</header>`
+            const replaceRegex = /<!-- Multi-step Form Column — order 2 on all screens -->[\s\S]*?(?=\s*<\/div>\s*<\/div>\s*<\/header>)/;
+            
+            content = content.replace(replaceRegex, globalFormContent + '\n        </div>');
+            fs.writeFileSync(templatePath, content, 'utf8');
+            console.log(`Successfully injected global form into ${path.basename(templatePath)}`);
+        }
     } else {
-        console.log(`Could not find old form to replace in ${path.basename(templatePath)}`);
+        // Fallback for older version if it still has 5-Step WhatsApp Form
+        const oldFormRegex = /<!-- 5-Step WhatsApp Form -->[\s\S]*?<\/form>\s*<\/div>\s*<\/div>/;
+        if (oldFormRegex.test(content)) {
+            content = content.replace(oldFormRegex, globalFormContent);
+            fs.writeFileSync(templatePath, content, 'utf8');
+            console.log(`Successfully injected global form into ${path.basename(templatePath)} (legacy)`);
+        } else {
+            console.log(`Could not find old form to replace in ${path.basename(templatePath)}`);
+        }
     }
 }
 
