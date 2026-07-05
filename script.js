@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "name": f.q,
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": `${f.boldAnswer} ${f.regularAnswer}`
+                    "text": f.a
                 }
             }))
         };
@@ -607,8 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const normalizedFilter = filterText.toLowerCase().trim();
         const filtered = faqData.filter(f => 
             f.q.toLowerCase().includes(normalizedFilter) || 
-            f.boldAnswer.toLowerCase().includes(normalizedFilter) || 
-            f.regularAnswer.toLowerCase().includes(normalizedFilter)
+            f.a.toLowerCase().includes(normalizedFilter)
         );
 
         if (filtered.length === 0) {
@@ -636,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </h2>
                     <div id="faq${originalIndex}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#faqAccordion">
                         <div class="accordion-body">
-                            <strong>${f.boldAnswer}</strong> ${f.regularAnswer}
+                            ${f.a}
                         </div>
                     </div>
                 </div>
