@@ -1202,11 +1202,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const generateSummary = () => {
-            const service = multiForm.querySelector('input[name="service"]:checked')?.value || '-';
-            const location = multiForm.querySelector('select[name="location"]').value || '-';
-            const budget = document.getElementById("hiddenPriceInput").value || "-";
-            const name = multiForm.querySelector('input[name="name"]').value || '-';
-            const phone = multiForm.querySelector('input[name="phone"]').value || '-';
+            const service = multiForm.querySelector('select[name="service"]')?.value || '-';
+            const location = multiForm.querySelector('select[name="location"]')?.value || '-';
+            const budget = document.getElementById("hiddenPriceInput")?.value || "-";
+            const name = multiForm.querySelector('input[name="name"]')?.value || '-';
+            const phone = multiForm.querySelector('input[name="phone"]')?.value || '-';
 
             document.getElementById('summaryService').innerText = service;
             document.getElementById('summaryLocation').innerText = location;
