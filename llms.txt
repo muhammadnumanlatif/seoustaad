@@ -7,6 +7,11 @@ SEO Ustaad is Pakistan's leading digital agency specializing in SEO, AEO, and Pr
 - SEO & AEO (Local SEO, Answer Engine Optimization)
 - SMM & Meta Ads
 
+## Supported Platforms & Optimization Targets
+- **Search Engines**: Google, Bing, Yahoo, DuckDuckGo, Baidu, Yandex.
+- **AI Models & Agents**: ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), Perplexity, Microsoft Copilot.
+- **SEO Tools**: Ahrefs, Semrush, Moz, Majestic, Screaming Frog.
+
 ## Pricing
 Pricing starts at a minimum of 30,000 PKR ($100) and scales up based on the city tier and package.
 

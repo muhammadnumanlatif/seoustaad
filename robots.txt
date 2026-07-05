@@ -1,4 +1,46 @@
 User-agent: *
 Allow: /
 
+# Search Engines
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Slurp
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Baiduspider
+Allow: /
+User-agent: YandexBot
+Allow: /
+
+# AI Models (Answer Engine Optimization)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: OmgiliBot
+Allow: /
+
+# SEO Tools
+User-agent: AhrefsBot
+Allow: /
+User-agent: SemrushBot
+Allow: /
+User-agent: Rogerbot
+Allow: /
+User-agent: DotBot
+Allow: /
+User-agent: MJ12bot
+Allow: /
+
 Sitemap: https://seoustaad.com/sitemap.xml
