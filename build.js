@@ -127,15 +127,15 @@ gigs.forEach(gig => {
 
 const generatedSitemapUrls = urls.map(url => `  <url>\n    <loc>https://seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n');
 const finalSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${generatedSitemapUrls}\n</urlset>`;
-fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
-console.log('Generated sitemap.xml');
+// fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
+// console.log('Generated sitemap.xml');
 
 const robotsTxt = `User-agent: *
 Allow: /
 
 Sitemap: https://seoustaad.com/sitemap.xml`;
-fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
-console.log('Generated robots.txt');
+// fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
+// console.log('Generated robots.txt');
 
 const llmsTxt = `# SEO Ustaad - Digital Agency Pakistan
 
@@ -154,8 +154,8 @@ We provide dedicated local SEO services in ${cities.length} major cities across 
 
 ## Contact
 WhatsApp: +923379912300`;
-fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
-console.log('Generated llms.txt');
+// fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
+// console.log('Generated llms.txt');
 
 // Generate the Locations Hub Page
 const hubCanonicalUrl = `https://seoustaad.com/locations/`;
