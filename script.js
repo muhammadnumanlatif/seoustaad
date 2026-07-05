@@ -4,54 +4,42 @@
  */
 
 // Global Data for Packages
+
 const packagesData = [
-    // Tier 1: Major Hubs
-    { tier: 'tier1', name: 'Capital Corporate', service: 'WordPress', price: 800, feature: 'Custom Premium Theme + Plugin' },
-    { tier: 'tier1', name: 'Lahore Elite E-comm', service: 'Shopify', price: 1200, feature: 'Fully Custom Liquid Theme' },
-    { tier: 'tier1', name: 'Karachi Tech Giant', service: 'Custom Web', price: 2500, feature: 'Next.js Enterprise App' },
-    { tier: 'tier1', name: 'City Dominator SEO', service: 'SEO', price: 500, feature: 'High-Competition Ranking' },
-    { tier: 'tier1', name: 'Twin City SMM', service: 'SMM', price: 400, feature: '20 Posts + 5 Reels' },
-    { tier: 'tier1', name: 'Meta Sales Pro', service: 'Ads', price: 600, feature: 'Direct Sales Scaling' },
-    { tier: 'tier1', name: 'Hub Leader Flutter', service: 'App', price: 3000, feature: 'Custom iOS/Android App' },
-    { tier: 'tier1', name: 'Corporate Authority', service: 'SEO', price: 700, feature: 'PR Backlinks + Audit' },
-    { tier: 'tier1', name: 'Mega Mall Shopify', service: 'Shopify', price: 1800, feature: '500+ Product Optimization' },
-    { tier: 'tier1', name: 'Executive Bundle', service: 'Hybrid', price: 1500, feature: 'Web + SEO + SMM Full' },
-    
-    // Tier 2: Industrial
-    { tier: 'tier2', name: 'Global Exporter', service: 'WordPress', price: 600, feature: 'Multi-language B2B Portal' },
-    { tier: 'tier2', name: 'Textile Titan', service: 'Shopify', price: 900, feature: 'Export-Ready Store Design' },
-    { tier: 'tier2', name: 'Industrial SEO', service: 'SEO', price: 350, feature: 'B2B Global Ranking' },
-    { tier: 'tier2', name: 'Sialkot Sports SMM', service: 'SMM', price: 300, feature: 'Catalog Design + Intl Ads' },
-    { tier: 'tier2', name: 'Manufacturer Ads', service: 'Ads', price: 450, feature: 'LinkedIn & Meta Lead Gen' },
-    { tier: 'tier2', name: 'Export Manager App', service: 'App', price: 2000, feature: 'Inventory Flutter App' },
-    { tier: 'tier2', name: 'B2B Lead Magnet', service: 'Custom', price: 1500, feature: 'React Quotation System' },
-    { tier: 'tier2', name: 'Industry Authority', service: 'SEO', price: 400, feature: 'Domain Authority Building' },
-    { tier: 'tier2', name: 'Factory Online', service: 'WordPress', price: 500, feature: 'Portfolio + Custom Catalog' },
-    { tier: 'tier2', name: 'Industrial Bundle', service: 'Hybrid', price: 1000, feature: 'Web + Export SEO + B2B' },
+    // Web Development
+    { name: "Website Speed Optimization", price: "5,000 PKR", category: "web", features: ["Core Web Vitals Boost", "Image Compression", "Caching Setup"] },
+    { name: "E-Commerce Bug Fixing & Tweaks", price: "10,000 PKR", category: "web", features: ["Shopify/WooCommerce Bugs", "CSS Layout Fixes", "Checkout Optimization"] },
+    { name: "Premium Custom WordPress development full website", price: "15,000 PKR", category: "web", features: ["100% Responsive Design", "Premium Theme Setup", "Speed Optimized"] },
+    { name: "Premium custom Shopify Store development and Setup", price: "25,000 PKR", category: "web", features: ["Premium Liquid Theme", "Product Setup", "Payment Gateway Integration"] },
+    { name: "Custom Next.js full website [for any niche]", price: "30,000 PKR", category: "web", features: ["React / Next.js Framework", "API Integration", "Blazing Fast Speed"] },
 
-    // Tier 3: Regional
-    { tier: 'tier3', name: 'Regional Retailer', service: 'WordPress', price: 300, feature: 'Fast Local Site' },
-    { tier: 'tier3', name: 'Southern E-comm', service: 'Shopify', price: 500, feature: 'COD Optimized Store' },
-    { tier: 'tier3', name: 'Local Search Hero', service: 'SEO', price: 200, feature: 'Google Maps Dominance' },
-    { tier: 'tier3', name: 'Peshawar Market SMM', service: 'SMM', price: 250, feature: 'Local Language Content' },
-    { tier: 'tier3', name: 'Regional Footfall', service: 'Ads', price: 300, feature: 'Store Visit Ads' },
-    { tier: 'tier3', name: 'Logistics Tracker', service: 'App', price: 1500, feature: 'Flutter Delivery App' },
-    { tier: 'tier3', name: 'Trade Portal', service: 'Custom', price: 1200, feature: 'Regional Marketplace' },
-    { tier: 'tier3', name: 'Multan Agri-SEO', service: 'SEO', price: 250, feature: 'Agri-Specific Keywords' },
-    { tier: 'tier3', name: 'Local Brand Starter', service: 'SMM', price: 150, feature: '12 Posts + Management' },
-    { tier: 'tier3', name: 'Regional Growth', service: 'Hybrid', price: 600, feature: 'Web + SEO + Basic SMM' },
+    // Technical & On-Page SEO
+    { name: "Premium Disavow Toxic Backlinks & Penalty Recovery", price: "5,000 PKR", category: "seo", features: ["Toxic Link Audit", "Disavow File Creation", "Google Search Console Update"] },
+    { name: "Premium Schema Markup & Advanced Structured Data", price: "8,000 PKR", category: "seo", features: ["LocalBusiness Schema", "Product Schema", "FAQ Snippet Coding"] },
+    { name: "Comprehensive Keyword Research & Competitor Gap Analysis", price: "10,000 PKR", category: "seo", features: ["500+ Keywords", "Search Intent Mapping", "Competitor Matrix"] },
+    { name: "Premium Technical SEO Audit & Action Plan", price: "15,000 PKR", category: "seo", features: ["Crawl Error Fixes", "Indexability Check", "Architecture Review"] },
+    { name: "Complete On-Page SEO Optimization [up to 10 Pages]", price: "20,000 PKR", category: "seo", features: ["Title/Meta Tags", "Header Tags Hierarchy", "Internal Linking"] },
+    { name: "Advanced Core Web Vitals & PageSpeed Fixes", price: "25,000 PKR", category: "seo", features: ["LCP Optimization", "CLS Reduction", "INP Improvements"] },
 
-    // Tier 4: Emerging
-    { tier: 'tier4', name: 'Startup Essential', service: 'WordPress', price: 150, feature: 'Clean Theme + 5 Pages' },
-    { tier: 'tier4', name: 'Micro Shopify', service: 'Shopify', price: 250, feature: 'Basic + 20 Products' },
-    { tier: 'tier4', name: 'SME Ranking', service: 'SEO', price: 100, feature: 'Keywords + Meta Tags' },
-    { tier: 'tier4', name: 'Social Starter', service: 'SMM', price: 100, feature: '10 Posts + Graphics' },
-    { tier: 'tier4', name: 'Boost Ads', service: 'Ads', price: 150, feature: 'Traffic & Awareness' },
-    { tier: 'tier4', name: 'Basic Shop App', service: 'App', price: 1000, feature: 'Flutter WebView App' },
-    { tier: 'tier4', name: 'Simple Portfolio', service: 'Custom', price: 500, feature: 'Fast React Landing Page' },
-    { tier: 'tier4', name: 'Small Town SEO', service: 'SEO', price: 100, feature: 'Local Citation Building' },
-    { tier: 'tier4', name: 'Budget Creative', service: 'SMM', price: 120, feature: 'Video Reels + Design' },
-    { tier: 'tier4', name: 'SME All-In-One', service: 'Hybrid', price: 400, feature: 'Web + SEO + Social Ads' }
+    // Local SEO
+    { name: "Premium Local Citations & High-DA Directory Listings", price: "8,000 PKR", category: "local", features: ["50+ Local Citations", "NAP Consistency", "Map Pack Boost"] },
+    { name: "Premium Google Business Profile (GMB) Setup & Ranking", price: "10,000 PKR", category: "local", features: ["Profile Verification", "Geo-tagged Images", "Q&A Setup"] },
+    { name: "Highly-Converting Geo-Targeted Landing Page Copywriting", price: "15,000 PKR", category: "local", features: ["Location specific Copy", "High Conversion Rate", "Entity Rich Content"] },
+    { name: "Premium Local SEO Monthly Retainer [Dominate your City]", price: "20,000 PKR", category: "local", features: ["Monthly Citation Building", "GMB Management", "Local Backlinks"] },
+
+    // E-Commerce SEO
+    { name: "Premium Shopify/WooCommerce Product SEO [20 Products]", price: "15,000 PKR", category: "ecom", features: ["Product Descriptions", "Image Alt Tags", "Schema Setup"] },
+    { name: "Complete E-Commerce Category Page Optimization", price: "20,000 PKR", category: "ecom", features: ["Category Descriptions", "Internal Silo Links", "Faceted Navigation SEO"] },
+    { name: "Advanced Conversion Rate Optimization (CRO) Audit", price: "25,000 PKR", category: "ecom", features: ["UX Heatmaps", "Checkout Flow Review", "A/B Testing Ideas"] },
+    { name: "Premium E-Commerce Architecture & Silo Restructure", price: "30,000 PKR", category: "ecom", features: ["URL Restructuring", "Taxonomy Optimization", "Pagination Fixes"] },
+
+    // Link Building & SMM
+    { name: "10 Premium Foundation Web 2.0 Backlinks", price: "5,000 PKR", category: "smm", features: ["High DA Blogs", "Contextual Links", "100% Manual Placement"] },
+    { name: "Advanced Competitor Backlink Intercept Strategy", price: "10,000 PKR", category: "smm", features: ["Competitor Audit", "Outreach List", "Link Gap Execution"] },
+    { name: "High-Converting Ad Copywriting & Creative Strategy", price: "15,000 PKR", category: "smm", features: ["3 Ad Variations", "Hook & CTA Design", "Targeting Advice"] },
+    { name: "Premium Meta Ads Campaign Setup & Targeting", price: "20,000 PKR", category: "smm", features: ["Pixel Installation", "Custom Audiences", "Retargeting Setup"] },
+    { name: "5 Ultra High-DR Guest Post Backlinks [Contextual]", price: "25,000 PKR", category: "smm", features: ["DR 50+ Sites", "Real Traffic Blogs", "Dofollow Links"] },
+    { name: "Premium Social Media Management [Full Month / 3 Posts Wk]", price: "30,000 PKR", category: "smm", features: ["12 Custom Posts", "Hashtag Strategy", "Community Engagement"] }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -410,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!packageGrid) return;
 
         // Filter by Tier
-        let filtered = packagesData.filter(p => p.tier === currentTier);
+        let filtered = packagesData;
 
         // Filter by Sub-Service Category
         if (currentServiceFilter === 'web') {

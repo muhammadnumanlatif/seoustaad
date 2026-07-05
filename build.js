@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const gigs = require('./gigs.json');
 
 const srcDir = __dirname;
 // We'll update files in place since this is a static project without a build step currently
@@ -55,8 +56,16 @@ if (!fs.existsSync(locationsDir)) {
     fs.mkdirSync(locationsDir);
 }
 
-const templatePath = path.join(srcDir, 'index.html');
+const templatePath = path.join(srcDir, 'city-template.html');
 const template = fs.readFileSync(templatePath, 'utf8');
+
+let sitemapUrls = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url><loc>https://seoustaad.com/</loc><priority>1.0</priority></url>
+    <url><loc>https://seoustaad.com/legal</loc><priority>0.5</priority></url>
+    <url><loc>https://seoustaad.com/locations/</loc><priority>0.9</priority></url>`;
+
+let locationsHtmlList = '';
 
 cities.forEach(city => {
     // Generate SEO Agency Page for each city
@@ -67,25 +76,116 @@ cities.forEach(city => {
     }
     
     const canonicalUrl = `https://seoustaad.com/locations/${slug}/`;
+    sitemapUrls += `\n    <url><loc>${canonicalUrl}</loc><priority>0.8</priority></url>`;
+    locationsHtmlList += `\n                        <li class="mb-2"><a href="/locations/${slug}/" class="text-white text-decoration-none hover-orange">SEO Agency in ${city}</a></li>`;
     
     // Modify template for this city
     let cityContent = template;
-    // Update titles and meta
     cityContent = cityContent.replace(/<title>.*?<\/title>/, `<title>SEO Agency in ${city} | SEO Ustaad</title>`);
-    cityContent = cityContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Dominate digital search in ${city} with SEO Ustaad. Top-rated SEO agency in ${city}."`);
-    // Update canonical
+    cityContent = cityContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Looking for a local SEO consultant in ${city}? SEO Ustaad provides premium eCommerce web design services and affordable WordPress developers in ${city} starting at just 5,000 PKR. Dominate your local market today!"`);
     cityContent = cityContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonicalUrl}"`);
-    // Adjust asset paths
     cityContent = cityContent.replace(/href="style\.css"/g, 'href="/style.css"');
     cityContent = cityContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
     cityContent = cityContent.replace(/src="script\.js"/g, 'src="/script.js"');
     cityContent = cityContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
-    
-    // Update some content
     cityContent = cityContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Dominate Digital Search in ${city} <br> <span class="text-gradient">With SEO Ustaad</span>`);
+    cityContent = cityContent.replace(/__CITY__/g, city);
     
     fs.writeFileSync(path.join(cityDir, 'index.html'), cityContent, 'utf8');
     console.log(`Generated location page: /locations/${slug}/`);
 });
+
+// Generate Service Pages (The 25 Gigs)
+const serviceTemplate = fs.readFileSync(path.join(srcDir, 'service-template.html'), 'utf8');
+const servicesDir = path.join(srcDir, 'services');
+if (!fs.existsSync(servicesDir)) fs.mkdirSync(servicesDir);
+
+let urls = ['/', '/legal', '/locations/'];
+
+gigs.forEach(gig => {
+    const gigDir = path.join(servicesDir, gig.slug);
+    if (!fs.existsSync(gigDir)) fs.mkdirSync(gigDir);
+    
+    let gigContent = serviceTemplate;
+    gigContent = gigContent.replace(/<title>.*?<\/title>/, `<title>${gig.name} | SEO Ustaad</title>`);
+    gigContent = gigContent.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="Get professional ${gig.name} services by SEO Ustaad. We specialize in ROI-driven ${gig.category} and custom solutions for startups to boost your rankings. Premium quality starting at ${gig.price}. Order directly on WhatsApp!"`);
+    gigContent = gigContent.replace(/<link rel="canonical" href=".*?">/, `<link rel="canonical" href="https://seoustaad.com/services/${gig.slug}/">`);
+    
+    gigContent = gigContent.replace(/<h1 class="display-3[^>]*>.*?<\/h1>/s, `<h1 class="display-3 fw-bold text-white mb-4 outfit lh-sm">${gig.name} <br> <span class="text-gradient">Only ${gig.price}</span></h1>`);
+    gigContent = gigContent.replace(/__GIG_NAME__/g, gig.name);
+    gigContent = gigContent.replace(/__GIG_PRICE__/g, gig.price);
+    
+    fs.writeFileSync(path.join(gigDir, 'index.html'), gigContent, 'utf8');
+    
+    urls.push(`/services/${gig.slug}/`);
+    console.log(`Generated service page: /services/${gig.slug}/`);
+});
+
+const generatedSitemapUrls = urls.map(url => `  <url>\n    <loc>https://seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n');
+const finalSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${generatedSitemapUrls}\n</urlset>`;
+fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
+console.log('Generated sitemap.xml');
+
+const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: https://seoustaad.com/sitemap.xml`;
+fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
+console.log('Generated robots.txt');
+
+const llmsTxt = `# SEO Ustaad - Digital Agency Pakistan
+
+SEO Ustaad is Pakistan's leading digital agency specializing in SEO, AEO, and Premium Web Development.
+
+## Services
+- Web Development (WordPress, Shopify, Next.js, Flutter)
+- SEO & AEO (Local SEO, Answer Engine Optimization)
+- SMM & Meta Ads
+
+## Pricing
+Pricing starts at a minimum of 30,000 PKR ($100) and scales up based on the city tier and package.
+
+## Locations Targeted
+We provide dedicated local SEO services in ${cities.length} major cities across Pakistan: ${cities.join(', ')}.
+
+## Contact
+WhatsApp: +923379912300`;
+fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
+console.log('Generated llms.txt');
+
+// Generate the Locations Hub Page
+const hubCanonicalUrl = `https://seoustaad.com/locations/`;
+let hubContent = fs.readFileSync(path.join(srcDir, 'index.html'), 'utf8');
+hubContent = hubContent.replace(/<title>.*?<\/title>/, `<title>Areas We Serve | SEO Ustaad Locations in Pakistan</title>`);
+hubContent = hubContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Find SEO Ustaad services in your city. We serve ${cities.length} major cities in Pakistan with premium Generative Engine Optimization, affordable WordPress developers, and ROI-driven SEO."`);
+hubContent = hubContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${hubCanonicalUrl}"`);
+hubContent = hubContent.replace(/href="style\.css"/g, 'href="/style.css"');
+hubContent = hubContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
+hubContent = hubContent.replace(/src="script\.js"/g, 'src="/script.js"');
+hubContent = hubContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
+hubContent = hubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Find Us In Your City <br> <span class="text-gradient">Service Locations</span>`);
+
+// Replace a section in the hub to show the links
+const servicesRegex = /<section id="services"[\s\S]*?<\/section>/;
+hubContent = hubContent.replace(servicesRegex, `
+    <section id="locations-hub" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5 stagger-reveal">
+                <h2 class="outfit display-5">Our <span class="text-orange">Service Areas</span></h2>
+                <p class="text-gray">Select your city below to see localized SEO and web development strategies.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-12">
+                    <ul class="list-unstyled d-flex flex-wrap gap-3 justify-content-center">
+                        ${locationsHtmlList.replace(/mb-2/g, 'bg-darker p-3 rounded glass-card')}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+`);
+
+fs.writeFileSync(path.join(locationsDir, 'index.html'), hubContent, 'utf8');
+console.log('Generated Hub Page: /locations/');
 
 console.log('Build script completed successfully.');
