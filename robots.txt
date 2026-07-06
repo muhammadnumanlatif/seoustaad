@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://seoustaad.com/sitemap.xml
+Sitemap: https://www.seoustaad.com/sitemap.xml

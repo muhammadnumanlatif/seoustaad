@@ -246,7 +246,7 @@ const preFooterHTML = `
         <div class="container position-relative z-2">
             <h2 class="outfit display-5 text-white fw-bold mb-3">Ready to Dominate Search?</h2>
             <p class="text-dark fw-bold mb-4">Send us a query on WhatsApp and let's start scaling your traffic today.</p>
-            <a href="https://wa.me/923379912300" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold hover-glow">Chat on WhatsApp: 923379912300</a>
+            <a rel="nofollow noopener noreferrer" href="https://wa.me/923379912300" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold hover-glow">Chat on WhatsApp: 923379912300</a>
         </div>
     </section>
 `;

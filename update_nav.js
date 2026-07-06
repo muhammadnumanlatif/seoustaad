@@ -49,7 +49,7 @@ const megaMenuHTML = `
                     </li>
                     <li class="nav-item"><a class="nav-link text-white" href="/#calculator">ROI Calculator</a></li>
                     <li class="nav-item ms-lg-3">
-                        <a href="https://wa.me/923379912300" class="btn btn-orange btn-glow px-4 py-2 fw-bold">Talk to an Expert</a>
+                        <a rel="nofollow noopener noreferrer" href="https://wa.me/923379912300" class="btn btn-orange btn-glow px-4 py-2 fw-bold">Talk to an Expert</a>
                     </li>
                 </ul>`;
 

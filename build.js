@@ -64,19 +64,19 @@ filesToProcess.forEach(file => {
     content = fixInternalLinks(content);
     content = updatePrices(content);
     
-    let canonicalUrl = 'https://seoustaad.com/';
-    if (file === 'legal.html') canonicalUrl = 'https://seoustaad.com/legal';
-    if (file === 'package-details.html') canonicalUrl = 'https://seoustaad.com/package-details'; 
+    let canonicalUrl = 'https://www.seoustaad.com/';
+    if (file === 'legal.html') canonicalUrl = 'https://www.seoustaad.com/legal/';
+    if (file === 'package-details.html') canonicalUrl = 'https://www.seoustaad.com/package-details/'; 
     
     if (!content.includes('<link rel="canonical"')) {
         content = content.replace(/<\/head>/i, `    <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
     }
     
     // Cache busting
-    content = content.replace(/href="style\.css"/g, `href="style.css?v=${Date.now()}"`);
-    content = content.replace(/src="script\.js"/g, `src="script.js?v=${Date.now()}"`);
-    content = content.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
-    content = content.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+    content = content.replace(/href="style\.css"/g, `href="style.min.css?v=${Date.now()}"`);
+    content = content.replace(/src="script\.js"/g, `src="script.min.js?v=${Date.now()}"`);
+    content = content.replace(/href="\/style\.css"/g, `href="/style.min.css?v=${Date.now()}"`);
+    content = content.replace(/src="\/script\.js"/g, `src="/script.min.js?v=${Date.now()}"`);
     
     // Always re-inject widget
     content = injectComponents(content);
@@ -106,7 +106,7 @@ cities.forEach(city => {
         fs.mkdirSync(cityDir, { recursive: true });
     }
     
-    const canonicalUrl = `https://seoustaad.com/locations/${slug}/`;
+    const canonicalUrl = `https://www.seoustaad.com/locations/${slug}/`;
     urls.push(`/locations/${slug}/`);
     locationsHtmlList += `\n                        <li class="mb-2"><a href="/locations/${slug}/" class="text-white text-decoration-none hover-orange">SEO Agency in ${city}</a></li>`;
     
@@ -115,9 +115,9 @@ cities.forEach(city => {
     cityContent = cityContent.replace(/<title>.*?<\/title>/, `<title>SEO Agency in ${city} | SEO Ustaad</title>`);
     cityContent = cityContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Looking for a local SEO consultant in ${city}? SEO Ustaad provides premium eCommerce web design services and affordable WordPress developers in ${city} starting at just 5,000 PKR. Dominate your local market today!"`);
     cityContent = cityContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonicalUrl}"`);
-    cityContent = cityContent.replace(/href="style\.css"/g, `href="/style.css?v=${Date.now()}"`);
+    cityContent = cityContent.replace(/href="style\.css"/g, `href="/style.min.css?v=${Date.now()}"`);
     cityContent = cityContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
-    cityContent = cityContent.replace(/src="script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+    cityContent = cityContent.replace(/src="script\.js"/g, `src="/script.min.js?v=${Date.now()}"`);
     cityContent = cityContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
     cityContent = cityContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Dominate Digital Search in ${city} <br> <span class="text-gradient">With SEO Ustaad</span>`);
     cityContent = cityContent.replace(/__CITY__/g, city);
@@ -125,6 +125,42 @@ cities.forEach(city => {
     
     // Dynamic Form Pre-selection for Location
     cityContent = cityContent.replace(new RegExp('value="' + city + '"'), 'value="' + city + '" selected');
+
+    // Inject Rich Text for City
+    const cityRichText = `
+    <section class="py-5 bg-dark">
+        <div class="container py-5 stagger-reveal">
+            <h2 class="outfit h3 text-white mb-4">Why Choose Our SEO Agency in ${city}?</h2>
+            <p class="text-gray mb-3">When looking for a trusted digital partner in ${city}, you need an agency that understands the local market dynamics. SEO Ustaad brings extensive experience in scaling businesses within the ${city} area through ROI-driven local SEO, custom web development, and targeted social media marketing. Our strategies are designed to help you dominate the digital search landscape specifically in ${city}.</p>
+            <p class="text-gray mb-4">Whether you are a startup or an established enterprise in ${city}, our dedicated team of WordPress developers and SEO specialists will craft a customized roadmap. We ensure your website ranks higher for local search queries, driving high-quality traffic and increasing your conversion rates month over month.</p>
+            
+            <h3 class="outfit h4 text-orange mb-3">Frequently Asked Questions</h3>
+            <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+                <h4 class="text-white h6">How long does it take to see SEO results in ${city}?</h4>
+                <p class="text-gray small mb-3">Typically, local SEO campaigns in ${city} start showing measurable improvements within 3 to 6 months depending on the competitiveness of your niche.</p>
+                <h4 class="text-white h6">Do you offer web design services for businesses in ${city}?</h4>
+                <p class="text-gray small mb-0">Yes! We provide premium WordPress, Shopify, and Next.js development services tailored to local businesses in ${city}.</p>
+            </div>
+        </div>
+    </section>
+    `;
+    cityContent = cityContent.replace('<!-- INJECT_FOOTER -->', cityRichText + '\\n<!-- INJECT_FOOTER -->');
+
+    const servicesInCityHtml = gigs.map(gig => {
+        return `<li style="flex: 1 1 300px;"><a href="/services/${gig.slug}-in-${slug}/" class="text-orange text-decoration-none border-bottom border-orange border-opacity-25 pb-1 d-inline-block hover-lift"><i class="fas fa-chevron-right small me-2"></i>${gig.name}</a></li>`;
+    }).join('\\n');
+
+    const siloServicesSection = `
+    <section class="py-5 bg-darker border-top border-secondary border-opacity-25">
+        <div class="container py-4 stagger-reveal">
+            <h3 class="outfit h4 text-white mb-4">SEO & Digital Services We Offer in ${city}</h3>
+            <ul class="list-unstyled d-flex flex-wrap gap-3">
+                ${servicesInCityHtml}
+            </ul>
+        </div>
+    </section>
+    `;
+    cityContent = cityContent.replace('<!-- INJECT_FOOTER -->', siloServicesSection + '\\n<!-- INJECT_FOOTER -->');
 
     cityContent = injectComponents(cityContent);
     fs.writeFileSync(path.join(cityDir, 'index.html'), cityContent, 'utf8');
@@ -143,15 +179,52 @@ gigs.forEach(gig => {
     let gigContent = serviceTemplate;
     gigContent = gigContent.replace(/<title>.*?<\/title>/, `<title>${gig.name} | SEO Ustaad</title>`);
     gigContent = gigContent.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="Get professional ${gig.name} services by SEO Ustaad. We specialize in ROI-driven ${gig.category} and custom solutions for startups to boost your rankings. Premium quality starting at ${gig.price}. Order directly on WhatsApp!"`);
-    gigContent = gigContent.replace(/<link rel="canonical" href=".*?">/, `<link rel="canonical" href="https://seoustaad.com/services/${gig.slug}/">`);
+    gigContent = gigContent.replace(/<link rel="canonical" href=".*?">/, `<link rel="canonical" href="https://www.seoustaad.com/services/${gig.slug}/">`);
     
     gigContent = gigContent.replace(/<h1 class="display-3[^>]*>.*?<\/h1>/s, `<h1 class="display-3 fw-bold text-white mb-4 outfit lh-sm">${gig.name} <br> <span class="text-gradient">Only ${gig.price}</span></h1>`);
     gigContent = gigContent.replace(/__GIG_NAME__/g, gig.name);
     gigContent = gigContent.replace(/__GIG_PRICE__/g, gig.price);
     
-    gigContent = gigContent.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
-    gigContent = gigContent.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+    gigContent = gigContent.replace(/href="\/style\.css"/g, `href="/style.min.css?v=${Date.now()}"`);
+    gigContent = gigContent.replace(/src="\/script\.js"/g, `src="/script.min.js?v=${Date.now()}"`);
     
+    // Inject Rich Text for Gig
+    const gigRichText = `
+    <section class="py-5 bg-darker">
+        <div class="container py-5 stagger-reveal">
+            <h2 class="outfit h3 text-white mb-4">Everything You Need to Know About ${gig.name}</h2>
+            <p class="text-gray mb-3">Our <strong>${gig.name}</strong> service is specifically designed to provide you with the highest quality deliverables in the industry. As part of the ${gig.category} category, this premium package ensures that every aspect of your project is handled with precision and generative engine optimization in mind.</p>
+            <p class="text-gray mb-4">Priced transparently at <strong>${gig.price}</strong>, we focus on delivering measurable ROI. We utilize cutting-edge tools, advanced analytics, and industry best practices to ensure your brand stands out. Our dedicated team works closely with you from onboarding to project completion.</p>
+            
+            <h3 class="outfit h4 text-orange mb-3">Service Details & Delivery</h3>
+            <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+                <h4 class="text-white h6">What is the typical timeline for ${gig.name}?</h4>
+                <p class="text-gray small mb-3">Depending on your specific requirements, we offer standard and urgent delivery options. Please consult with our experts via WhatsApp for a tailored timeline.</p>
+                <h4 class="text-white h6">Are there any hidden costs?</h4>
+                <p class="text-gray small mb-0">No! The price of ${gig.price} covers all core features listed. Any custom add-ons will be fully discussed and approved by you beforehand.</p>
+            </div>
+        </div>
+    </section>
+    `;
+    gigContent = gigContent.replace('<!-- INJECT_FOOTER -->', gigRichText + '\\n<!-- INJECT_FOOTER -->');
+
+    const citiesForServiceHtml = cities.map(cityName => {
+        const cSlug = cityName.toLowerCase().replace(/\\s+/g, '-');
+        return `<li><a href="/services/${gig.slug}-in-${cSlug}/" class="text-orange text-decoration-none border-bottom border-orange border-opacity-25 pb-1 d-inline-block hover-lift"><i class="fas fa-map-marker-alt small me-2"></i>${cityName}</a></li>`;
+    }).join('\\n');
+
+    const siloLocationsSection = `
+    <section class="py-5 bg-dark border-top border-secondary border-opacity-25">
+        <div class="container py-4 stagger-reveal">
+            <h3 class="outfit h4 text-white mb-4">Available Locations for ${gig.name}</h3>
+            <ul class="list-unstyled d-flex flex-wrap gap-3">
+                ${citiesForServiceHtml}
+            </ul>
+        </div>
+    </section>
+    `;
+    gigContent = gigContent.replace('<!-- INJECT_FOOTER -->', siloLocationsSection + '\\n<!-- INJECT_FOOTER -->');
+
     gigContent = injectComponents(gigContent);
     fs.writeFileSync(path.join(gigDir, 'index.html'), gigContent, 'utf8');
     
@@ -178,8 +251,27 @@ if (serviceLocationTemplate) {
             matrixContent = matrixContent.replace(/__GIG_NAME__/g, gig.name);
             matrixContent = matrixContent.replace(/__GIG_PRICE__/g, gig.price);
             
-            matrixContent = matrixContent.replace(/href="\/style\.css"/g, `href="/style.css?v=${Date.now()}"`);
-            matrixContent = matrixContent.replace(/src="\/script\.js"/g, `src="/script.js?v=${Date.now()}"`);
+            matrixContent = matrixContent.replace(/href="\/style\.css"/g, `href="/style.min.css?v=${Date.now()}"`);
+            matrixContent = matrixContent.replace(/src="\/script\.js"/g, `src="/script.min.js?v=${Date.now()}"`);
+            
+            const matrixRichText = `
+            <section class="py-5 bg-dark">
+                <div class="container py-5 stagger-reveal">
+                    <h2 class="outfit h3 text-white mb-4">Premium ${gig.name} Services in ${city}</h2>
+                    <p class="text-gray mb-3">If you are looking for top-tier <strong>${gig.name}</strong> in ${city}, SEO Ustaad is your reliable partner. We combine our expertise in the ${gig.category} domain with a deep understanding of the ${city} local market to bring you unparalleled results.</p>
+                    <p class="text-gray mb-4">Our package, priced at <strong>${gig.price}</strong>, is engineered for maximum return on investment. We help local businesses in ${city} scale their operations and dominate the search engine rankings through meticulous execution and proven strategies.</p>
+                    
+                    <h3 class="outfit h4 text-orange mb-3">Your Success in ${city}</h3>
+                    <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+                        <h4 class="text-white h6">Why is ${gig.name} important for my business in ${city}?</h4>
+                        <p class="text-gray small mb-3">In today's competitive landscape in ${city}, having a professional edge in ${gig.category} is crucial for standing out and attracting your ideal customers.</p>
+                        <h4 class="text-white h6">How do I get started with ${gig.name} in ${city}?</h4>
+                        <p class="text-gray small mb-0">Simply click the WhatsApp button to chat directly with our regional experts for ${city}. We will provide a custom roadmap tailored to your goals.</p>
+                    </div>
+                </div>
+            </section>
+            `;
+            matrixContent = matrixContent.replace('<!-- INJECT_FOOTER -->', matrixRichText + '\\n<!-- INJECT_FOOTER -->');
             
             matrixContent = injectComponents(matrixContent);
             fs.writeFileSync(path.join(matrixDir, 'index.html'), matrixContent, 'utf8');
@@ -194,7 +286,7 @@ const generatedSitemapUrls = urls.map(url => {
     let priority = '0.8';
     if (url === '/') priority = '1.0';
     else if (url === '/locations/' || url === '/services/') priority = '0.9';
-    return `  <url>\n    <loc>https://seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+    return `  <url>\n    <loc>https://www.seoustaad.com${url}</loc>\n    <lastmod>${new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
 }).join('\n');
 const finalSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${generatedSitemapUrls}\n</urlset>`;
 fs.writeFileSync(path.join(srcDir, 'sitemap.xml'), finalSitemap, 'utf8');
@@ -203,11 +295,11 @@ console.log('Generated sitemap.xml');
 const robotsTxt = `User-agent: *
 Allow: /
 
-Sitemap: https://seoustaad.com/sitemap.xml`;
+Sitemap: https://www.seoustaad.com/sitemap.xml`;
 fs.writeFileSync(path.join(srcDir, 'robots.txt'), robotsTxt, 'utf8');
 console.log('Generated robots.txt');
 
-const llmsUrls = urls.map(url => `- https://seoustaad.com${url}`).join('\n');
+const llmsUrls = urls.map(url => `- https://www.seoustaad.com${url}`).join('\n');
 const llmsTxt = `# SEO Ustaad - Digital Agency Pakistan
 
 SEO Ustaad is Pakistan's leading digital agency specializing in SEO, AEO, and Premium Web Development.
@@ -232,14 +324,14 @@ fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
 console.log('Generated llms.txt');
 
 // Generate the Locations Hub Page
-const hubCanonicalUrl = `https://seoustaad.com/locations/`;
+const hubCanonicalUrl = `https://www.seoustaad.com/locations/`;
 let hubContent = fs.readFileSync(path.join(srcDir, 'index.html'), 'utf8');
 hubContent = hubContent.replace(/<title>.*?<\/title>/, `<title>Areas We Serve | SEO Ustaad Locations in Pakistan</title>`);
 hubContent = hubContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Find SEO Ustaad services in your city. We serve ${cities.length} major cities in Pakistan with premium Generative Engine Optimization, affordable WordPress developers, and ROI-driven SEO."`);
 hubContent = hubContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${hubCanonicalUrl}"`);
-hubContent = hubContent.replace(/href="style\.css"/g, 'href="/style.css"');
+hubContent = hubContent.replace(/href="style\.css"/g, 'href="/style.min.css"');
 hubContent = hubContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
-hubContent = hubContent.replace(/src="script\.js"/g, 'src="/script.js"');
+hubContent = hubContent.replace(/src="script\.js"/g, 'src="/script.min.js"');
 hubContent = hubContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
 hubContent = hubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Find Us In Your City <br> <span class="text-gradient">Service Locations</span>`);
 
@@ -270,15 +362,15 @@ console.log('Generated Hub Page: /locations/');
 
 
 // Generate the Services Hub Page
-const servicesHubCanonicalUrl = `https://seoustaad.com/services/`;
+const servicesHubCanonicalUrl = `https://www.seoustaad.com/services/`;
 let servicesHubContent = fs.readFileSync(path.join(srcDir, 'index.html'), 'utf8');
 servicesHubContent = servicesHubContent.replace(/<title>.*?<\/title>/, `<title>All Premium SEO & Web Development Services | SEO Ustaad</title>`);
 servicesHubContent = servicesHubContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Explore our 25 premium gigs including custom Next.js development, advanced Core Web Vitals fixes, and ROI-driven SEO campaigns starting at 5,000 PKR."`);
 servicesHubContent = servicesHubContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${servicesHubCanonicalUrl}"`);
 // Fix paths
-servicesHubContent = servicesHubContent.replace(/href="style\.css"/g, 'href="/style.css"');
+servicesHubContent = servicesHubContent.replace(/href="style\.css"/g, 'href="/style.min.css"');
 servicesHubContent = servicesHubContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
-servicesHubContent = servicesHubContent.replace(/src="script\.js"/g, 'src="/script.js"');
+servicesHubContent = servicesHubContent.replace(/src="script\.js"/g, 'src="/script.min.js"');
 servicesHubContent = servicesHubContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
 // Update Hero
 servicesHubContent = servicesHubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Explore Our 25 <br> <span class="text-gradient">Premium Gigs</span>`);
