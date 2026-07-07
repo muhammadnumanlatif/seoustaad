@@ -601,8 +601,8 @@ h4, h5, h6,
 }
 
 .whatsapp-trigger-btn {
-    background-color: #25d366;
-    color: white;
+    background: var(--primary);
+    color: var(--on-primary);
     padding: 12px 25px;
     border-radius: 50px;
     display: flex;
@@ -616,6 +616,7 @@ h4, h5, h6,
 }
 
 .whatsapp-trigger-btn i {
+    color: var(--on-primary);
     font-size: 1.5rem;
 }
 
@@ -668,9 +669,9 @@ h4, h5, h6,
 
 /* Animations */
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-    70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(204, 120, 92, 0.4); }
+    70% { box-shadow: 0 0 0 20px rgba(204, 120, 92, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(204, 120, 92, 0); }
 }
 
 .pulsing {
