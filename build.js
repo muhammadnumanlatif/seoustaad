@@ -100,7 +100,8 @@ let locationsHtmlList = '';
 
 cities.forEach(city => {
     // Generate SEO Agency Page for each city
-    const slug = `seo-agency-${city.toLowerCase().replace(/\s+/g, '-')}`;
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+    const slug = `seo-agency-${citySlug}`;
     const cityDir = path.join(locationsDir, slug);
     if (!fs.existsSync(cityDir)) {
         fs.mkdirSync(cityDir, { recursive: true });
@@ -147,7 +148,7 @@ cities.forEach(city => {
     cityContent = cityContent.replace('<!-- INJECT_FOOTER -->', cityRichText + '\\n<!-- INJECT_FOOTER -->');
 
     const servicesInCityHtml = gigs.map(gig => {
-        return `<li style="flex: 1 1 300px;"><a href="/services/${gig.slug}-in-${slug}/" class="text-orange text-decoration-none border-bottom border-orange border-opacity-25 pb-1 d-inline-block hover-lift"><i class="fas fa-chevron-right small me-2"></i>${gig.name}</a></li>`;
+        return `<li style="flex: 1 1 300px;"><a href="/services/${gig.slug}-in-${citySlug}/" class="text-orange text-decoration-none border-bottom border-orange border-opacity-25 pb-1 d-inline-block hover-lift"><i class="fas fa-chevron-right small me-2"></i>${gig.name}</a></li>`;
     }).join('\\n');
 
     const siloServicesSection = `
@@ -209,7 +210,7 @@ gigs.forEach(gig => {
     gigContent = gigContent.replace('<!-- INJECT_FOOTER -->', gigRichText + '\\n<!-- INJECT_FOOTER -->');
 
     const citiesForServiceHtml = cities.map(cityName => {
-        const cSlug = cityName.toLowerCase().replace(/\\s+/g, '-');
+        const cSlug = cityName.toLowerCase().replace(/\s+/g, '-');
         return `<li><a href="/services/${gig.slug}-in-${cSlug}/" class="text-orange text-decoration-none border-bottom border-orange border-opacity-25 pb-1 d-inline-block hover-lift"><i class="fas fa-map-marker-alt small me-2"></i>${cityName}</a></li>`;
     }).join('\\n');
 
