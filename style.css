@@ -290,11 +290,11 @@ h4, h5, h6,
     background-color: var(--on-dark);
     border-radius: 2px;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    transform-origin: left center;
+    transform-origin: center;
 }
 
 .hamburger-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(1px, -1px);
+    transform: rotate(45deg) translate(3px, 3px);
     background-color: var(--primary);
 }
 
@@ -304,7 +304,7 @@ h4, h5, h6,
 }
 
 .hamburger-menu.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(1px, 1px);
+    transform: rotate(-45deg) translate(3px, -3px);
     background-color: var(--primary);
 }
 
@@ -1512,8 +1512,17 @@ body.mobile-menu-open {
     .navbar-toggler {
         position: relative;
         z-index: 1100;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
-}
+    
+    .navbar-toggler:focus,
+    .navbar-toggler:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 
 /* =========================================
    MEGA MENU (Glassmorphism & Hover)
@@ -1594,6 +1603,17 @@ body.mobile-menu-open {
     .navbar .has-megamenu .dropdown-toggle::after {
         float: right;
         margin-top: 8px;
+    }
+    .navbar .megamenu .dropdown-item {
+        color: var(--on-dark-soft) !important;
+    }
+    .navbar .megamenu .dropdown-item:hover,
+    .navbar .megamenu .dropdown-item:focus {
+        color: var(--primary) !important;
+        background: rgba(204, 120, 92, 0.1) !important;
+    }
+    .navbar .megamenu h6 {
+        color: var(--primary) !important;
     }
 }
 
