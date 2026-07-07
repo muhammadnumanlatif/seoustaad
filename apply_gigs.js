@@ -230,7 +230,7 @@ const aboutUsHTML = `
                     </ul>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="/logo.webp" alt="SEO Ustaad Local Authority" class="img-fluid rounded-4 shadow-lg opacity-75" style="max-width:300px; mix-blend-mode: screen;">
+                    <img src="/images/logo.svg" alt="SEO Ustaad Local Authority" class="img-fluid rounded-4" style="max-width:300px;">
                 </div>
             </div>
         </div>

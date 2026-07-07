@@ -7,7 +7,7 @@ const filesToProcess = ['index.html', 'legal.html', 'package-details.html', 'cit
 const megaMenuHTML = `
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item dropdown has-megamenu">
-                        <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">Services</a>
+                        <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-display="static">Services</a>
                         <div class="dropdown-menu megamenu shadow-sm p-3">
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -33,7 +33,7 @@ const megaMenuHTML = `
                         </div>
                     </li>
                     <li class="nav-item dropdown has-megamenu">
-                        <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">Locations</a>
+                        <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-display="static">Locations</a>
                         <div class="dropdown-menu megamenu shadow-sm p-3">
                             <h6 class="text-orange fw-bold mb-3">Tier 1 Hubs</h6>
                             <ul class="list-unstyled mb-0">

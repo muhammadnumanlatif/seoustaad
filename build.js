@@ -108,7 +108,7 @@ cities.forEach(city => {
     
     const canonicalUrl = `https://www.seoustaad.com/locations/${slug}/`;
     urls.push(`/locations/${slug}/`);
-    locationsHtmlList += `\n                        <li class="mb-2"><a href="/locations/${slug}/" class="text-white text-decoration-none hover-orange">SEO Agency in ${city}</a></li>`;
+    locationsHtmlList += `\n                        <li class="mb-2"><a href="/locations/${slug}/" class="text-decoration-none hover-orange">SEO Agency in ${city}</a></li>`;
     
     // Modify template for this city
     let cityContent = template;
@@ -116,9 +116,9 @@ cities.forEach(city => {
     cityContent = cityContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Looking for a local SEO consultant in ${city}? SEO Ustaad provides premium eCommerce web design services and affordable WordPress developers in ${city} starting at just 5,000 PKR. Dominate your local market today!"`);
     cityContent = cityContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonicalUrl}"`);
     cityContent = cityContent.replace(/href="style\.css"/g, `href="/style.min.css?v=${Date.now()}"`);
-    cityContent = cityContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
+    cityContent = cityContent.replace(/src="logo\.webp"/g, 'src="/images/logo.svg"');
     cityContent = cityContent.replace(/src="script\.js"/g, `src="/script.min.js?v=${Date.now()}"`);
-    cityContent = cityContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
+    cityContent = cityContent.replace(/content="logo\.webp"/g, 'content="/images/logo.svg"');
     cityContent = cityContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Dominate Digital Search in ${city} <br> <span class="text-gradient">With SEO Ustaad</span>`);
     cityContent = cityContent.replace(/__CITY__/g, city);
     
@@ -181,7 +181,7 @@ gigs.forEach(gig => {
     gigContent = gigContent.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="Get professional ${gig.name} services by SEO Ustaad. We specialize in ROI-driven ${gig.category} and custom solutions for startups to boost your rankings. Premium quality starting at ${gig.price}. Order directly on WhatsApp!"`);
     gigContent = gigContent.replace(/<link rel="canonical" href=".*?">/, `<link rel="canonical" href="https://www.seoustaad.com/services/${gig.slug}/">`);
     
-    gigContent = gigContent.replace(/<h1 class="display-3[^>]*>.*?<\/h1>/s, `<h1 class="display-3 fw-bold text-white mb-4 outfit lh-sm">${gig.name} <br> <span class="text-gradient">Only ${gig.price}</span></h1>`);
+    gigContent = gigContent.replace(/<h1 class="display-3[^>]*>.*?<\/h1>/s, `<h1 class="display-3 fw-bold mb-4 outfit lh-sm">${gig.name} <br> <span class="text-gradient">Only ${gig.price}</span></h1>`);
     gigContent = gigContent.replace(/__GIG_NAME__/g, gig.name);
     gigContent = gigContent.replace(/__GIG_PRICE__/g, gig.price);
     
@@ -330,9 +330,9 @@ hubContent = hubContent.replace(/<title>.*?<\/title>/, `<title>Areas We Serve | 
 hubContent = hubContent.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="Find SEO Ustaad services in your city. We serve ${cities.length} major cities in Pakistan with premium Generative Engine Optimization, affordable WordPress developers, and ROI-driven SEO."`);
 hubContent = hubContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${hubCanonicalUrl}"`);
 hubContent = hubContent.replace(/href="style\.css"/g, 'href="/style.min.css"');
-hubContent = hubContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
+hubContent = hubContent.replace(/src="logo\.webp"/g, 'src="/images/logo.svg"');
 hubContent = hubContent.replace(/src="script\.js"/g, 'src="/script.min.js"');
-hubContent = hubContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
+hubContent = hubContent.replace(/content="logo\.webp"/g, 'content="/images/logo.svg"');
 hubContent = hubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Find Us In Your City <br> <span class="text-gradient">Service Locations</span>`);
 
 // Replace a section in the hub to show the links
@@ -369,9 +369,9 @@ servicesHubContent = servicesHubContent.replace(/<meta name="description" conten
 servicesHubContent = servicesHubContent.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${servicesHubCanonicalUrl}"`);
 // Fix paths
 servicesHubContent = servicesHubContent.replace(/href="style\.css"/g, 'href="/style.min.css"');
-servicesHubContent = servicesHubContent.replace(/src="logo\.webp"/g, 'src="/logo.webp"');
+servicesHubContent = servicesHubContent.replace(/src="logo\.webp"/g, 'src="/images/logo.svg"');
 servicesHubContent = servicesHubContent.replace(/src="script\.js"/g, 'src="/script.min.js"');
-servicesHubContent = servicesHubContent.replace(/content="logo\.webp"/g, 'content="/logo.webp"');
+servicesHubContent = servicesHubContent.replace(/content="logo\.webp"/g, 'content="/images/logo.svg"');
 // Update Hero
 servicesHubContent = servicesHubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\/span>/, `Explore Our 25 <br> <span class="text-gradient">Premium Gigs</span>`);
 

@@ -16,9 +16,9 @@ servicesHubContent = servicesHubContent.replace(/<meta name="description" conten
 servicesHubContent = servicesHubContent.replace(/<link rel="canonical" href="[^"]*"/, \`<link rel="canonical" href="\${servicesHubCanonicalUrl}"\`);
 // Fix paths
 servicesHubContent = servicesHubContent.replace(/href="style\\.css"/g, 'href="/style.css"');
-servicesHubContent = servicesHubContent.replace(/src="logo\\.webp"/g, 'src="/logo.webp"');
+servicesHubContent = servicesHubContent.replace(/src="logo\\.webp"/g, 'src="/images/logo.svg"');
 servicesHubContent = servicesHubContent.replace(/src="script\\.js"/g, 'src="/script.js"');
-servicesHubContent = servicesHubContent.replace(/content="logo\\.webp"/g, 'content="/logo.webp"');
+servicesHubContent = servicesHubContent.replace(/content="logo\\.webp"/g, 'content="/images/logo.svg"');
 // Update Hero
 servicesHubContent = servicesHubContent.replace(/Dominate Digital Search <br> <span class="text-gradient">With SEO Ustaad<\\/span>/, \`Explore Our 25 <br> <span class="text-gradient">Premium Gigs</span>\`);
 
