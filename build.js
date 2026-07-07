@@ -135,7 +135,7 @@ cities.forEach(city => {
             <p class="text-gray mb-4">Whether you are a startup or an established enterprise in ${city}, our dedicated team of WordPress developers and SEO specialists will craft a customized roadmap. We ensure your website ranks higher for local search queries, driving high-quality traffic and increasing your conversion rates month over month.</p>
             
             <h3 class="outfit h4 text-orange mb-3">Frequently Asked Questions</h3>
-            <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+            <div class="p-4 rounded-4" style="background: var(--surface-dark-elevated); border: 1px solid rgba(255,255,255,0.08);">
                 <h4 class="text-white h6">How long does it take to see SEO results in ${city}?</h4>
                 <p class="text-gray small mb-3">Typically, local SEO campaigns in ${city} start showing measurable improvements within 3 to 6 months depending on the competitiveness of your niche.</p>
                 <h4 class="text-white h6">Do you offer web design services for businesses in ${city}?</h4>
@@ -151,7 +151,7 @@ cities.forEach(city => {
     }).join('\\n');
 
     const siloServicesSection = `
-    <section class="py-5 bg-darker border-top border-secondary border-opacity-25">
+    <section class="py-5 bg-darker">
         <div class="container py-4 stagger-reveal">
             <h3 class="outfit h4 text-white mb-4">SEO & Digital Services We Offer in ${city}</h3>
             <ul class="list-unstyled d-flex flex-wrap gap-3">
@@ -197,7 +197,7 @@ gigs.forEach(gig => {
             <p class="text-gray mb-4">Priced transparently at <strong>${gig.price}</strong>, we focus on delivering measurable ROI. We utilize cutting-edge tools, advanced analytics, and industry best practices to ensure your brand stands out. Our dedicated team works closely with you from onboarding to project completion.</p>
             
             <h3 class="outfit h4 text-orange mb-3">Service Details & Delivery</h3>
-            <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+            <div class="p-4 rounded-4" style="background: var(--surface-dark-elevated); border: 1px solid rgba(255,255,255,0.08);">
                 <h4 class="text-white h6">What is the typical timeline for ${gig.name}?</h4>
                 <p class="text-gray small mb-3">Depending on your specific requirements, we offer standard and urgent delivery options. Please consult with our experts via WhatsApp for a tailored timeline.</p>
                 <h4 class="text-white h6">Are there any hidden costs?</h4>
@@ -214,7 +214,7 @@ gigs.forEach(gig => {
     }).join('\\n');
 
     const siloLocationsSection = `
-    <section class="py-5 bg-dark border-top border-secondary border-opacity-25">
+    <section class="py-5 bg-dark">
         <div class="container py-4 stagger-reveal">
             <h3 class="outfit h4 text-white mb-4">Available Locations for ${gig.name}</h3>
             <ul class="list-unstyled d-flex flex-wrap gap-3">
@@ -262,7 +262,7 @@ if (serviceLocationTemplate) {
                     <p class="text-gray mb-4">Our package, priced at <strong>${gig.price}</strong>, is engineered for maximum return on investment. We help local businesses in ${city} scale their operations and dominate the search engine rankings through meticulous execution and proven strategies.</p>
                     
                     <h3 class="outfit h4 text-orange mb-3">Your Success in ${city}</h3>
-                    <div class="glass-card p-4 rounded-4 border border-secondary border-opacity-25">
+                    <div class="p-4 rounded-4" style="background: var(--surface-dark-elevated); border: 1px solid rgba(255,255,255,0.08);">
                         <h4 class="text-white h6">Why is ${gig.name} important for my business in ${city}?</h4>
                         <p class="text-gray small mb-3">In today's competitive landscape in ${city}, having a professional edge in ${gig.category} is crucial for standing out and attracting your ideal customers.</p>
                         <h4 class="text-white h6">How do I get started with ${gig.name} in ${city}?</h4>
