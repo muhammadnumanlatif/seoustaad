@@ -191,7 +191,7 @@ h4, h5, h6,
 /* Typography & Colors */
 .text-orange { color: var(--primary); }
 .bg-orange { background-color: var(--primary) !important; }
-.text-gray { color: var(--muted); }
+.text-gray { color: #a09d96; }
 .text-gradient {
     background: linear-gradient(120deg, var(--ink) 20%, var(--primary) 50%, var(--ink) 80%);
     background-size: 200% auto;
@@ -814,6 +814,7 @@ h4, h5, h6,
     color: var(--ink) !important;
     border-radius: var(--rounded-md);
     padding: 12px;
+    min-height: 44px;
 }
 
 .form-control::placeholder {
@@ -876,10 +877,10 @@ h4, h5, h6,
     appearance: none;
     background: var(--primary) !important;
     border: 2px solid var(--on-primary) !important;
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     border-radius: 50% !important;
-    margin-top: -7px;
+    margin-top: -10px;
     cursor: pointer;
     transition: transform 0.1s ease;
 }
@@ -891,8 +892,8 @@ h4, h5, h6,
 .custom-range::-moz-range-thumb {
     background: var(--primary) !important;
     border: 2px solid var(--on-primary) !important;
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     border-radius: 50% !important;
     cursor: pointer;
     transition: transform 0.1s ease;
@@ -1762,4 +1763,12 @@ body.mobile-menu-open {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 90%;
+}
+.icon-circle-sm {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

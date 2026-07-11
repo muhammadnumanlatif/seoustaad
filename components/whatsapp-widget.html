@@ -3,19 +3,19 @@
   <button
     type="button"
     class="whatsapp-trigger-btn pulsing"
-    aria-label="Contact on WhatsApp"
   >
-    <i class="fab fa-whatsapp"></i>
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
     <span>Order via WhatsApp</span>
   </button>
   <div class="whatsapp-agents-panel">
     <div
-      class="panel-header border-bottom border-white border-opacity-10 pb-2 mb-2"
+      class="panel-header border-bottom border-white border-opacity-10 pb-2 mb-2 position-relative"
     >
       <span class="fw-bold text-white small d-block"
         >Connect with our Experts</span
       >
       <span class="text-gray x-small">Select an agent or ask a Quick FAQ</span>
+      <button class="btn-close btn-close-white position-absolute top-0 end-0 mt-1" aria-label="Close widget" onclick="document.querySelector('.whatsapp-trigger-btn').click()" style="font-size: 0.6rem;"></button>
     </div>
     <div class="d-flex flex-column gap-2">
       <a
@@ -34,7 +34,7 @@
             ><span class="online-dot"></span>Online • Agent 1</span
           >
         </div>
-        <i class="fab fa-whatsapp ms-auto text-white text-opacity-50"></i>
+        <i class="fab fa-whatsapp ms-auto text-white text-opacity-75" aria-hidden="true"></i>
       </a>
       <a
         href="javascript:void(0)"
@@ -52,7 +52,7 @@
             ><span class="online-dot"></span>Online • Agent 2</span
           >
         </div>
-        <i class="fab fa-whatsapp ms-auto text-white text-opacity-50"></i>
+        <i class="fab fa-whatsapp ms-auto text-white text-opacity-75" aria-hidden="true"></i>
       </a>
     </div>
 
@@ -61,65 +61,17 @@
       class="panel-faq-section mt-3 pt-2 border-top border-white border-opacity-10"
     >
       <div class="d-flex align-items-center mb-3">
-        <div
-          class="icon-circle bg-orange bg-opacity-10 me-2"
-          style="
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "
-        >
-          <i class="fas fa-bolt text-orange" style="font-size: 0.7rem"></i>
+        <div class="icon-circle-sm bg-orange bg-opacity-10 me-2">
+          <i class="fas fa-bolt text-orange" style="font-size: 0.7rem" aria-hidden="true"></i>
         </div>
         <span class="fw-bold text-white small m-0">Quick Enquiries / FAQs</span>
       </div>
       <div
         id="waWidgetQuickFaqs"
-        class="d-flex flex-column gap-2 mb-3"
+        class="d-flex flex-column gap-2 mb-2"
         style="max-height: 150px; overflow-y: auto"
       >
         <!-- Dynamically populated by JS based on dropdown selections -->
-      </div>
-    </div>
-
-    <!-- Dynamic WhatsApp Chat section -->
-    <div
-      class="panel-faq-section mt-3 pt-2 border-top border-white border-opacity-10"
-    >
-      <div class="d-flex align-items-center mb-3">
-        <div
-          class="icon-circle bg-orange bg-opacity-10 me-2"
-          style="
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "
-        >
-          <i class="fas fa-briefcase text-orange" style="font-size: 0.7rem"></i>
-        </div>
-        <span class="fw-bold text-white small m-0">Project Enquiries</span>
-      </div>
-      <div class="d-flex flex-column gap-2">
-        <select class="premium-select mb-2" id="waWidgetService">
-                        <option value="" disabled selected>Select Service...</option>
-                    </select>
-        <select class="premium-select" id="waWidgetLocation">
-                        <option value="" disabled selected>Select Location...</option>
-                    </select>
-        <a
-          href="javascript:void(0)"
-          onclick="openWhatsAppChat()"
-          id="waWidgetChatBtn"
-          class="premium-whatsapp-btn text-white w-100 fw-bold mt-3 d-flex align-items-center justify-content-center text-decoration-none"
-        >
-          <i class="fab fa-whatsapp me-2 fs-5"></i> Chat with Expert
-        </a>
       </div>
     </div>
   </div>
