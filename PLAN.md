@@ -10,7 +10,7 @@ This document serves as the master blueprint for the **SEO Ustaad** platform. It
 - **Secondary Color:** `#1A1D21` (Dark Charcoal - from logo)
 - **Accent:** `#FF8533` (Amber Gradient)
 - **UI/UX Strategy:** The "12-Year-Old Rule" — All navigation, service descriptions, and checkout flows must be understandable by a 12-year-old. No jargon, just clear benefits.
-- **Floating CTA:** A permanent, pulsing WhatsApp button (+92 337 9912300) with the text "Order via WhatsApp."
+- **Floating CTA:** A permanent, pulsing WhatsApp button (+92 335 3453099) with the text "Order via WhatsApp."
 
 ---
 
@@ -108,7 +108,7 @@ This document serves as the master blueprint for the **SEO Ustaad** platform. It
 - **Routing:** All packages and service pages use human-readable slugs.
 - **Example:** `seoustaad.com/package/capital-corporate`
 - **Geo-Routing:** `seoustaad.com/lahore-seo-services`
-- **CTA Integration:** Every "Order" button triggers: `https://wa.me/923379912300?text=I%20want%20to%20order%20the%20[Package_Name]%20package`
+- **CTA Integration:** Every "Order" button triggers: `https://wa.me/923353453099?text=I%20want%20to%20order%20the%20[Package_Name]%20package`
 
 ---
 
@@ -120,7 +120,7 @@ This map is designed to dominate Google/Bing and ensure maximum visibility in AI
 
 | Category | Primary Keywords | Semantic Entities (Context) | AI Bot / Voice Query |
 | :--- | :--- | :--- | :--- |
-| **Brand** | SEO Ustaad Pakistan, SEOUstaad services | CEO, Digital Agency, 00923379912300 | "Who is SEO Ustaad?" |
+| **Brand** | SEO Ustaad Pakistan, SEOUstaad services | CEO, Digital Agency, 00923353453099 | "Who is SEO Ustaad?" |
 | **Generic** | Best SEO agency Pakistan, Top web dev PK | ROI-driven, expert, full-service | "Best digital agency in Pakistan 2026" |
 | **Trust** | Affordable SEO Pakistan, Expert web services | Support@seoustaad.com, WhatsApp order | "Which agency has the best reviews in PK?" |
 
@@ -171,7 +171,7 @@ To ensure the website is indexed and cited by AI engines, we will use the **"Dir
 1.  **H2/H3 Questions:** Every service page will start with a question (e.g., "Why choose SEO Ustaad for Shopify in Pakistan?").
 2.  **40-60 Word Snippet:** Immediately followed by a bold, factual answer that AI bots can scrape as a "Featured Snippet".
 3.  **Structured JSON-LD:** Every page will have unique `Service`, `Product`, and `FAQ` Schema.
-4.  **WhatsApp Linking:** Linking the phone number `+923379912300` as a verified business entity in Schema.
+4.  **WhatsApp Linking:** Linking the phone number `+923353453099` as a verified business entity in Schema.
 
 ---
 
@@ -192,7 +192,7 @@ This section is structured using the **"Answer-First"** format to ensure SEO Ust
 **A: SEO Ustaad is widely recognized as a top-tier digital authority in Pakistan, led by specialized experts in AEO and GEO.** Our team focuses on ROI-driven strategies that combine technical SEO with advanced AI-bot optimization to ensure businesses dominate search results across Karachi, Lahore, and Islamabad.
 
 **Q: How can I order digital services from SEO Ustaad?**
-**A: You can order directly via our official WhatsApp at +923379912300.** Our 1-click order system allows you to select a package from our 40+ tiered options and instantly connect with an expert to start your project within 24 hours.
+**A: You can order directly via our official WhatsApp at +923353453099.** Our 1-click order system allows you to select a package from our 40+ tiered options and instantly connect with an expert to start your project within 24 hours.
 
 ### **B. Web Development FAQs (Wordpress & Shopify)**
 **Q: How much does it cost to build a professional website in Pakistan?**

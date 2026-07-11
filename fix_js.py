@@ -23,7 +23,7 @@ window.openWhatsAppChat = function() {
     }
     text += `. Can we connect?`;
     
-    window.open(`https://wa.me/923379912300?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/923353453099?text=${encodeURIComponent(text)}`, '_blank');
 };
 """
 

@@ -462,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
       locationSelect.options[locationSelect.selectedIndex].text;
     const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
     const msg = `Hi SEO Ustaad! I used your calculator. My budget is ${budget.toLocaleString()} PKR for ${serviceName} targeting ${locationName}. Estimated traffic: ${visitors.toLocaleString()}+ visitors and ${leads} leads in ${minDays}-${maxDays} days. Please send me this growth plan!`;
-    calcOrderBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(msg)}`;
+    calcOrderBtn.href = `https://wa.me/923353453099?text=${encodeURIComponent(msg)}`;
   };
 
   if (budgetRange) {
@@ -842,7 +842,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             
                             <div class="d-flex gap-2">
                                 <button class="btn btn-outline-light w-50 py-2 btn-sm fw-semibold view-package-details" data-name="${encodeURIComponent(p.name)}">Details</button>
-                                <a rel="nofollow noopener noreferrer" href="https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price})." target="_blank" class="btn btn-orange w-50 py-2 btn-sm fw-bold">Order</a>
+                                <a rel="nofollow noopener noreferrer" href="https://wa.me/923353453099?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price})." target="_blank" class="btn btn-orange w-50 py-2 btn-sm fw-bold">Order</a>
                             </div>
                         </div>
                     </div>
@@ -941,7 +941,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
 
         const orderBtn = document.getElementById("modalOrderBtn");
-        orderBtn.href = `https://wa.me/923379912300?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price}).`;
+        orderBtn.href = `https://wa.me/923353453099?text=Hi%20SEO%20Ustaad!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}%20package%20($${p.price}).`;
 
         if (typeof bootstrap !== "undefined") {
           const myModal = new bootstrap.Modal(
@@ -1664,7 +1664,7 @@ document.addEventListener("DOMContentLoaded", () => {
           `*Timeline*: ${timeline}\n` +
           `*Goals*: ${goals}`;
 
-        successWaBtn.href = `https://wa.me/923379912300?text=${encodeURIComponent(waText)}`;
+        successWaBtn.href = `https://wa.me/923353453099?text=${encodeURIComponent(waText)}`;
       }
     };
 
@@ -1884,7 +1884,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "%cSEO Ustaad Digital Agency",
     "color: #FF6600; font-size: 20px; font-weight: bold;",
   );
-  console.log("Optimizing for Pakistan 2026. WhatsApp: +923379912300");
+  console.log("Optimizing for Pakistan 2026. WhatsApp: +923353453099");
 });
 
 // PWA Service Worker Registration
@@ -1923,7 +1923,7 @@ document.addEventListener("DOMContentLoaded", () => {
       text += `. Can we connect?`;
 
       window.open(
-        `https://wa.me/923379912300?text=${encodeURIComponent(text)}`,
+        `https://wa.me/923353453099?text=${encodeURIComponent(text)}`,
         "_blank",
       );
     });
@@ -1931,7 +1931,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.openWhatsAppChat = function (phone) {
-  if (!phone) phone = "923379912300";
+  if (!phone) phone = "923353453099";
   const serviceSelect = document.getElementById("waWidgetService");
   const locationSelect = document.getElementById("waWidgetLocation");
 
@@ -1994,7 +1994,7 @@ document.addEventListener("DOMContentLoaded", () => {
         a.href = "javascript:void(0)";
         // Call openWhatsAppChat with Agent 1 by default, but pass the specific question
         a.onclick = function () {
-          const phone = "923379912300";
+          const phone = "923353453099";
           let text = `Hi SEO Ustaad! I have a question: ${faq}`;
           window.open(
             `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,

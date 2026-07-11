@@ -8,8 +8,8 @@ for filename in files:
 
     # Replace Agent 1 link
     html = re.sub(
-        r'<a href="https://wa\.me/923379912300\?text=[^"]*" target="_blank" class="agent-link d-flex align-items-center p-2 rounded">',
-        r'<a href="javascript:void(0)" onclick="openWhatsAppChat(\'923379912300\')" class="agent-link d-flex align-items-center p-2 rounded text-decoration-none">',
+        r'<a href="https://wa\.me/923353453099\?text=[^"]*" target="_blank" class="agent-link d-flex align-items-center p-2 rounded">',
+        r'<a href="javascript:void(0)" onclick="openWhatsAppChat(\'923353453099\')" class="agent-link d-flex align-items-center p-2 rounded text-decoration-none">',
         html
     )
 

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 a.href = "javascript:void(0)";
                 // Call openWhatsAppChat with Agent 1 by default, but pass the specific question
                 a.onclick = function() {
-                    const phone = '923379912300';
+                    const phone = '923353453099';
                     let text = `Hi SEO Ustaad! I have a question: ${faq}`;
                     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
                 };

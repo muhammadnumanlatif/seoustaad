@@ -4,9 +4,9 @@ with open('script.js', 'r', encoding='utf-8') as f:
     js = f.read()
 
 # Replace window.openWhatsAppChat function to accept a phone number
-old_fn = r"""window.openWhatsAppChat = function\(\) \{[\s\S]*?window.open\(`https:\/\/wa\.me\/923379912300\?text=\$\{encodeURIComponent\(text\)\}`, '_blank'\);\s*\};"""
+old_fn = r"""window.openWhatsAppChat = function\(\) \{[\s\S]*?window.open\(`https:\/\/wa\.me\/923353453099\?text=\$\{encodeURIComponent\(text\)\}`, '_blank'\);\s*\};"""
 new_fn = """window.openWhatsAppChat = function(phone) {
-    if (!phone) phone = '923379912300';
+    if (!phone) phone = '923353453099';
     const serviceSelect = document.getElementById('waWidgetService');
     const locationSelect = document.getElementById('waWidgetLocation');
     

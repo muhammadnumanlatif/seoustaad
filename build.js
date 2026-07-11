@@ -320,7 +320,7 @@ We provide dedicated local SEO services in ${cities.length} major cities across 
 ${llmsUrls}
 
 ## Contact
-WhatsApp: +923379912300`;
+WhatsApp: +923353453099`;
 fs.writeFileSync(path.join(srcDir, 'llms.txt'), llmsTxt, 'utf8');
 console.log('Generated llms.txt');
 

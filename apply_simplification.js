@@ -92,7 +92,7 @@ const tabsHTML = `
                                         <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Priority Delivery</li>
                                     </ul>
                                     <div class="d-flex flex-column gap-2 mt-auto">
-                                        <a rel="nofollow noopener noreferrer" href="https://wa.me/923379912300?text=${waText}" target="_blank" class="btn btn-orange w-100 fw-bold">Order via WhatsApp</a>
+                                        <a rel="nofollow noopener noreferrer" href="https://wa.me/923353453099?text=${waText}" target="_blank" class="btn btn-orange w-100 fw-bold">Order via WhatsApp</a>
                                         <a href="/services/${gig.slug}/" class="btn btn-outline-light w-100 btn-sm">View Details</a>
                                     </div>
                                 </div>
