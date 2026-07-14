@@ -23,11 +23,11 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
   <div class="form-card-spotlight"></div>
   <div class="form-progress-container mb-4">
     <div class="d-flex justify-content-between align-items-center mb-2">
-      <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 6</span>
-      <span class="small text-gray" id="stepProgressPercent">16% Complete</span>
+      <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 5</span>
+      <span class="small text-gray" id="stepProgressPercent">20% Complete</span>
     </div>
     <div class="progress bg-dark" style="height:6px">
-      <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width:16%" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
 
@@ -42,99 +42,123 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
   </style>
 
   <form id="heroMultistepForm" class="needs-validation d-flex flex-column flex-grow-1" novalidate="">
-    <!-- Step 1: Category -->
+    <!-- Step 1: Select Premium Service Gig -->
     <div class="form-step active-step" data-step="1">
       <h4 class="outfit mb-2 h5">What service do you need?</h4>
-      <p class="text-gray small mb-3">Select the primary category for your project.</p>
-      <div class="services-grid-container max-height-step-container">
-        <label class="service-option-card">
-          <input type="radio" name="category" value="web" required="">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fas fa-code text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">Web Development</span>
-              <span class="text-gray small">WordPress, Shopify, React/Next.js</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="seo">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fas fa-search text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">Technical SEO</span>
-              <span class="text-gray small">Audits, On-Page, Speed, Web Vitals</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="local">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fas fa-map-marker-alt text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">Local SEO</span>
-              <span class="text-gray small">GMB, Citations, Local Retainers</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="ecom">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fas fa-shopping-cart text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">E-Commerce</span>
-              <span class="text-gray small">Product SEO, Category Optimization, CRO</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="smm">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">Social Media &amp; Ads</span>
-              <span class="text-gray small">Meta Ads, Backlinks, Guest Posts</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="shopify">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fab fa-shopify text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">Shopify Dev</span>
-              <span class="text-gray small">Custom stores, themes, white-label</span>
-            </div>
-          </div>
-        </label>
-        <label class="service-option-card">
-          <input type="radio" name="category" value="wordpress">
-          <div class="service-option-content d-flex align-items-center p-3">
-            <i class="fab fa-wordpress text-orange me-3 fa-lg"></i>
-            <div class="text-start">
-              <span class="d-block fw-bold text-white">WordPress Dev</span>
-              <span class="text-gray small">Themes, plugins, WooCommerce</span>
-            </div>
-          </div>
-        </label>
-      </div>
-    </div>
-
-    <!-- Step 2: Specific Service -->
-    <div class="form-step" data-step="2">
-      <h4 class="outfit mb-2 h5">Select Specific Service</h4>
       <p class="text-gray small mb-3">Choose the premium gig that fits your needs.</p>
-      <div class="mb-3 text-start">
-        <label class="form-label text-gray small fw-bold">Selected Service</label>
-        <select class="form-select glass-input custom-select-tall" name="service" id="gigSelect" required="">
-          <option value="" disabled="" selected="">Please select a category first...</option>
-        </select>
-        <div class="invalid-feedback">Please select a service.</div>
+      
+      <div class="services-grid-container max-height-step-container" style="max-height: 380px; overflow-y: auto;">
+        
+        <!-- Web Development -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-2 mb-2">Web Development</div>
+        {rootGigs.filter(g => g.category === 'web').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category} required="">
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fas fa-code text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- Shopify Dev -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">Shopify Dev</div>
+        {rootGigs.filter(g => g.category === 'shopify').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fab fa-shopify text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- WordPress Dev -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">WordPress Dev</div>
+        {rootGigs.filter(g => g.category === 'wordpress').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fab fa-wordpress text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- Technical SEO -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">Technical SEO</div>
+        {rootGigs.filter(g => g.category === 'seo').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fas fa-search text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- Local SEO -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">Local SEO</div>
+        {rootGigs.filter(g => g.category === 'local').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fas fa-map-marker-alt text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- E-Commerce -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">E-Commerce</div>
+        {rootGigs.filter(g => g.category === 'ecom').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fas fa-shopping-cart text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
+        <!-- Social Media & Ads -->
+        <div class="category-header text-orange small fw-bold text-uppercase mt-3 mb-2">Social Media &amp; Ads</div>
+        {rootGigs.filter(g => g.category === 'smm').map(gig => (
+          <label class="service-option-card mb-2 d-block">
+            <input type="radio" name="service" value={gig.name} data-slug={gig.slug} data-price={gig.price} data-category={gig.category}>
+            <div class="service-option-content d-flex align-items-center p-3">
+              <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
+              <div class="text-start">
+                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="text-gray small">Price: {gig.price}</span>
+              </div>
+            </div>
+          </label>
+        ))}
+
       </div>
     </div>
 
-    <!-- Step 3: Location & Goals -->
-    <div class="form-step" data-step="3">
+    <!-- Step 2: Location & Goals -->
+    <div class="form-step" data-step="2">
       <h4 class="outfit mb-2 h5">Location &amp; Goals</h4>
       <p class="text-gray small mb-3">Help us align with your local market scope.</p>
       <div class="mb-3 text-start">
@@ -151,8 +175,8 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       </div>
     </div>
 
-    <!-- Step 4: Cost & Timeline -->
-    <div class="form-step" data-step="4">
+    <!-- Step 3: Cost & Timeline -->
+    <div class="form-step" data-step="3">
       <h4 class="outfit mb-2 h5">Project Cost &amp; Timeline</h4>
       <p class="text-gray small mb-3">Review the cost of your selected gig.</p>
       <div class="mb-3 text-start">
@@ -175,8 +199,8 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       </div>
     </div>
 
-    <!-- Step 5: Contact Info -->
-    <div class="form-step" data-step="5">
+    <!-- Step 4: Contact Info -->
+    <div class="form-step" data-step="4">
       <h4 class="outfit mb-2 h5">Contact Information</h4>
       <p class="text-gray small mb-3">Provide your details to receive the roadmap proposal.</p>
       <div class="mb-3 text-start">
@@ -205,8 +229,8 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       </div>
     </div>
 
-    <!-- Step 6: Review & Confirm -->
-    <div class="form-step" data-step="6">
+    <!-- Step 5: Review & Confirm -->
+    <div class="form-step" data-step="5">
       <h4 class="outfit mb-2 h5">Review &amp; Confirm</h4>
       <p class="text-gray small mb-3">Verify your request details before submitting.</p>
       <div class="glass-card p-4 mb-3 text-start border border-orange border-opacity-25 rounded position-relative overflow-hidden">
@@ -267,14 +291,13 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
   </div>
 </div>
 
-<script define:vars={{ categoriesMap, defaultServiceSlug, defaultCity }}>
-  // Dynamic initialization script that populates the drop-downs
+<script define:vars={{ defaultServiceSlug, defaultCity }}>
+  // Dynamic initialization script for the consolidated 5-step form
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('heroMultistepForm');
     if (!form) return;
 
-    const categoryInputs = form.querySelectorAll('input[name="category"]');
-    const gigSelect = document.getElementById('gigSelect');
+    const serviceRadioInputs = form.querySelectorAll('input[name="service"]');
     const locationSelect = document.getElementById('formLocationSelect');
     const displayPrice = document.getElementById('displayPrice');
     const hiddenPriceInput = document.getElementById('hiddenPriceInput');
@@ -298,25 +321,11 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       if (match) locationSelect.value = match;
     }
 
-    // Function to populate Gigs dropdown based on category
-    function populateGigs(category, selectedSlug = '') {
-      const list = categoriesMap[category] || [];
-      gigSelect.innerHTML = '<option value="" disabled selected>Select a specific gig...</option>' +
-        list.map(g => `<option value="${g.name}" data-slug="${g.slug}" data-price="${g.price}">${g.name} (${g.price})</option>`).join('');
-      
-      if (selectedSlug) {
-        const option = Array.from(gigSelect.options).find(opt => opt.getAttribute('data-slug') === selectedSlug);
-        if (option) {
-          gigSelect.value = option.value;
-          updatePrice(option);
-        }
-      }
-    }
-
-    // Update Price display
-    function updatePrice(option) {
-      if (option && option.value) {
-        const price = option.getAttribute('data-price');
+    // Update Price display based on active selected radio input
+    function updateSelectedPrice() {
+      const checked = form.querySelector('input[name="service"]:checked');
+      if (checked) {
+        const price = checked.getAttribute('data-price') || '';
         displayPrice.textContent = price;
         hiddenPriceInput.value = price;
       } else {
@@ -325,18 +334,9 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       }
     }
 
-    // Listen to Category radio change
-    categoryInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        populateGigs(input.value);
-        updatePrice(null);
-      });
-    });
-
-    // Listen to Gig select change
-    gigSelect.addEventListener('change', () => {
-      const selectedOption = gigSelect.options[gigSelect.selectedIndex];
-      updatePrice(selectedOption);
+    // Listen to service selections
+    serviceRadioInputs.forEach(input => {
+      input.addEventListener('change', updateSelectedPrice);
     });
 
     // Multistep form navigation logic
@@ -344,28 +344,14 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
     const totalSteps = steps.length;
     let currentStep = 1;
 
-    // Auto-select based on target URL/Prop parameters
+    // Auto-select and fast-forward based on target URL/Prop parameters
     if (paramService) {
-      let foundCat = '';
-      let foundSlug = '';
-      for (const cat in categoriesMap) {
-        const match = categoriesMap[cat].find(g => g.slug === paramService);
-        if (match) {
-          foundCat = cat;
-          foundSlug = match.slug;
-          break;
-        }
-      }
-      if (foundCat) {
-        const radio = form.querySelector(`input[name="category"][value="${foundCat}"]`);
-        if (radio) {
-          radio.checked = true;
-          // Populate the gig dropdown options and auto-select the current gig
-          populateGigs(foundCat, foundSlug);
-          
-          // Since category & gig are pre-selected, fast-forward directly to location step
-          currentStep = 3;
-        }
+      const radio = form.querySelector(`input[name="service"][data-slug="${paramService}"]`);
+      if (radio) {
+        radio.checked = true;
+        updateSelectedPrice();
+        // Since gig is pre-selected, fast-forward directly to location step (Step 2)
+        currentStep = 2;
       }
     }
 
@@ -446,13 +432,14 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
     });
 
     function updateSummary() {
-      const service = gigSelect.value || '-';
+      const checked = form.querySelector('input[name="service"]:checked');
+      const serviceName = checked ? checked.value : '-';
       const location = locationSelect.value || '-';
       const price = hiddenPriceInput.value || '-';
       const name = form.querySelector('input[name="name"]').value || '-';
       const phone = form.querySelector('input[name="phone"]').value || '-';
 
-      document.getElementById('summaryService').textContent = service;
+      document.getElementById('summaryService').textContent = serviceName;
       document.getElementById('summaryLocation').textContent = location;
       document.getElementById('summaryBudget').textContent = price;
       document.getElementById('summaryName').textContent = name;
@@ -464,14 +451,14 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       
       // Determine expert contact number dynamically
       let currentWaNumber = '923146348900'; // general default
-      const activeCategory = form.querySelector('input[name="category"]:checked')?.value || '';
+      const activeCategory = checked ? (checked.getAttribute('data-category') || '') : '';
       if (['seo', 'local', 'ecom', 'smm'].includes(activeCategory)) {
         currentWaNumber = '923353453099'; // SEO/Ads Expert
       } else if (['web', 'shopify', 'wordpress'].includes(activeCategory)) {
         currentWaNumber = '923379912300'; // Web/App Dev Expert
       }
 
-      const msg = `Hi SEO Ustaad! I just submitted your project analysis request form.\n\n*Name*: ${name}\n*WhatsApp*: ${phone}\n*Email*: ${form.querySelector('input[name="email"]').value || ''}\n*Service*: ${service}\n*Location*: ${location}\n*Budget*: ${price}\n*Timeline*: ${timeline}\n*Goals*: ${goals}`;
+      const msg = `Hi SEO Ustaad! I just submitted your project analysis request form.\n\n*Name*: ${name}\n*WhatsApp*: ${phone}\n*Email*: ${form.querySelector('input[name="email"]').value || ''}\n*Service*: ${serviceName}\n*Location*: ${location}\n*Budget*: ${price}\n*Timeline*: ${timeline}\n*Goals*: ${goals}`;
       successWaBtn.href = `https://wa.me/${currentWaNumber}?text=${encodeURIComponent(msg)}`;
     }
 
@@ -523,8 +510,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       document.getElementById('formSuccessMessage').classList.remove('d-flex');
       document.getElementById('formSuccessMessage').classList.add('d-none');
       form.classList.remove('was-validated');
-      populateGigs('');
-      updatePrice(null);
+      updateSelectedPrice();
       updateStepUI();
     });
 
