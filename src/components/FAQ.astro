@@ -1,0 +1,46 @@
+---
+import faqsData from '../../faqs.json';
+
+const { category = 'general', count = 5, city = 'Pakistan', gigName = 'our services' } = Astro.props;
+const availableFaqs = faqsData[category] || faqsData['general'] || [];
+
+// Simple shuffle function
+const shuffledFaqs = [...availableFaqs].sort(() => 0.5 - Math.random());
+const selectedFaqs = shuffledFaqs.slice(0, count);
+
+// We need a unique ID for the accordion to avoid conflicts if multiple are on the same page
+const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`;
+---
+<section class="py-5 bg-darker">
+    <div class="container py-5">
+        <div class="text-center mb-5 stagger-reveal">
+            <h2 class="outfit display-5 text-white">Frequently Asked <span class="text-orange">Questions</span></h2>
+            <p class="text-gray">Answers to your most common inquiries.</p>
+        </div>
+        <div class="row justify-content-center stagger-reveal">
+            <div class="col-lg-8">
+                <div class="accordion custom-accordion" id={accordionId}>
+                    {selectedFaqs.map((faq, index) => {
+                        const headingId = `${accordionId}_heading${index}`;
+                        const collapseId = `${accordionId}_collapse${index}`;
+                        const processedQ = faq.q.replace(/__CITY__/g, city).replace(/__GIG_NAME__/g, gigName);
+                        const processedA = faq.a.replace(/__CITY__/g, city).replace(/__GIG_NAME__/g, gigName);
+                        
+                        return (
+                            <div class="accordion-item bg-transparent border-0 mb-3" style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.08);border-radius:12px">
+                                <h2 class="accordion-header" id={headingId}>
+                                    <button class="accordion-button bg-transparent text-white fw-bold collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`} aria-expanded="false" aria-controls={collapseId}>
+                                        {processedQ}
+                                    </button>
+                                </h2>
+                                <div id={collapseId} class="accordion-collapse collapse" aria-labelledby={headingId} data-bs-parent={`#${accordionId}`}>
+                                    <div class="accordion-body text-gray" set:html={processedA} />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

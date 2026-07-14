@@ -148,5 +148,215 @@
     "price": "30,000 PKR",
     "category": "smm",
     "slug": "premium-social-media-management"
+  },
+  {
+    "name": "Website Development",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development"
+  },
+  {
+    "name": "Website Development Services",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-services"
+  },
+  {
+    "name": "Website Development Company",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-company"
+  },
+  {
+    "name": "Website Development in Lahore",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-in-lahore"
+  },
+  {
+    "name": "Ecommerce Website Development",
+    "price": "30,000 PKR",
+    "category": "ecom",
+    "slug": "ecommerce-website-development"
+  },
+  {
+    "name": "Website Development Company in Pakistan",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-company-in-pakistan"
+  },
+  {
+    "name": "Website Development Agency",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-agency"
+  },
+  {
+    "name": "WordPress Website Development",
+    "price": "15,000 PKR",
+    "category": "web",
+    "slug": "wordpress-website-development"
+  },
+  {
+    "name": "Website Development Course",
+    "price": "10,000 PKR",
+    "category": "web",
+    "slug": "website-development-course"
+  },
+  {
+    "name": "Website Development Services in Pakistan",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-services-in-pakistan"
+  },
+  {
+    "name": "Website Development Cost in Pakistan",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-cost-in-pakistan"
+  },
+  {
+    "name": "Website Development Pakistan",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-pakistan"
+  },
+  {
+    "name": "Custom Website Development",
+    "price": "30,000 PKR",
+    "category": "web",
+    "slug": "custom-website-development"
+  },
+  {
+    "name": "Website Development Price in Pakistan",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-price-in-pakistan"
+  },
+  {
+    "name": "Website Development in Karachi",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-in-karachi"
+  },
+  {
+    "name": "Website Development Company in Karachi",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-company-in-karachi"
+  },
+  {
+    "name": "Website Development Company in Islamabad",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-company-in-islamabad"
+  },
+  {
+    "name": "Custom Website Development Services",
+    "price": "30,000 PKR",
+    "category": "web",
+    "slug": "custom-website-development-services"
+  },
+  {
+    "name": "Website Development Lahore",
+    "price": "20,000 PKR",
+    "category": "web",
+    "slug": "website-development-lahore"
+  },
+  {
+    "name": "Premium E-Commerce SEO Services",
+    "category": "ecom",
+    "price": "25,000 PKR",
+    "slug": "premium-ecommerce-seo-services"
+  },
+  {
+    "name": "Comprehensive E-Commerce SEO Audit",
+    "category": "ecom",
+    "price": "15,000 PKR",
+    "slug": "comprehensive-ecommerce-seo-audit"
+  },
+  {
+    "name": "Hire E-Commerce SEO Expert",
+    "category": "ecom",
+    "price": "30,000 PKR",
+    "slug": "hire-ecommerce-seo-expert"
+  },
+  {
+    "name": "Advanced E-Commerce SEO Strategy & Packages",
+    "category": "ecom",
+    "price": "20,000 PKR",
+    "slug": "ecommerce-seo-packages-strategy"
+  },
+  {
+    "name": "Premium Local SEO Services",
+    "category": "seo",
+    "price": "25,000 PKR",
+    "slug": "local-seo-services"
+  },
+  {
+    "name": "Local SEO Audit & Citation Building",
+    "category": "seo",
+    "price": "15,000 PKR",
+    "slug": "local-seo-audit-citations"
+  },
+  {
+    "name": "Hire Dedicated Local SEO Expert",
+    "category": "seo",
+    "price": "30,000 PKR",
+    "slug": "hire-local-seo-expert"
+  },
+  {
+    "name": "Custom Shopify Development Services",
+    "category": "shopify",
+    "price": "35,000 PKR",
+    "slug": "custom-shopify-development-services"
+  },
+  {
+    "name": "Shopify Theme Development",
+    "category": "shopify",
+    "price": "20,000 PKR",
+    "slug": "shopify-theme-development"
+  },
+  {
+    "name": "White Label Shopify Development",
+    "category": "shopify",
+    "price": "45,000 PKR",
+    "slug": "white-label-shopify-development"
+  },
+  {
+    "name": "Shopify Development Partner – Full Store Setup",
+    "category": "shopify",
+    "price": "30,000 PKR",
+    "slug": "shopify-store-development-partner"
+  },
+  {
+    "name": "Custom WordPress Development Services",
+    "category": "wordpress",
+    "price": "30,000 PKR",
+    "slug": "custom-wordpress-development-services"
+  },
+  {
+    "name": "WordPress Theme Development",
+    "category": "wordpress",
+    "price": "18,000 PKR",
+    "slug": "wordpress-theme-development"
+  },
+  {
+    "name": "WordPress Plugin Development",
+    "category": "wordpress",
+    "price": "25,000 PKR",
+    "slug": "wordpress-plugin-development"
+  },
+  {
+    "name": "White Label WordPress Development",
+    "category": "wordpress",
+    "price": "40,000 PKR",
+    "slug": "white-label-wordpress-development"
+  },
+  {
+    "name": "E-Commerce WordPress & WooCommerce Development",
+    "category": "wordpress",
+    "price": "35,000 PKR",
+    "slug": "ecommerce-wordpress-woocommerce-development"
   }
 ]
