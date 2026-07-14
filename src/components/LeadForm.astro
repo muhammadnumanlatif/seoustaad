@@ -329,6 +329,11 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
       updatePrice(selectedOption);
     });
 
+    // Multistep form navigation logic
+    const steps = form.querySelectorAll('.form-step');
+    const totalSteps = steps.length;
+    let currentStep = 1;
+
     // Auto-select based on target URL/Prop parameters
     if (paramService) {
       let foundCat = '';
@@ -345,15 +350,14 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
         const radio = form.querySelector(`input[name="category"][value="${foundCat}"]`);
         if (radio) {
           radio.checked = true;
+          // Populate the gig dropdown options and auto-select the current gig
           populateGigs(foundCat, foundSlug);
+          
+          // Since category & gig are pre-selected, fast-forward directly to location step
+          currentStep = 3;
         }
       }
     }
-
-    // Multistep form navigation logic
-    const steps = form.querySelectorAll('.form-step');
-    const totalSteps = steps.length;
-    let currentStep = 1;
 
     const stepIndicator = document.getElementById('stepIndicator');
     const stepProgressPercent = document.getElementById('stepProgressPercent');
