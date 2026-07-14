@@ -23,13 +23,23 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
   <div class="form-card-spotlight"></div>
   <div class="form-progress-container mb-4">
     <div class="d-flex justify-content-between align-items-center mb-2">
-      <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 5</span>
-      <span class="small text-gray" id="stepProgressPercent">20% Complete</span>
+      <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 6</span>
+      <span class="small text-gray" id="stepProgressPercent">16% Complete</span>
     </div>
     <div class="progress bg-dark" style="height:6px">
-      <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width:16%" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
+
+  <style>
+    /* Multistep Form Transitions */
+    .form-step {
+      display: none;
+    }
+    .form-step.active-step {
+      display: block !important;
+    }
+  </style>
 
   <form id="heroMultistepForm" class="needs-validation d-flex flex-column flex-grow-1" novalidate="">
     <!-- Step 1: Category -->
