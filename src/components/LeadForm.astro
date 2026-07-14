@@ -39,6 +39,39 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
     .form-step.active-step {
       display: block !important;
     }
+    /* Service Option Cards Styles */
+    .service-option-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.2s ease-in-out;
+      position: relative;
+    }
+    .service-option-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .service-option-card:hover {
+      border-color: rgba(204, 120, 92, 0.4);
+      background: rgba(204, 120, 92, 0.05);
+    }
+    .service-option-card input[type="radio"]:checked + .service-option-content {
+      background: rgba(204, 120, 92, 0.12);
+      border-radius: 7px;
+    }
+    .service-option-card input[type="radio"]:checked {
+      border-color: var(--orange) !important;
+    }
+    /* Ensure readable contrast for inner texts */
+    .service-option-card .text-body {
+      color: var(--text-color, #2d3748) !important;
+    }
+    .service-option-card .text-gray {
+      color: var(--text-muted, #718096) !important;
+    }
   </style>
 
   <form id="heroMultistepForm" class="needs-validation d-flex flex-column flex-grow-1" novalidate="">
@@ -57,7 +90,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fas fa-code text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -72,7 +105,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fab fa-shopify text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -87,7 +120,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fab fa-wordpress text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -102,7 +135,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fas fa-search text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -117,7 +150,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fas fa-map-marker-alt text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -132,7 +165,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fas fa-shopping-cart text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
@@ -147,7 +180,7 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
             <div class="service-option-content d-flex align-items-center p-3">
               <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
               <div class="text-start">
-                <span class="d-block fw-bold text-white">{gig.name}</span>
+                <span class="d-block fw-bold text-body">{gig.name}</span>
                 <span class="text-gray small">Price: {gig.price}</span>
               </div>
             </div>
