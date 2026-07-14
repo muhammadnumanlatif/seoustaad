@@ -11,10 +11,10 @@ const selectedFaqs = shuffledFaqs.slice(0, count);
 // We need a unique ID for the accordion to avoid conflicts if multiple are on the same page
 const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`;
 ---
-<section class="py-5 faq-section">
+<section class="py-5 bg-darker">
     <div class="container py-5">
         <div class="text-center mb-5 stagger-reveal">
-            <h2 class="outfit display-5 text-body">Frequently Asked <span class="text-orange">Questions</span></h2>
+            <h2 class="outfit display-5 text-white">Frequently Asked <span class="text-orange">Questions</span></h2>
             <p class="text-gray">Answers to your most common inquiries.</p>
         </div>
         <div class="row justify-content-center stagger-reveal">
@@ -27,14 +27,14 @@ const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`
                         const processedA = faq.a.replace(/__CITY__/g, city).replace(/__GIG_NAME__/g, gigName);
                         
                         return (
-                            <div class="accordion-item bg-transparent mb-3" style="border:1px solid rgba(255,102,0,.15);border-radius:12px;overflow:hidden">
+                            <div class="accordion-item bg-transparent border-0 mb-3" style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.08);border-radius:12px">
                                 <h2 class="accordion-header" id={headingId}>
-                                    <button class="accordion-button bg-transparent text-body fw-bold collapsed shadow-none py-3 px-4" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`} aria-expanded="false" aria-controls={collapseId}>
+                                    <button class="accordion-button bg-transparent text-white fw-bold collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`} aria-expanded="false" aria-controls={collapseId}>
                                         {processedQ}
                                     </button>
                                 </h2>
                                 <div id={collapseId} class="accordion-collapse collapse" aria-labelledby={headingId} data-bs-parent={`#${accordionId}`}>
-                                    <div class="accordion-body text-gray bg-transparent border-top border-orange border-opacity-10 py-3 px-4" set:html={processedA} />
+                                    <div class="accordion-body text-gray" set:html={processedA} />
                                 </div>
                             </div>
                         );
@@ -44,16 +44,3 @@ const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`
         </div>
     </div>
 </section>
-
-<style>
-  .faq-section {
-    background: transparent;
-  }
-  .custom-accordion .accordion-button::after {
-    filter: invert(0.5);
-  }
-  .custom-accordion .accordion-button:not(.collapsed) {
-    color: var(--orange) !important;
-    background-color: rgba(204, 120, 92, 0.08) !important;
-  }
-</style>
