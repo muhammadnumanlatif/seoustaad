@@ -29,7 +29,7 @@ const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`
                         return (
                             <div class="accordion-item bg-transparent border-0 mb-3" style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.08);border-radius:12px">
                                 <h2 class="accordion-header" id={headingId}>
-                                    <button class="accordion-button bg-transparent text-white fw-bold collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`} aria-expanded="false" aria-controls={collapseId}>
+                                    <button class="accordion-button faq-btn bg-transparent text-white fw-bold collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`} aria-expanded="false" aria-controls={collapseId}>
                                         {processedQ}
                                     </button>
                                 </h2>
@@ -44,3 +44,18 @@ const accordionId = `faqAccordion_${Math.random().toString(36).substring(2, 9)}`
         </div>
     </div>
 </section>
+
+<style>
+  .faq-btn {
+    color: var(--text-color, #ffffff) !important;
+  }
+  
+  :global(.bg-light) .faq-btn,
+  :global(.light-theme) .faq-btn {
+    color: var(--text-color, #2d3748) !important;
+  }
+
+  .faq-btn:not(.collapsed) {
+    color: var(--primary-orange, #cc785c) !important;
+  }
+</style>
