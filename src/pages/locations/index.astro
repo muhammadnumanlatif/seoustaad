@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsappWidget from '../../components/WhatsappWidget.astro';
+
+const cities = [
+  { name: 'Karachi', slug: 'karachi', tier: 1, desc: 'Pakistan\'s largest city & commercial capital' },
+  { name: 'Lahore', slug: 'lahore', tier: 1, desc: 'Cultural hub and second-largest metropolis' },
+  { name: 'Islamabad', slug: 'islamabad', tier: 1, desc: 'Federal capital and tech startup hotspot' },
+  { name: 'Rawalpindi', slug: 'rawalpindi', tier: 1, desc: 'Twin city of Islamabad, major trade center' },
+  { name: 'Faisalabad', slug: 'faisalabad', tier: 2, desc: 'Industrial powerhouse of Punjab' },
+  { name: 'Gujranwala', slug: 'gujranwala', tier: 2, desc: 'Industrial city known for manufacturing' },
+  { name: 'Peshawar', slug: 'peshawar', tier: 2, desc: 'Gateway to KPK and northern Pakistan' },
+  { name: 'Multan', slug: 'multan', tier: 2, desc: 'City of saints and southern Punjab hub' },
+  { name: 'Hyderabad', slug: 'hyderabad', tier: 2, desc: 'Major city of Sindh after Karachi' },
+  { name: 'Quetta', slug: 'quetta', tier: 2, desc: 'Capital of Balochistan province' },
+  { name: 'Sialkot', slug: 'sialkot', tier: 2, desc: 'Global sports goods export capital' },
+  { name: 'Bahawalpur', slug: 'bahawalpur', tier: 2, desc: 'Historic city of southern Punjab' },
+  { name: 'Sargodha', slug: 'sargodha', tier: 2, desc: 'Citrus city of central Punjab' },
+  { name: 'Sukkur', slug: 'sukkur', tier: 3, desc: 'Major city in northern Sindh' },
+  { name: 'Larkana', slug: 'larkana', tier: 3, desc: 'Sindh\'s cultural and historic city' },
+  { name: 'Sheikhupura', slug: 'sheikhupura', tier: 3, desc: 'Industrial city near Lahore' },
+  { name: 'Rahim Yar Khan', slug: 'rahim-yar-khan', tier: 3, desc: 'Southern Punjab agricultural hub' },
+  { name: 'Jhang', slug: 'jhang', tier: 3, desc: 'Historic city on the banks of Chenab' },
+  { name: 'Dera Ghazi Khan', slug: 'dera-ghazi-khan', tier: 3, desc: 'Western Punjab gateway city' },
+  { name: 'Gujrat', slug: 'gujrat', tier: 3, desc: 'Furniture and industrial export city' },
+  { name: 'Sahiwal', slug: 'sahiwal', tier: 3, desc: 'Agriculture-driven city of Punjab' },
+  { name: 'Wah Cantonment', slug: 'wah-cantonment', tier: 3, desc: 'Industrial cantonment near Rawalpindi' },
+  { name: 'Mardan', slug: 'mardan', tier: 3, desc: 'Second largest city in KPK' },
+  { name: 'Kasur', slug: 'kasur', tier: 3, desc: 'Historical city near Lahore' },
+  { name: 'Okara', slug: 'okara', tier: 3, desc: 'Agri-industrial city of central Punjab' },
+];
+
+const tier1 = cities.filter(c => c.tier === 1);
+const tier2 = cities.filter(c => c.tier === 2);
+const tier3 = cities.filter(c => c.tier === 3);
+---
+
+<Layout
+  title="Locations | SEO Agency Across Pakistan | SEO Ustaad"
+  description="SEO Ustaad provides premium SEO, Web Development, WordPress, and Shopify services across 26 major cities in Pakistan including Karachi, Lahore, and Islamabad."
+  canonicalUrl="https://www.seoustaad.com/locations/"
+>
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="py-5" style="padding-top:140px!important;background:var(--bg-dark)">
+    <div class="container py-4 text-center">
+      <span class="badge text-orange border border-orange border-opacity-50 bg-transparent px-3 py-2 mb-3 rounded-pill">Serving All of Pakistan</span>
+      <h1 class="outfit display-4 fw-bold text-white mb-3">Our <span class="text-orange">Locations</span></h1>
+      <p class="text-gray lead mx-auto" style="max-width:620px">
+        Dedicated local SEO, Web Development, Shopify & WordPress services across <strong class="text-white">26 major cities</strong> in Pakistan — with hyper-local content tailored to each market.
+      </p>
+      <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap">
+        <div class="text-center">
+          <div class="display-6 fw-bold text-orange">26</div>
+          <div class="text-gray small">Cities Covered</div>
+        </div>
+        <div class="text-center">
+          <div class="display-6 fw-bold text-orange">1,500+</div>
+          <div class="text-gray small">Local Pages</div>
+        </div>
+        <div class="text-center">
+          <div class="display-6 fw-bold text-orange">#1</div>
+          <div class="text-gray small">Ranked Agency</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tier 1 -->
+  <section class="py-5 border-top" style="border-color:rgba(255,255,255,.06)!important">
+    <div class="container">
+      <h2 class="outfit fw-bold text-white mb-1">🏙️ Tier 1 — Metro Hubs</h2>
+      <p class="text-gray small mb-4">Pakistan's top commercial centres with dedicated SEO campaigns and full service availability.</p>
+      <div class="row g-4">
+        {tier1.map(city => (
+          <div class="col-12 col-md-6 col-lg-3">
+            <a
+              href={`/locations/seo-agency-${city.slug}/`}
+              class="d-block p-4 text-decoration-none rounded-3 h-100"
+              style="background:var(--surface-dark-elevated);border:1px solid rgba(255,102,0,.25);transition:all .25s"
+              onmouseover="this.style.borderColor='rgba(255,102,0,.7)';this.style.transform='translateY(-3px)'"
+              onmouseout="this.style.borderColor='rgba(255,102,0,.25)';this.style.transform='translateY(0)'"
+            >
+              <h3 class="outfit fw-bold text-white h5 mb-1">{city.name}</h3>
+              <p class="text-gray small mb-3">{city.desc}</p>
+              <span class="text-orange small fw-semibold">View SEO Services &rarr;</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tier 2 -->
+  <section class="py-5 border-top" style="border-color:rgba(255,255,255,.06)!important">
+    <div class="container">
+      <h2 class="outfit fw-bold text-white mb-1">🏘️ Tier 2 — Major Cities</h2>
+      <p class="text-gray small mb-4">High-growth markets with strong business communities and rising digital adoption.</p>
+      <div class="row g-3">
+        {tier2.map(city => (
+          <div class="col-6 col-md-4 col-lg-3">
+            <a
+              href={`/locations/seo-agency-${city.slug}/`}
+              class="d-block p-3 text-decoration-none rounded-3 h-100"
+              style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.07);transition:all .2s"
+              onmouseover="this.style.borderColor='rgba(255,102,0,.5)';this.style.transform='translateY(-2px)'"
+              onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'"
+            >
+              <p class="text-white fw-semibold mb-1 small">{city.name}</p>
+              <p class="text-gray mb-0" style="font-size:.75rem">{city.desc}</p>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tier 3 -->
+  <section class="py-5 border-top" style="border-color:rgba(255,255,255,.06)!important">
+    <div class="container">
+      <h2 class="outfit fw-bold text-white mb-1">📍 Tier 3 — Emerging Markets</h2>
+      <p class="text-gray small mb-4">Underserved cities with massive first-mover SEO advantages for local businesses.</p>
+      <div class="row g-3">
+        {tier3.map(city => (
+          <div class="col-6 col-md-4 col-lg-3">
+            <a
+              href={`/locations/seo-agency-${city.slug}/`}
+              class="d-block p-3 text-decoration-none rounded-3 h-100"
+              style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.07);transition:all .2s"
+              onmouseover="this.style.borderColor='rgba(255,102,0,.5)';this.style.transform='translateY(-2px)'"
+              onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'"
+            >
+              <p class="text-white fw-semibold mb-1 small">{city.name}</p>
+              <p class="text-gray mb-0" style="font-size:.75rem">{city.desc}</p>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-5 text-center" style="background:var(--surface-dark)">
+    <div class="container py-4">
+      <h2 class="outfit display-5 fw-bold text-white mb-3">Ready to Dominate Your <span class="text-orange">Local Market?</span></h2>
+      <p class="text-gray mb-4 mx-auto" style="max-width:500px">Our local SEO experts will build a city-specific strategy that gets you ranking in the Map Pack and organic results.</p>
+      <a href="https://wa.me/923353453099" class="btn btn-orange btn-glow px-5 py-3 fw-bold fs-5">
+        <i class="fab fa-whatsapp me-2"></i>Talk to a Local SEO Expert
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <WhatsappWidget slot="widget" />
+</Layout>

@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsappWidget from '../../components/WhatsappWidget.astro';
+import gigs from '../../../gigs.json';
+
+const silos = [
+  {
+    key: 'seo',
+    label: 'SEO Services',
+    icon: '🔍',
+    desc: 'Dominate Google with technical SEO, schema markup, keyword research, and local citations.',
+    categories: ['seo', 'local'],
+  },
+  {
+    key: 'ecom',
+    label: 'E-Commerce SEO',
+    icon: '🛒',
+    desc: 'Drive qualified buyers to your online store with our specialized e-commerce SEO packages.',
+    categories: ['ecom'],
+  },
+  {
+    key: 'wordpress',
+    label: 'WordPress Development',
+    icon: '🟦',
+    desc: 'Custom themes, plugins, WooCommerce stores and white-label WordPress solutions.',
+    categories: ['wordpress'],
+  },
+  {
+    key: 'shopify',
+    label: 'Shopify Development',
+    icon: '🟢',
+    desc: 'Custom Shopify stores, theme development, white-label builds, and partner store setups.',
+    categories: ['shopify'],
+  },
+  {
+    key: 'web',
+    label: 'Web Development',
+    icon: '💻',
+    desc: 'Next.js, WordPress, custom websites, speed optimization and bug fixing.',
+    categories: ['web'],
+  },
+  {
+    key: 'smm',
+    label: 'Social Media & Link Building',
+    icon: '📣',
+    desc: 'Meta Ads, social media management, guest posts, and strategic backlink campaigns.',
+    categories: ['smm'],
+  },
+];
+
+// Get unique root gigs (no city suffix duplication — show only those without "-in-" in slug)
+const rootGigs = gigs.filter(g => !g.slug.match(/-in-[a-z]/));
+---
+
+<Layout
+  title="All Services | SEO Ustaad Pakistan"
+  description="Explore all SEO, Web Development, Shopify, WordPress, E-Commerce SEO and Local SEO services offered by SEO Ustaad across 26 cities in Pakistan."
+  canonicalUrl="https://www.seoustaad.com/services/"
+>
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="py-5" style="padding-top:140px!important;background:var(--bg-dark)">
+    <div class="container py-4 text-center">
+      <span class="badge text-orange border border-orange border-opacity-50 bg-transparent px-3 py-2 mb-3 rounded-pill">Full Service Directory</span>
+      <h1 class="outfit display-4 fw-bold text-white mb-3">All <span class="text-orange">Services</span></h1>
+      <p class="text-gray lead mx-auto" style="max-width:600px">
+        Pakistan's most comprehensive digital growth agency. 60+ services across SEO, E-Commerce, WordPress, Shopify and Web Development — all available in 26 cities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Silo Sections -->
+  {silos.map(silo => {
+    const siloGigs = rootGigs.filter(g => silo.categories.includes(g.category));
+    if (siloGigs.length === 0) return null;
+    return (
+      <section class="py-5 border-top" style="border-color:rgba(255,255,255,.06)!important">
+        <div class="container">
+          <div class="row align-items-center mb-4">
+            <div class="col">
+              <h2 class="outfit fw-bold text-white mb-1">
+                <span class="me-2">{silo.icon}</span>{silo.label}
+              </h2>
+              <p class="text-gray mb-0 small">{silo.desc}</p>
+            </div>
+          </div>
+          <div class="row g-3">
+            {siloGigs.map(gig => (
+              <div class="col-6 col-md-4 col-lg-3">
+                <a
+                  href={`/services/${gig.slug}/`}
+                  class="d-block p-3 text-decoration-none rounded-3 h-100"
+                  style="background:var(--surface-dark-elevated);border:1px solid rgba(255,255,255,.07);transition:border-color .2s,transform .2s"
+                  onmouseover="this.style.borderColor='rgba(255,102,0,.5)';this.style.transform='translateY(-2px)'"
+                  onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'"
+                >
+                  <p class="text-white fw-semibold mb-1 small">{gig.name}</p>
+                  <p class="text-orange mb-0" style="font-size:.75rem">{gig.price}</p>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <!-- CTA -->
+  <section class="py-5 text-center" style="background:var(--surface-dark)">
+    <div class="container py-4">
+      <h2 class="outfit display-5 fw-bold text-white mb-3">Not Sure Which Service <span class="text-orange">You Need?</span></h2>
+      <p class="text-gray mb-4">Talk to our experts for a free consultation. We'll recommend the right package for your goals and budget.</p>
+      <a href="https://wa.me/923353453099" class="btn btn-orange btn-glow px-5 py-3 fw-bold fs-5">
+        <i class="fab fa-whatsapp me-2"></i>Get Free Consultation
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <WhatsappWidget slot="widget" />
+</Layout>
