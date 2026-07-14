@@ -352,6 +352,9 @@ const categoriesMap = rootGigs.reduce((acc, gig) => {
         updateSelectedPrice();
         // Since gig is pre-selected, fast-forward directly to location step (Step 2)
         currentStep = 2;
+        // Dynamically remove active-step from the HTML element on Step 1 to avoid overlap rendering
+        const step1 = form.querySelector('.form-step[data-step="1"]');
+        if (step1) step1.classList.remove('active-step');
       }
     }
 
