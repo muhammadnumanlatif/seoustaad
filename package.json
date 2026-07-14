@@ -11,5 +11,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
+  },
+  "devDependencies": {
+    "uglify-js": "^3.19.3"
   }
 }
