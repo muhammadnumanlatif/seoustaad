@@ -1,0 +1,519 @@
+---
+import gigs from '../../gigs.json';
+
+interface Props {
+  defaultServiceSlug?: string;
+  defaultCity?: string;
+}
+
+const { defaultServiceSlug = '', defaultCity = '' } = Astro.props;
+
+// Filter out locations Matrix gigs from the dynamic dropdown selector
+const rootGigs = gigs.filter(g => !g.slug.match(/-in-[a-z]/));
+
+// Group gigs by category for client-side JavaScript initialization
+const categoriesMap = rootGigs.reduce((acc, gig) => {
+  if (!acc[gig.category]) acc[gig.category] = [];
+  acc[gig.category].push({ name: gig.name, slug: gig.slug, price: gig.price });
+  return acc;
+}, {} as Record<string, typeof rootGigs>);
+---
+
+<div class="glass-card p-4 hero-form-card position-relative overflow-hidden">
+  <div class="form-card-spotlight"></div>
+  <div class="form-progress-container mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="small text-orange fw-bold text-uppercase tracking-wider" id="stepIndicator">Step 1 of 5</span>
+      <span class="small text-gray" id="stepProgressPercent">20% Complete</span>
+    </div>
+    <div class="progress bg-dark" style="height:6px">
+      <div class="progress-bar bg-orange progress-bar-striped progress-bar-animated" id="stepProgressBar" role="progressbar" style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+  <form id="heroMultistepForm" class="needs-validation d-flex flex-column flex-grow-1" novalidate="">
+    <!-- Step 1: Category -->
+    <div class="form-step active-step" data-step="1">
+      <h4 class="outfit mb-2 h5">What service do you need?</h4>
+      <p class="text-gray small mb-3">Select the primary category for your project.</p>
+      <div class="services-grid-container max-height-step-container">
+        <label class="service-option-card">
+          <input type="radio" name="category" value="web" required="">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fas fa-code text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">Web Development</span>
+              <span class="text-gray small">WordPress, Shopify, React/Next.js</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="seo">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fas fa-search text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">Technical SEO</span>
+              <span class="text-gray small">Audits, On-Page, Speed, Web Vitals</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="local">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fas fa-map-marker-alt text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">Local SEO</span>
+              <span class="text-gray small">GMB, Citations, Local Retainers</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="ecom">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fas fa-shopping-cart text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">E-Commerce</span>
+              <span class="text-gray small">Product SEO, Category Optimization, CRO</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="smm">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fas fa-bullhorn text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">Social Media &amp; Ads</span>
+              <span class="text-gray small">Meta Ads, Backlinks, Guest Posts</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="shopify">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fab fa-shopify text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">Shopify Dev</span>
+              <span class="text-gray small">Custom stores, themes, white-label</span>
+            </div>
+          </div>
+        </label>
+        <label class="service-option-card">
+          <input type="radio" name="category" value="wordpress">
+          <div class="service-option-content d-flex align-items-center p-3">
+            <i class="fab fa-wordpress text-orange me-3 fa-lg"></i>
+            <div class="text-start">
+              <span class="d-block fw-bold text-white">WordPress Dev</span>
+              <span class="text-gray small">Themes, plugins, WooCommerce</span>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Step 2: Specific Service -->
+    <div class="form-step" data-step="2">
+      <h4 class="outfit mb-2 h5">Select Specific Service</h4>
+      <p class="text-gray small mb-3">Choose the premium gig that fits your needs.</p>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Selected Service</label>
+        <select class="form-select glass-input custom-select-tall" name="service" id="gigSelect" required="">
+          <option value="" disabled="" selected="">Please select a category first...</option>
+        </select>
+        <div class="invalid-feedback">Please select a service.</div>
+      </div>
+    </div>
+
+    <!-- Step 3: Location & Goals -->
+    <div class="form-step" data-step="3">
+      <h4 class="outfit mb-2 h5">Location &amp; Goals</h4>
+      <p class="text-gray small mb-3">Help us align with your local market scope.</p>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Your Target City / Location</label>
+        <select class="form-select glass-input custom-select-tall" name="location" id="formLocationSelect" required="">
+          <option value="" disabled="" selected="">Select location...</option>
+        </select>
+        <div class="invalid-feedback">Please select a location.</div>
+      </div>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Briefly describe your goals</label>
+        <textarea class="form-control glass-input" name="goals" rows="3" placeholder="e.g. Build a store with local COD delivery and rank it..." required=""></textarea>
+        <div class="invalid-feedback">Please describe your project goals.</div>
+      </div>
+    </div>
+
+    <!-- Step 4: Cost & Timeline -->
+    <div class="form-step" data-step="4">
+      <h4 class="outfit mb-2 h5">Project Cost &amp; Timeline</h4>
+      <p class="text-gray small mb-3">Review the cost of your selected gig.</p>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Gig Price</label>
+        <div class="glass-card p-3 border border-orange border-opacity-50 text-center rounded">
+          <span class="text-orange fw-bold fs-4 d-block outfit" id="displayPrice">Select a gig to view price</span>
+          <span class="text-gray small" id="displayPriceSubtitle">Fixed transparent pricing</span>
+        </div>
+        <input type="hidden" name="price" id="hiddenPriceInput" value="">
+      </div>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Project Timeline</label>
+        <select class="form-select glass-input" name="timeline" required="">
+          <option value="" disabled="" selected="">Choose timeline...</option>
+          <option value="Urgent (ASAP)">Urgent (ASAP / Within 7 days)</option>
+          <option value="1 Month">Standard (Within 30 days)</option>
+          <option value="2-3 Months">Flexible (2-3 months planning)</option>
+        </select>
+        <div class="invalid-feedback">Please select a timeline.</div>
+      </div>
+    </div>
+
+    <!-- Step 5: Contact Info -->
+    <div class="form-step" data-step="5">
+      <h4 class="outfit mb-2 h5">Contact Information</h4>
+      <p class="text-gray small mb-3">Provide your details to receive the roadmap proposal.</p>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Full Name</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-gray animate-fade-in" style="border-color:rgba(255,255,255,.12)"><i class="fas fa-user"></i></span>
+          <input type="text" class="form-control glass-input" name="name" placeholder="e.g. Hamza Chaudhry" required="">
+          <div class="invalid-feedback">Please enter your full name.</div>
+        </div>
+      </div>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-gray" style="border-color:rgba(255,255,255,.12)"><i class="fas fa-envelope"></i></span>
+          <input type="email" class="form-control glass-input" name="email" placeholder="e.g. hamza@seoustaad.com" required="">
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="mb-3 text-start">
+        <label class="form-label text-gray small fw-bold">WhatsApp Number</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-gray" style="border-color:rgba(255,255,255,.12)"><i class="fab fa-whatsapp"></i></span>
+          <input type="tel" class="form-control glass-input" name="phone" placeholder="e.g. +923146348900" required="">
+          <div class="invalid-feedback">Please enter your WhatsApp contact number.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6: Review & Confirm -->
+    <div class="form-step" data-step="6">
+      <h4 class="outfit mb-2 h5">Review &amp; Confirm</h4>
+      <p class="text-gray small mb-3">Verify your request details before submitting.</p>
+      <div class="glass-card p-4 mb-3 text-start border border-orange border-opacity-25 rounded position-relative overflow-hidden">
+        <div class="position-absolute top-0 end-0 p-3 opacity-25">
+          <i class="fas fa-file-invoice fa-4x text-orange"></i>
+        </div>
+        <div class="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center position-relative" style="border-color:rgba(255,255,255,.08)">
+          <span class="text-gray small"><i class="fas fa-briefcase me-2 text-orange"></i>Service:</span>
+          <span class="text-body fw-bold small text-end ms-3" id="summaryService" style="max-width:60%;word-break:break-word">-</span>
+        </div>
+        <div class="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center position-relative" style="border-color:rgba(255,255,255,.08)">
+          <span class="text-gray small"><i class="fas fa-map-marker-alt me-2 text-orange"></i>Location:</span>
+          <span class="text-body fw-bold small" id="summaryLocation">-</span>
+        </div>
+        <div class="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center position-relative" style="border-color:rgba(255,255,255,.08)">
+          <span class="text-gray small"><i class="fas fa-tag me-2 text-orange"></i>Project Cost:</span>
+          <span class="text-orange fw-bold" id="summaryBudget" style="font-size:1.1rem">-</span>
+        </div>
+        <div class="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center position-relative" style="border-color:rgba(255,255,255,.08)">
+          <span class="text-gray small"><i class="fas fa-user me-2 text-orange"></i>Name:</span>
+          <span class="text-body fw-bold small" id="summaryName">-</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center position-relative">
+          <span class="text-gray small"><i class="fab fa-whatsapp me-2 text-orange"></i>WhatsApp:</span>
+          <span class="text-body fw-bold small" id="summaryPhone">-</span>
+        </div>
+      </div>
+      <div class="alert alert-info bg-transparent border-orange text-orange small p-2 text-start mb-0" role="alert">
+        <i class="fas fa-info-circle me-1"></i> Pressing submit submits the form to Formspree securely via HTTPS.
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="d-flex justify-content-between mt-auto border-top pt-3" style="border-color:rgba(255,255,255,.08)!important">
+      <button type="button" class="btn btn-outline-orange px-4" id="prevStepBtn" style="display:none">Back</button>
+      <button type="button" class="btn btn-orange px-4 ms-auto" id="nextStepBtn">Next Step <i class="fas fa-arrow-right ms-2"></i></button>
+      <button type="submit" class="btn btn-orange btn-glow px-4 ms-auto" id="submitFormBtn" style="display:none">Submit Request <i class="fas fa-paper-plane ms-2"></i></button>
+    </div>
+  </form>
+
+  <div id="formLoadingOverlay" class="position-absolute top-0 start-0 w-100 h-100 bg-darker d-none align-items-center justify-content-center" style="opacity:.95;z-index:10">
+    <div class="text-center">
+      <div class="spinner-border text-orange mb-3" role="status"></div>
+      <p class="text-white small mb-0">Sending your growth request to SEO Ustaad...</p>
+    </div>
+  </div>
+
+  <div id="formSuccessMessage" class="position-absolute top-0 start-0 w-100 h-100 bg-darker d-none flex-column align-items-center justify-content-center p-4 text-center" style="z-index:10">
+    <div class="success-icon mb-4">
+      <i class="fas fa-check-circle text-orange mb-2" style="font-size:4rem;filter:drop-shadow(0 0 10px rgba(204, 120, 92, .5))"></i>
+    </div>
+    <h4 class="outfit text-white mb-2">Details Submitted!</h4>
+    <p class="text-gray small mb-4">Your analysis request has been logged. Our strategist will contact you within 24 hours.</p>
+    <a rel="nofollow noopener noreferrer" href="https://wa.me/923146348900" id="successWaBtn" target="_blank" class="btn btn-orange btn-glow w-100 py-3 fw-bold mb-2">
+      <i class="fab fa-whatsapp me-2"></i> Discuss details on WhatsApp
+    </a>
+    <button type="button" class="btn btn-link text-gray text-decoration-none small" id="restartFormBtn">Submit Another Request</button>
+  </div>
+</div>
+
+<script define:vars={{ categoriesMap, defaultServiceSlug, defaultCity }}>
+  // Dynamic initialization script that populates the drop-downs
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('heroMultistepForm');
+    if (!form) return;
+
+    const categoryInputs = form.querySelectorAll('input[name="category"]');
+    const gigSelect = document.getElementById('gigSelect');
+    const locationSelect = document.getElementById('formLocationSelect');
+    const displayPrice = document.getElementById('displayPrice');
+    const hiddenPriceInput = document.getElementById('hiddenPriceInput');
+    const successWaBtn = document.getElementById('successWaBtn');
+
+    // Get URL Parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramService = urlParams.get('service') || defaultServiceSlug;
+    const paramCity = urlParams.get('city') || defaultCity;
+
+    // Populate Cities list
+    const pakistanCities = ["Karachi","Lahore","Faisalabad","Rawalpindi","Gujranwala","Peshawar","Multan","Hyderabad","Islamabad","Quetta","Bahawalpur","Sargodha","Sialkot","Sukkur","Larkana","Sheikhupura","Rahim Yar Khan","Jhang","Dera Ghazi Khan","Gujrat","Sahiwal","Wah Cantonment","Mardan","Kasur","Okara"];
+    locationSelect.innerHTML = '<option value="" disabled selected>Select location...</option>' + 
+      pakistanCities.map(c => `<option value="${c}">${c}</option>`).join('') +
+      '<option value="Other PK City">Other Pakistani City</option>' +
+      '<option value="International">Outside Pakistan (International)</option>';
+
+    // Set default target city
+    if (paramCity) {
+      const match = pakistanCities.find(c => c.toLowerCase() === paramCity.toLowerCase());
+      if (match) locationSelect.value = match;
+    }
+
+    // Function to populate Gigs dropdown based on category
+    function populateGigs(category, selectedSlug = '') {
+      const list = categoriesMap[category] || [];
+      gigSelect.innerHTML = '<option value="" disabled selected>Select a specific gig...</option>' +
+        list.map(g => `<option value="${g.name}" data-slug="${g.slug}" data-price="${g.price}">${g.name} (${g.price})</option>`).join('');
+      
+      if (selectedSlug) {
+        const option = Array.from(gigSelect.options).find(opt => opt.getAttribute('data-slug') === selectedSlug);
+        if (option) {
+          gigSelect.value = option.value;
+          updatePrice(option);
+        }
+      }
+    }
+
+    // Update Price display
+    function updatePrice(option) {
+      if (option && option.value) {
+        const price = option.getAttribute('data-price');
+        displayPrice.textContent = price;
+        hiddenPriceInput.value = price;
+      } else {
+        displayPrice.textContent = 'Select a gig to view price';
+        hiddenPriceInput.value = '';
+      }
+    }
+
+    // Listen to Category radio change
+    categoryInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        populateGigs(input.value);
+        updatePrice(null);
+      });
+    });
+
+    // Listen to Gig select change
+    gigSelect.addEventListener('change', () => {
+      const selectedOption = gigSelect.options[gigSelect.selectedIndex];
+      updatePrice(selectedOption);
+    });
+
+    // Auto-select based on target URL/Prop parameters
+    if (paramService) {
+      let foundCat = '';
+      let foundSlug = '';
+      for (const cat in categoriesMap) {
+        const match = categoriesMap[cat].find(g => g.slug === paramService);
+        if (match) {
+          foundCat = cat;
+          foundSlug = match.slug;
+          break;
+        }
+      }
+      if (foundCat) {
+        const radio = form.querySelector(`input[name="category"][value="${foundCat}"]`);
+        if (radio) {
+          radio.checked = true;
+          populateGigs(foundCat, foundSlug);
+        }
+      }
+    }
+
+    // Multistep form navigation logic
+    const steps = form.querySelectorAll('.form-step');
+    const totalSteps = steps.length;
+    let currentStep = 1;
+
+    const stepIndicator = document.getElementById('stepIndicator');
+    const stepProgressPercent = document.getElementById('stepProgressPercent');
+    const stepProgressBar = document.getElementById('stepProgressBar');
+    const prevBtn = document.getElementById('prevStepBtn');
+    const nextBtn = document.getElementById('nextStepBtn');
+    const submitBtn = document.getElementById('submitFormBtn');
+
+    function updateStepUI() {
+      steps.forEach((el, index) => {
+        if (index + 1 === currentStep) {
+          el.classList.add('active-step');
+          el.classList.remove('d-none');
+        } else {
+          el.classList.remove('active-step');
+          el.classList.add('d-none');
+        }
+      });
+
+      // Progress calculation
+      const percent = Math.round((currentStep / totalSteps) * 100);
+      stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}`;
+      stepProgressPercent.textContent = `${percent}% Complete`;
+      stepProgressBar.style.width = `${percent}%`;
+      stepProgressBar.setAttribute('aria-valuenow', percent);
+
+      // Buttons visibility
+      prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
+      if (currentStep === totalSteps) {
+        nextBtn.style.display = 'none';
+        submitBtn.style.display = 'block';
+        updateSummary();
+      } else {
+        nextBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+      }
+    }
+
+    function validateStep(stepNum) {
+      const stepEl = form.querySelector(`.form-step[data-step="${stepNum}"]`);
+      if (!stepEl) return true;
+      const requiredInputs = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+      
+      requiredInputs.forEach(input => {
+        if (input.type === 'radio') {
+          const name = input.name;
+          const checked = stepEl.querySelector(`input[name="${name}"]:checked`);
+          if (!checked) isValid = false;
+        } else if (!input.value.trim()) {
+          isValid = false;
+          input.classList.add('is-invalid');
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+      return isValid;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (validateStep(currentStep)) {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateStepUI();
+        }
+      } else {
+        form.classList.add('was-validated');
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        updateStepUI();
+      }
+    });
+
+    function updateSummary() {
+      const service = gigSelect.value || '-';
+      const location = locationSelect.value || '-';
+      const price = hiddenPriceInput.value || '-';
+      const name = form.querySelector('input[name="name"]').value || '-';
+      const phone = form.querySelector('input[name="phone"]').value || '-';
+
+      document.getElementById('summaryService').textContent = service;
+      document.getElementById('summaryLocation').textContent = location;
+      document.getElementById('summaryBudget').textContent = price;
+      document.getElementById('summaryName').textContent = name;
+      document.getElementById('summaryPhone').textContent = phone;
+
+      // Dynamic Whatsapp Message construction
+      const goals = form.querySelector('textarea[name="goals"]').value || '';
+      const timeline = form.querySelector('select[name="timeline"]').value || '';
+      
+      // Determine expert contact number dynamically
+      let currentWaNumber = '923146348900'; // general default
+      const activeCategory = form.querySelector('input[name="category"]:checked')?.value || '';
+      if (['seo', 'local', 'ecom', 'smm'].includes(activeCategory)) {
+        currentWaNumber = '923353453099'; // SEO/Ads Expert
+      } else if (['web', 'shopify', 'wordpress'].includes(activeCategory)) {
+        currentWaNumber = '923379912300'; // Web/App Dev Expert
+      }
+
+      const msg = `Hi SEO Ustaad! I just submitted your project analysis request form.\n\n*Name*: ${name}\n*WhatsApp*: ${phone}\n*Email*: ${form.querySelector('input[name="email"]').value || ''}\n*Service*: ${service}\n*Location*: ${location}\n*Budget*: ${price}\n*Timeline*: ${timeline}\n*Goals*: ${goals}`;
+      successWaBtn.href = `https://wa.me/${currentWaNumber}?text=${encodeURIComponent(msg)}`;
+    }
+
+    // Form Submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateStep(currentStep)) {
+        form.classList.add('was-validated');
+        return;
+      }
+
+      const loading = document.getElementById('formLoadingOverlay');
+      const success = document.getElementById('formSuccessMessage');
+      
+      loading.classList.remove('d-none');
+      loading.classList.add('d-flex');
+
+      try {
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => { data[key] = value; });
+
+        const res = await fetch('https://formspree.io/f/mkowzgeb', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        loading.classList.remove('d-flex');
+        loading.classList.add('d-none');
+
+        if (res.ok) {
+          success.classList.remove('d-none');
+          success.classList.add('d-flex');
+        } else {
+          alert('Oops! There was a problem submitting your form. Please try again.');
+        }
+      } catch (err) {
+        loading.classList.remove('d-flex');
+        loading.classList.add('d-none');
+        alert('Network error. Please try again.');
+      }
+    });
+
+    // Reset Form button
+    document.getElementById('restartFormBtn').addEventListener('click', () => {
+      form.reset();
+      currentStep = 1;
+      document.getElementById('formSuccessMessage').classList.remove('d-flex');
+      document.getElementById('formSuccessMessage').classList.add('d-none');
+      form.classList.remove('was-validated');
+      populateGigs('');
+      updatePrice(null);
+      updateStepUI();
+    });
+
+    updateStepUI();
+  });
+</script>
