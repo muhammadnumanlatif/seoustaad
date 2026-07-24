@@ -1,0 +1,56 @@
+---
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items = [] } = Astro.props;
+const siteUrl = "https://seoustaad.com";
+
+// Auto-prepend Home if not present
+const fullList = [
+  { name: "Home", url: "/" },
+  ...items
+].map((item, index) => {
+  const absoluteUrl = item.url.startsWith("http")
+    ? item.url
+    : `${siteUrl}${item.url.startsWith("/") ? "" : "/"}${item.url}`;
+    
+  return {
+    position: index + 1,
+    name: item.name,
+    url: absoluteUrl
+  };
+});
+
+const schemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": fullList.map((item) => ({
+    "@type": "ListItem",
+    "position": item.position,
+    "name": item.name,
+    "item": item.url
+  }))
+});
+---
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav container my-3">
+  <ol class="breadcrumb mb-0 py-2 px-3 bg-light rounded-3 small">
+    {fullList.map((item, index) => (
+      <li class={`breadcrumb-item ${index === fullList.length - 1 ? 'active text-muted fw-semibold' : ''}`}>
+        {index === fullList.length - 1 ? (
+          <span aria-current="page">{item.name}</span>
+        ) : (
+          <a href={item.url} class="text-decoration-none text-primary">{item.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={schemaJson} />

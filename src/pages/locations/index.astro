@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import WhatsappWidget from '../../components/WhatsappWidget.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ReviewSnippetSchema from '../../components/ReviewSnippetSchema.astro';
 
 const cities = [
   { name: 'Karachi', slug: 'karachi', tier: 1, desc: 'Pakistan\'s largest city & commercial capital' },
@@ -43,6 +45,23 @@ const tier3 = cities.filter(c => c.tier === 3);
   canonicalUrl="https://www.seoustaad.com/locations/"
 >
   <Header slot="header" />
+
+  <Breadcrumbs items={[{ name: "Locations", url: "/locations/" }]} />
+
+  <ReviewSnippetSchema 
+    serviceName="Local SEO & Web Development Services Pakistan"
+    serviceDescription="Hyper-local SEO and web development services covering 26 major cities in Pakistan."
+    ratingValue={4.9}
+    reviewCount={48}
+    reviews={[
+      {
+        author: "Kamran Khan",
+        ratingValue: 5,
+        reviewBody: "SEO Ustaad helped us rank #1 for our localized services in Karachi and Lahore.",
+        datePublished: "2026-05-10"
+      }
+    ]}
+  />
 
   <!-- Hero -->
   <section class="py-5" style="padding-top:140px!important;background:var(--bg-dark)">
